@@ -1,0 +1,1969 @@
+openapi: 3.1.0
+info:
+  title: API danych planistycznych
+  version: 0.0.1
+servers:
+- url: https://b2b.pse.pl/
+  description: B2B REST API server
+paths:
+  /pwdp/api/v1/schedule-submissions:
+    post:
+      tags:
+      - Zgłoszenia danych planistycznych
+      summary: Przesłanie planu pracy 
+      operationId: submitSchedule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TimeSeriesSubmission"
+            examples:
+              scheduleSubmission_MWE_1day_2series:
+                $ref: '#/components/examples/scheduleSubmission_MWE_1day_2series'
+        required: true
+      responses:
+        "202":
+          $ref: '#/components/responses/Submitted'
+        "400":
+          $ref: '#/components/responses/Rejected'
+        "403":
+          description: Odmowa dostępu
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security: 
+        - BearerAuth: []
+  /pwdp/api/v1/availability-submissions:
+    post:
+      tags:
+      - Zgłoszenia danych planistycznych
+      summary: Przesłanie zgłoszenia harmonogramu dyspozycyjności
+      operationId: submitAvailability
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TimeSeriesSubmission"
+            examples:
+              availabilitySubmission_MWE_1year_2series:
+                $ref: '#/components/examples/availabilitySubmission_MWE_1year_2series'
+        required: true      
+      responses:
+        "202":
+          $ref: '#/components/responses/Submitted'
+        "400":
+          $ref: '#/components/responses/Rejected'
+        "403":
+          description: Odmowa dostępu
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security: 
+        - BearerAuth: []
+  /pwdp/api/v1/outage-submissions:
+    post:
+      tags:
+      - Zgłoszenia danych planistycznych
+      summary: Przesłanie zgłoszenia postoju
+      operationId: submitOutage
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OutageSubmission"
+            examples:
+              outageSubmission_MWE_new:
+                $ref: '#/components/examples/outageSubmission_MWE_new'
+              outageSubmission_MWE_modification:
+                $ref: '#/components/examples/outageSubmission_MWE_modification'
+              outageSubmission_MWE_withdraw:
+                $ref: '#/components/examples/outageSubmission_MWE_withdraw'
+        required: true      
+      responses:
+        "202":
+          $ref: '#/components/responses/Submitted'
+        "400":
+          $ref: '#/components/responses/Rejected'
+        "403":
+          description: Odmowa dostępu
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security: 
+        - BearerAuth: []
+  /pwdp/api/v1/derate-submissions:
+    post:
+      tags:
+      - Zgłoszenia danych planistycznych
+      summary: Przesłanie zgłoszenia ubytku
+      operationId: submitDerate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DerateSubmission"
+            examples:
+              derateSubmission_MWE_new:
+                $ref: '#/components/examples/derateSubmission_MWE_new'
+              derateSubmission_MWE_modification:
+                $ref: '#/components/examples/derateSubmission_MWE_modification'
+              derateSubmission_MWE_withdraw:
+                $ref: '#/components/examples/derateSubmission_MWE_withdraw'
+        required: true
+      responses:
+        "202":
+          $ref: '#/components/responses/Submitted'
+        "400":
+          $ref: '#/components/responses/Rejected'
+        "403":
+          description: Odmowa dostępu
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security: 
+        - BearerAuth: []
+  /pwdp/api/v1/control-malfunction-submissions:
+    post:
+      tags:
+      - Zgłoszenia danych planistycznych
+      summary: Przesłanie zgłoszenia niesprawności układu regulacji
+      operationId: submitControlMalfunction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ControlMalfunctionSubmission"
+            examples:
+              controlMalfunctionSubmission_MWE_new:
+                $ref: '#/components/examples/controlMalfunctionSubmission_MWE_new'
+              controlMalfunctionSubmission_MWE_modification:
+                $ref: '#/components/examples/controlMalfunctionSubmission_MWE_modification'
+              controlMalfunctionSubmission_MWE_withdraw:
+                $ref: '#/components/examples/controlMalfunctionSubmission_MWE_withdraw'
+        required: true
+      responses:
+        "202":
+          $ref: '#/components/responses/Submitted'
+        "400":
+          $ref: '#/components/responses/Rejected'
+        "403":
+          description: Odmowa dostępu
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security: 
+        - BearerAuth: []
+  /pwdp/api/v1/dispatch-instruction-submissions:
+    post:
+      tags:
+      - Zgłoszenia danych planistycznych
+      summary: Przesłanie zgłoszenia polecenia ruchowego OSD
+      operationId: submitDispatchInstruction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TimeSeriesSubmission"
+            examples:
+              dispatchInstructionSubmission:
+                $ref: '#/components/examples/dispatchInstructionSubmission'
+              dispatchInstructionSubmission_withdraw:
+                $ref: '#/components/examples/dispatchInstructionSubmission_withdraw'
+        required: true
+      responses:
+        "202":
+          $ref: '#/components/responses/Submitted'
+        "400":
+          $ref: '#/components/responses/Rejected'
+        "403":
+          description: Odmowa dostępu
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security: 
+        - BearerAuth: []
+  /pwdp/api/v1/exchange-schedule-submissions:
+    post:
+      tags:
+      - Zgłoszenia danych planistycznych
+      summary: Przesłanie zgłoszenia salda wymiany
+      operationId: submitExchangeSchedule
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TimeSeriesSubmission"
+            examples:
+              exchangeScheduleSubmission_1Y:
+                $ref: '#/components/examples/exchangeScheduleSubmission_1Y'
+              exchangeScheduleSubmission_1M:
+                $ref: '#/components/examples/exchangeScheduleSubmission_1M'
+              exchangeScheduleSubmission_1D:
+                $ref: '#/components/examples/exchangeScheduleSubmission_1D'
+        required: true
+      responses:
+        "202":
+          $ref: '#/components/responses/Submitted'
+        "400":
+          $ref: '#/components/responses/Rejected'
+        "403":
+          description: Odmowa dostępu
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security: 
+        - BearerAuth: []
+  /pwdp/api/v1/storage-capacity-submissions:
+    post:
+      tags:
+      - Zgłoszenia danych planistycznych
+      summary: Przesłanie zgłoszenia pojemności użytkowej
+      operationId: submitStorageCapacity
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TimeSeriesSubmission"
+            examples:
+              storageCapacitySubmission_1year:
+                $ref: '#/components/examples/storageCapacitySubmission_1year'
+        required: true
+      responses:
+        "202":
+          $ref: '#/components/responses/Submitted'
+        "400":
+          $ref: '#/components/responses/Rejected'
+        "403":
+          description: Odmowa dostępu
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security: 
+        - BearerAuth: []
+  /pwdp/api/v1/submissions/{serverMsgId}/status:
+    get:
+      tags:
+      - Zgłoszenia danych planistycznych
+      summary: Odczytanie statusu przetwarzania zgłoszenia danych planistycznych
+      operationId: getSubmissionProcessingStatus
+      parameters:
+      - name: serverMsgId
+        in: path
+        description: "Unikalne ID zgłoszenia nadane przez system PSE"
+        required: true
+        schema:
+          format: uuid
+          description: "Unikalne ID zgłoszenia nadane przez system PSE"
+          examples: 
+            - '550e8400-e29b-41d4-a716-446655440000'
+        example: 550e8400-e29b-41d4-a716-446655440000
+      responses:
+        "500":
+          description: Wewnętrzny błąd serwera
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "200":
+          description: Poprawnie odczytano status przetwarzania przesłanego zgłoszenia
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProcessingStatusResponse"
+        "404":
+          description: Nie znaleziono danych przesłanego grafiku / harmonogramu dla
+            podanego serverRefId
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "403":
+          description: Odmowa dostępu
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+      security: 
+        - BearerAuth: []
+  /pwdp/api/v1/resources/{mainResourceMrid}/schedules:
+    get:
+      summary: Pobranie planu pracy dla zasobu w zadanym zakresie dat
+      tags:
+        - Aktualne dane planistyczne
+      operationId: listSchedules
+      parameters:
+        - $ref: '#/components/parameters/MainResourceMrid'
+        - $ref: '#/components/parameters/Start'
+        - $ref: '#/components/parameters/End'
+      responses:
+        '200':
+          description: Lista serii danych planów pracy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TimeSeriesData"
+      security: 
+        - BearerAuth: []
+  /pwdp/api/v1/resources/{mainResourceMrid}/availabilities:
+    get:
+      summary: Pobranie harmonogramu dyspozycyjności dla zasobu w zadanym zakresie dat
+      tags:
+        - Aktualne dane planistyczne
+      operationId: listAvailabilities
+      parameters:
+        - $ref: '#/components/parameters/MainResourceMrid'
+        - $ref: '#/components/parameters/Start'
+        - $ref: '#/components/parameters/End'
+      responses:
+        '200':
+          description: Lista serii danych harmonogramów dyspozycyjności
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TimeSeries"
+      security: 
+        - BearerAuth: []
+  /pwdp/api/v1/resources/{mainResourceMrid}/outages:
+    get:
+      summary: Pobranie postojów dla zasobu w zadanym zakresie dat
+      tags:
+        - Aktualne dane planistyczne
+      operationId: listOutages
+      parameters:
+        - $ref: '#/components/parameters/MainResourceMrid'
+        - $ref: '#/components/parameters/Start'
+        - $ref: '#/components/parameters/End'
+      responses:
+        '200':
+          description: Lista postojów
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Outage"
+      security: 
+        - BearerAuth: []
+  /pwdp/api/v1/resources/{mainResourceMrid}/derates:
+    get:
+      summary: Pobranie ubytków dla zasobu w zadanym zakresie dat
+      tags:
+        - Aktualne dane planistyczne
+      operationId: listDerates
+      parameters:
+        - $ref: '#/components/parameters/MainResourceMrid'
+        - $ref: '#/components/parameters/Start'
+        - $ref: '#/components/parameters/End'
+      responses:
+        '200':
+          description: Lista ubytków
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Derate"
+      security: 
+        - BearerAuth: []
+  /pwdp/api/v1/resources/{mainResourceMrid}/control-malfunctions:
+    get:
+      summary: Pobranie niesprawności układów regulacji dla zasobu w zadanym zakresie dat
+      tags:
+        - Aktualne dane planistyczne
+      operationId: listControlMalfunctions
+      parameters:
+        - $ref: '#/components/parameters/MainResourceMrid'
+        - $ref: '#/components/parameters/Start'
+        - $ref: '#/components/parameters/End'
+      responses:
+        '200':
+          description: Lista niesprawności regulacji
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/ControlMalfunction"
+      security: 
+        - BearerAuth: []
+  /pwdp/api/v1/resources/{mainResourceMrid}/dispatch-instructions:
+    get:
+      summary: Pobranie poleceń ruchowych OSD
+      tags:
+        - Aktualne dane planistyczne
+      operationId: listDispatchInstructions
+      parameters:
+        - $ref: '#/components/parameters/MainResourceMrid'
+        - $ref: '#/components/parameters/Start'
+        - $ref: '#/components/parameters/End'
+      responses:
+        '200':
+          description: Lista poleceń ruchowych OSD
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TimeSeries"
+      security: 
+        - BearerAuth: []
+  /pwdp/api/v1/resources/{mainResourceMrid}/exchange-schedules:
+    get:
+      summary: Pobranie wartości salda wymiany
+      tags:
+        - Aktualne dane planistyczne
+      operationId: listExchangeSchedules
+      parameters:
+        - $ref: '#/components/parameters/MainResourceMrid'
+        - $ref: '#/components/parameters/Start'
+        - $ref: '#/components/parameters/End'
+      responses:
+        '200':
+          description: Poprawnie udostępniono wartości salda wymiany
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TimeSeries"
+      security: 
+        - BearerAuth: []
+  /pwdp/api/v1/resources/{mainResourceMrid}/storage-capacities:
+    get:
+      summary: Pobranie wartości pojemności użytkowej
+      tags:
+        - Aktualne dane planistyczne
+      operationId: listStorageCapacities
+      parameters:
+        - $ref: '#/components/parameters/MainResourceMrid'
+        - $ref: '#/components/parameters/Start'
+        - $ref: '#/components/parameters/End'
+      responses:
+        '200':
+          description: Poprawnie udostępniono wartości pojemności użytkowej
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TimeSeries"
+      security: 
+        - BearerAuth: []
+components:
+  responses:
+    Submitted:
+      description: Poprawnie odebrano dane wejściowe i rozpoczęto przetwarzanie
+      content:
+         application/json:
+           schema:
+             $ref: "#/components/schemas/SubmitResponse"
+           examples:
+             responseSubmitted:
+               $ref: '#/components/examples/responseSubmitted'
+    Rejected:
+      description: Wykryto błąd w odebranych danych wejściowych
+      content:
+         application/json:
+           schema:
+             $ref: "#/components/schemas/SubmitResponse"
+           examples:
+             responseRejected:
+               $ref: '#/components/examples/responseRejected'
+    InternalServerError:
+      description: Wewnętrzny błąd serwera
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+  parameters:
+    MainResourceMrid:
+      name: mainResourceMrid
+      in: path
+      required: true
+      description: Identyfikator mRID obiektu
+      schema:
+        type: string
+        maxLength: 60
+      example: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+    Start:
+      name: start
+      in: query
+      required: true
+      description: Data i czas początku zakresu w UTC
+      schema:
+        type: string
+        format: date-time
+      example: '2024-03-12T02:00:00Z'
+    End:
+      name: end
+      in: query
+      required: true
+      description: Data i czas końca zakresu w UTC
+      schema:
+        type: string
+        format: date-time
+      example: '2024-03-13T02:00:00Z'
+  schemas:
+    ResourceMrid:
+      type: string
+      description: Identyfikator mRID obiektu
+      examples: 
+        - '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+      maxLength: 60
+    SubmissionMeta:
+      type: object
+      description: Nagłówek zgłoszenia danych planistycznych
+      properties: 
+        senderId:
+          type: integer
+          format: int32
+          description: Identyfikator podmiotu wysyłającego zgłoszenie
+          examples: 
+            - 10999
+        responsiblePartyId:
+          type: integer
+          format: int32
+          description: Identyfikator podmiotu odpowiedzialnego za dokonanie zgłoszenia
+          examples: 
+            - 10111
+        clientMsgId:
+          type: string
+          description: Opcjonalne ID żądania nadane przez klienta API
+          examples: 
+            - '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          maxLength: 36
+        type:
+          type: string
+          enum:
+            - POS
+            - UBT
+            - NUR
+            - HRM
+            - PUZ
+            - PLP
+            - PRU
+            - WYM
+          description: Typ komunikatu zgłoszenia
+          examples: 
+            - PLP
+        createdAt:
+          type: string
+          format: date-time
+          description: Czas utworzenia zgłoszenia w UTC
+          examples: 
+            - '2024-03-21T01:23:34.567Z'
+        stdVersion:
+          type: string
+          maxLength: 10
+          description: Wersja standardów B2B
+          examples: 
+            - '1.0'
+      required:
+        - senderId
+        - responsiblePartyId
+        - clientMsgId
+        - type
+        - createdAt
+    TimeSeriesContinuous:
+      allOf:
+        - $ref: "#/components/schemas/TimeSeries"
+        - type: object
+          required: 
+            - seriesPeriods
+          properties:
+            seriesPeriods:
+              type: array
+              items:
+                $ref: "#/components/schemas/SeriesPeriodContinuous"
+              description: >
+                Okresy serii danych o stałej rozdzielczości z podanymi 
+                wartościami dla wszystkich punktów czasowych
+    TimeSeriesPoints:
+      allOf:
+        - $ref: "#/components/schemas/TimeSeries"
+        - type: object
+          required: 
+            - seriesPeriods
+          properties:
+            seriesPeriods:
+              type: array
+              items:
+                $ref: "#/components/schemas/SeriesPeriodPoints"
+              description: >
+                Okresy serii danych o stałej rozdzielczości z podanymi 
+                wartościami dla punktów, w których następuje zmiana wartości
+    TimeSeries:
+      type: object
+      description: >
+        Zestaw danych dla wybranego parametru obejmujący wektor (serię) wartości
+        wraz z wielkościami dla wskazanego parametru wybranego obiektu
+      required:
+        - tsId
+        - businessType
+        - measurementUnit
+        - resourceMrid
+        - curveType
+      properties:
+        tsId:
+          type: integer
+          format: int32
+          description: Identyfikator serii, unikalny w ramach zgłoszenia
+          examples:
+            - 1
+            - 2
+        businessType:
+          type: string
+          maxLength: 5
+          description: Typ opisujący serię danych
+          examples:
+            - MCSR
+        direction:
+          $ref: "#/components/schemas/Direction"
+        measurementUnit:
+          type: string
+          description: |
+            Jednostka miary dla wartości
+            - MAW - megawat
+            - MWH - megawatogodzina
+            - FLAG - wartość numeryczna interpretowana zgodnie z businessType
+          enum:
+            - MAW
+            - MWH
+            - FLAG
+        resourceMrid:
+          $ref: "#/components/schemas/ResourceMrid"
+          description: Identyfikator obiektu, którego dotyczy seria danych
+        curveType:
+          type: string
+          enum:
+            - A01
+            - A03
+          description: Typ krzywej określający sposób przekazywania wartości w seriesPeriod
+          examples:
+            - A01
+      discriminator:
+        propertyName: curveType
+        mapping:
+          A01: "#/components/schemas/TimeSeriesContinuous"
+          A03: "#/components/schemas/TimeSeriesPoints"
+    SeriesPeriodContinuous:
+      type: object
+      description: Seria danych w podanym okresie (szereg czasowy)
+      properties:
+        timeInterval:
+          $ref: "#/components/schemas/TimeInterval"
+          description: Przedział czasowy - zakres szeregu czasowego
+        resolution:
+          $ref: "#/components/schemas/Resolution"
+        continuousSeriesPoints:
+          type: array
+          description: >
+            Lista wartości dla kolejnych punktów w czasie dla zadanego
+            okresu, zgodnie z przyjętą rozdzielczością
+          items:
+            type: [number, "null"]
+          examples: 
+            - [12.345, 10.001]
+      required:
+        - resolution
+        - timeInterval
+        - continuousSeriesPoints
+    SeriesPeriodPoints:
+      type: object
+      description: Seria danych w podanym okresie (szereg czasowy)
+      properties:
+        timeInterval:
+          $ref: "#/components/schemas/TimeInterval"
+          description: Przedział czasowy - zakres szeregu czasowego
+        resolution:
+          $ref: "#/components/schemas/Resolution"
+        seriesPoints:
+          type: array
+          description: Tablica punktów i wartości
+          items:
+            $ref: "#/components/schemas/SeriesPoint"
+      required:
+        - resolution
+        - timeInterval
+        - seriesPoints
+    SeriesPoint:
+      type: object
+      description: Wartość parametru w danym punkcie czasu (np. na daną godzinę)
+      properties:
+        position:
+          type: integer
+          format: int32
+          description: >
+            Kolejny numer pozycji (punktu czasowego), interpertowany w
+            zależności od SeriesPeriod.timeInterval oraz SeriesPeriod.resolution
+          examples: 
+            - 1
+        quantity:
+          type: [number, "null"]
+          description: "Wartość dla wskazanego punktu czasowego oraz wielkości"
+          examples: 
+            - 42.128
+      required:
+        - position
+        - quantity
+    TimeSeriesData:
+      type: object
+      description: Dane grafikowe
+      properties:
+        mainResourceMrid:
+          $ref:  "#/components/schemas/ResourceMrid"
+          description: Identyfikator obiektu, którego dotyczy zgłoszenie
+        dataPeriod:
+          $ref: "#/components/schemas/TimeInterval"
+          description: Przedział czasowy określający zakres przekazywanych danych
+        timeSeries:
+          type: array
+          description: Serie danych
+          items:
+            $ref: "#/components/schemas/TimeSeries"
+      required:
+        - dataPeriod
+        - timeSeries
+        - mainResourceMrid
+    TimeSeriesSubmission:
+      type: object
+      description: Zgłoszenie w postaci serii danych
+      properties: 
+        meta:
+          $ref: "#/components/schemas/SubmissionMeta"
+        data:
+          $ref: "#/components/schemas/TimeSeriesData" 
+      required:
+        - meta
+        - data
+    Unavailability:
+      type: object
+      description: Dane niedostępności
+      properties:
+        unavailabilityMrid:
+          type: string
+          format: uuid
+          description: |
+            Identyfikator niedostępności. 
+            Nadawany przez zgłaszającego podczas zgłoszenia nowej niedostępności.
+          examples: 
+            - 'd8736017-d25d-4952-a3cf-0fa83560e16f'
+        unavailabilityPeriod:
+          $ref: '#/components/schemas/TimeIntervalMarks'
+          description: Przedział czasowy niedostępności
+        mainResourceMrid:
+          $ref:  "#/components/schemas/ResourceMrid"
+          description: Identyfikator obiektu, którego dotyczy niedostępność
+        isComponent:
+          type: boolean
+          description: Czy niedostępność dotyczy tylko jednej ze składowych obiektu
+          default: false
+          examples: 
+            - true
+        resourceComponentMrid:
+          $ref:  "#/components/schemas/ResourceMrid"
+          description: >
+            Identyfikator składowej obiektu, której dotyczy niedostępność. 
+            Wymagany w przypadku gdy isComponent = true
+          examples:
+            - '_e8736017-d25d-4952-a3cf-0fa83560e0000'
+        orderNo:
+          type: integer
+          format: int32
+          description: |
+            Numer kolejnego zgłoszenia (nie mniejszy niż 1) w ramach niedostępności o określonym identyfikatorze. Dla kolejnych dokumentów dotyczących zgłaszanej niedyspozycyjności numer powinien być rosnący.
+            Pole służące prawidłowej kolejności obsługi zgłoszeń. 
+          examples: 
+            - 1
+            - 2
+        businessType:
+          type: string
+          maxLength: 5
+          description: Typ danych
+          examples: 
+            - POS
+        direction:
+          $ref:  "#/components/schemas/Direction"
+      required:
+        - unavailabilityMrid
+        - unavailabilityPeriod
+        - mainResourceMrid
+        - orderNo
+        - businessType
+    UnavailabilityWithdraw:
+      type: object
+      description: Dane wycofywanej niedostępności
+      properties:
+        unavailabilityMrid:
+          type: string
+          format: uuid
+          description: |
+            Identyfikator niedostępności. 
+            Nadawany przez zgłaszającego podczas zgłoszenia nowej niedostępności.
+          examples: 
+            - 'd8736017-d25d-4952-a3cf-0fa83560e16f'
+        mainResourceMrid:
+          $ref:  "#/components/schemas/ResourceMrid"
+          description: Identyfikator obiektu, którego dotyczy wycofywana niedostępność
+        orderNo:
+          type: integer
+          format: int32
+          description: |
+            Numer kolejnego zgłoszenia (nie mniejszy niż 1) w ramach niedostępności o określonym identyfikatorze. Dla kolejnych dokumentów dotyczących zgłaszanej niedyspozycyjności numer powinien być rosnący.
+            Pole służące prawidłowej kolejności obsługi zgłoszeń. 
+      required:
+        - unavailabilityMrid
+        - mainResourceMrid
+        - orderNo
+    OutageSubmission:
+      type: object
+      description: Zgłoszenie postoju
+      properties: 
+        meta:
+          $ref: "#/components/schemas/SubmissionMeta" 
+        data:
+          oneOf:
+            - $ref: "#/components/schemas/OutageData"
+            - $ref: "#/components/schemas/OutageWithdrawData"
+          discriminator: 
+            propertyName: operationType
+            mapping:
+              U: "#/components/schemas/OutageData"
+              M: "#/components/schemas/OutageData"
+              W: "#/components/schemas/OutageWithdrawData"
+      required:
+        - meta
+        - data
+    OutageData:
+      type: object
+      description: Dane zgłoszenia postoju
+      properties: 
+        operationType:
+          allOf:
+            - $ref: "#/components/schemas/OperationType"
+            - enum: [U, M]
+        changeDescription:
+          type: string
+          maxLength: 512
+          description: |
+            Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia, tj. aktualizacji bądź wycofania tym zgłoszeniem postoju.
+
+            Dla każdego zgłoszenia może być inna przyczyna zmiany.
+          examples: 
+            - 'Opis przyczyny zgłoszenia'
+        outage:
+          $ref: "#/components/schemas/Outage"
+      required:
+        - operationType
+        - outage
+    OutageWithdrawData:
+      type: object
+      description: Dane zgłoszenia wycofania postoju
+      properties: 
+        operationType:
+          allOf:
+            - $ref: "#/components/schemas/OperationType"
+            - enum: [W]
+        changeDescription:
+          type: string
+          maxLength: 512
+          description: |
+            Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia, tj. aktualizacji bądź wycofania tym zgłoszeniem postoju.
+
+            Dla każdego zgłoszenia może być inna przyczyna zmiany.
+          examples: 
+            - 'Opis przyczyny zgłoszenia'
+        outage:
+          $ref: "#/components/schemas/UnavailabilityWithdraw"
+      required:
+        - operationType
+        - outage
+    Outage:
+      allOf:
+        - $ref: "#/components/schemas/Unavailability"
+        - type: object
+          description: Dane postoju
+          properties:
+            recoverable:
+              type: boolean
+              description: |
+                Zdolność odzyskania dyspozycyjności
+                - true – odzyskanie możliwe
+                - false – odzyskanie niemożliwe
+            reasonDescription:
+              $ref: '#/components/schemas/ReasonDescription'
+            startupSchedule:
+              $ref: '#/components/schemas/StartupSchedule'
+          required:
+            - recoverable
+            - reasonDescription
+    StartupSchedule:
+      type: object
+      description: 'Uruchomienie dodatkowe'
+      properties:
+        synchroTime:
+          type: integer
+          description: >
+            Czas od rozpoczęcia uruchamiania do synchronizacji,
+            określany w minutach jako wielokrotność OREB
+          examples:
+            - 15
+        pminTime:
+          type: integer
+          description: > 
+            Czas od synchronizacji do osiągnięcia Pmin, określany w
+            minutach jako wielokrotność OREB
+          examples:
+            - 30
+        measurementUnit:
+          type: string
+          description: Pole określające jednostkę dla podawanych poziomów mocy
+          enum:
+            - MAW
+        curveType:
+          type: string
+          description: Typ krzywej określający sposób przekazywania wartości
+          enum:
+            - A01
+        resolution:
+          $ref: "#/components/schemas/Resolution"
+        continuousSeriesPoints:
+          type: array
+          description: >
+            Lista wartości dla kolejnych punktów w czasie dla zadanego 
+            okresu, zgodnie z przyjętą rozdzielczością
+          items:
+            type: number
+          examples: 
+            - [12.345, 10.001]
+      required:
+        - synchroTime
+        - pminTime
+        - measurementUnit
+        - curveType
+        - resolution
+        - continuousSeriesPoints
+    DerateSubmission:
+      type: object
+      description: Zgłoszenie ubytku
+      properties: 
+        meta:          
+          $ref: "#/components/schemas/SubmissionMeta" 
+        data:
+          $ref: "#/components/schemas/DerateData"
+      required:
+        - meta
+        - data
+    DerateData:
+      type: object
+      description: Dane zgłoszenia ubytku
+      properties: 
+        operationType:
+          $ref: "#/components/schemas/OperationType"
+        changeDescription:
+          type: string
+          maxLength: 512
+          description: |
+            Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia, tj. aktualizacji bądź wycofania tym zgłoszeniem niedostępności.
+
+            Dla każdego zgłoszenia może być inna przyczyna zmiany.
+          examples: 
+            - 'Opis przyczyny zgłoszenia'
+        derate:
+          oneOf:
+            - $ref: "#/components/schemas/Derate"
+            - $ref: "#/components/schemas/UnavailabilityWithdraw"
+      required:
+        - operationType
+        - derate
+    Derate:
+      allOf:
+        - $ref: "#/components/schemas/Unavailability"
+        - type: object
+          description: Dane ubytku
+          properties:
+            recoverable:
+              type: boolean
+              description: |
+                Zdolność odzyskania dyspozycyjności
+                - true – odzyskanie możliwe
+                - false – odzyskanie niemożliwe
+            reasonDescription:
+              $ref: '#/components/schemas/ReasonDescription'
+            timeSeries:
+              type: array
+              description: Serie danych planu pracy
+              items:
+                $ref: "#/components/schemas/DerateTimeSeries"
+          required:
+            - recoverable
+            - reasonDescription
+            - timeSeries
+    DerateTimeSeries:
+      type: object
+      description: Zestaw danych dla wybranego parametru obejmujący wektor (serię)
+        \ wartości wraz z wielkościami dla wskazanego parametru wybranego obiektu
+      properties:
+        tsId:
+          type: integer
+          format: int32
+          description: Identyfikator serii, unikalny w ramach zgłoszenia
+          examples:
+            - 1
+            - 2
+        recoverableFlag:
+          type: string
+          enum: 
+            - UOBW
+            - UPOD
+          description: | 
+            Pole powiązane z polem zdolności odzyskania dyspozycyjności (recoverable).
+
+            Pole odróżniające sekcję  z parametrami ubytku zgodnie z oczekiwaniami zgłaszającego od sekcji z parametrami potencjalnego ubytku, przewidywanego w sytuacji możliwego odzyskania dyspozycyjności.
+
+            Dopuszczalne wartości:
+            - UOBW - ubytek zgłaszany, obowiązujący zgodnie z oczekiwaniami zgłaszającego
+            - UPOD - potencjalny ubytek, przewidywany po możliwym odzyskaniu dyspozycyjności
+
+            Sekcja z wartością UOBW powinna wystąpić w każdym zgłoszeniu ubytku.
+
+            Sekcja z wartością UPOD ma charakter informacyjny i jest opcjonalna. Może wystąpić wyłącznie, jeśli jest podana sekcja z wartością UOBW, a także jeśli pole zdolności odzyskania dyspozycyjności wskazuje, że odzyskanie jest możliwe.
+        measurementUnit:
+          type: string
+          description: Jednostka miary dla wartości
+          enum: 
+            - MAW
+        curveType:
+          type: string
+          enum: 
+            - A03
+          description: Typ krzywej określający sposób przekazywania wartości
+        seriesPeriods:
+          type: array
+          description: Tablica serii danych w podanych okresach
+          items:
+            $ref: "#/components/schemas/SeriesPeriodPoints"
+      required:
+        - tsId
+        - recoverableFlag
+        - measurementUnit
+        - curveType
+        - seriesPeriods
+    ControlMalfunctionSubmission:
+      type: object
+      description: Zgłoszenie niesprawności układu regulacji
+      properties: 
+        meta:          
+          $ref: "#/components/schemas/SubmissionMeta" 
+        data:
+          $ref: "#/components/schemas/ControlMalfunctionData"
+          description: Dane zgłoszenia niesprawności układu regulacji
+      required:
+        - meta
+        - data
+    ControlMalfunctionData:
+      type: object
+      properties: 
+        operationType:
+          $ref: "#/components/schemas/OperationType"
+        changeDescription:
+          type: string
+          maxLength: 512
+          description: |
+            Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia, tj. aktualizacji bądź wycofania tym zgłoszeniem niedostępności.
+
+            Dla każdego zgłoszenia może być inna przyczyna zmiany.
+          examples: 
+            - 'Opis przyczyny zgłoszenia'
+        controlMalfunction:
+          oneOf:
+            - $ref: "#/components/schemas/ControlMalfunction"
+            - $ref: "#/components/schemas/UnavailabilityWithdraw"
+      required:
+        - operationType
+        - controlMalfunction
+    ControlMalfunction:
+      allOf:
+        - $ref: "#/components/schemas/Unavailability"
+        - type: object
+          description: Niesprawność układu regulacji
+          properties:
+            reasonDescription:
+              type: string
+              description: Dodatkowy opis przyczyny niedostępności
+              maxLength: 512
+              examples: 
+                - 'Dodatkowy opis przyczyny niedostępności'
+    ReasonDescription:
+      type: object
+      description: Przyczyna niedostępności 
+      properties:
+        reasonCode:
+          type: string
+          description: Kod przyczyny
+          maxLength: 2
+          examples: 
+            - WE
+        categoryCode:
+          type: string
+          description: Kod szczegółowej kategorii przyczyny
+          maxLength: 4
+          examples: 
+            - D001
+        description:
+          type: string
+          description: Dodatkowy opis przyczyny niedostępności
+          maxLength: 512
+          examples: 
+            - 'Dodatkowy opis przyczyny niedostępności'
+      required:
+        - reasonCode
+        - categoryCode
+    Resolution:
+      type: string
+      description: |
+        Rozdzielczość serii danych: 
+          - PT1M - 1 minuta
+          - PT5M - 5 minut
+          - PT15M - 15 minut
+          - PT1H - godzina
+          - PT60M - godzina
+          - P1D - doba
+          - P1M – miesiąc
+      enum:
+        - PT1M
+        - PT5M
+        - PT15M
+        - PT1H
+        - PT60M
+        - P1D
+        - P1M
+      examples: 
+        - PT15M
+    Direction:
+      type: string 
+      enum: 
+        - G
+        - P
+        - C
+      description: |
+        Kierunek, którego dotyczą dane:
+          - G - generacja
+          - P - pobór
+          - C - całkowity
+      examples:
+        - G
+    OperationType:
+      type: string
+      enum:
+        - U
+        - M
+        - W
+      description: |
+        Rodzaj operacji związany ze zgłoszeniem
+          - U - utworzenie
+          - M - modyfikacja
+          - W - wycofanie
+    TimeInterval:
+      type: object
+      description: Przedział czasu
+      properties:
+        start:
+          type: string
+          format: date-time
+          description: Data i godzina początku okresu w UTC
+          examples: 
+            - '2024-03-12T02:00:00Z'
+        end:
+          type: string
+          format: date-time
+          description: Data i godzina końca okresu w UTC
+          examples: 
+            - '2024-03-13T02:00:00Z'
+      required:
+      - end
+      - start
+    TimeIntervalMarks:
+      type: object
+      description: Przedział czasu z określeniem wykonania początku i końca
+      properties:
+        start:
+          type: string
+          format: date-time
+          description: Data i godzina początku okresu w UTC
+          examples: 
+            - '2024-03-12T02:00:00Z'
+        startOccurred:
+          type: boolean
+          description: Określa czy początek niedostepności miał już miejsce
+        end:
+          type: string
+          format: date-time
+          description: Data i godzina końca okresu w UTC
+          examples: 
+            - '2024-03-13T02:00:00Z'
+        endOccurred:
+          type: boolean
+          description: Określa czy koniec niedostepności miał już miejsce
+      required:
+      - start
+      - startOccurred
+      - end
+      - endOccurred
+    ResponseDetail:
+      type: object
+      description: Opis naruszeń walidacji w czasie przetwarzenia przesłanych dokumentów
+      properties:
+        severity:
+          type: string
+          description: Stopień naruszenia walidacji powstałego w czasie przetwarzania
+          enum:
+          - INFO
+          - WARN
+          - ERROR
+          examples: 
+            - WARN
+        code:
+          type: string
+          description: Kod naruszenia walidacji powstałego w czasie przetwarzania
+          maxLength: 10
+          examples: 
+            - XXX
+        field:
+          type: string
+          description: wskazanie na element w zgłoszeniu
+          examples: 
+            - 'data.timePeriod.point[1289].value'
+        message:
+          type: string
+          description: Opis naruszenia walidacji powstałego w czasie przetwarzania
+          examples: 
+            - 'Wartość z grafiku przekracza 100% wartości maksymalnej mocy netto'
+      required:
+      - message
+      - severity
+      - code
+    SubmitResponse:
+      type: object
+      description: Odpowiedź potwierdzająca przyjęcie przesłanych danych do przetwarzania
+      properties:
+        serverMsgId:
+          type: string
+          format: uuid
+          description: >
+            Unikalne ID nadane przez system PSE, które służy do identyfikacji
+            procesu przesłania danych"
+          examples: 
+            - '550e8400-e29b-41d4-a716-446655440000'
+        clientMsgId:
+          type: string
+          description: Opcjonalne ID żądania nadane przez klienta API
+          examples: 
+            - '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          maxLength: 36
+        receivedTime:
+          type: string
+          format: date-time
+          description: Data odebrania żądania w UTC
+          examples: 
+            - '2024-03-12T02:00:00.000Z'
+        status:
+          type: string
+          description: |
+            Status operacji odebrania i wstępnej walidacji żądania
+            - SUBMITTED - Zgłoszenie zostało poprawnie odebrane i będzie przetwarzane
+            - APPROVED - Dane zawarte w zgłoszeniu zostały zatwierdzone
+            - REJECTED - Zgłoszenie zostało odrzucone
+          enum:
+            - SUBMITTED
+            - APPROVED
+            - REJECTED
+        stdVersion:
+          type: string
+          maxLength: 10
+          description: Wersja standardów B2B
+          examples: 
+            - '1.0'
+        responseDetails:
+          type: array
+          description: Błędy, naruszenia i informacje zgłoszone w czasie wstępnej walidacji
+            przesłanych danych
+          items:
+            $ref: "#/components/schemas/ResponseDetail"
+      required:
+      - receivedTime
+      - serverMsgId
+      - status
+    ErrorResponse:
+      type: object
+      description: Odpowiedź z serwera w przypadku błędu
+      properties:
+        message:
+          type: string
+          description: Opis błędu
+          examples: 
+            - 'Błąd przetwarzania'
+        errorDetails:
+          type: string
+          description: Szczegóły przyczyny błędu
+          examples: 
+            - 'Brak elementu o podanym mRID'
+      required:
+      - errorDetails
+      - message
+    ProcessingStatusResponse:
+      type: object
+      description: Odpowiedź na zapytanie o status przetwarzania przesłanego dokumentu
+      properties:
+        serverMsgId:
+          type: string
+          format: uuid
+          description: >
+            Unikalne ID nadane przez system PSE, które służy do identyfikacji
+            procesu przesłania danych
+          examples: 
+            - '550e8400-e29b-41d4-a716-446655440000'
+        clientMsgId:
+          type: string
+          description: Opcjonalne ID żądania nadane przez klienta API
+          examples: 
+            - '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          maxLength: 36
+        receivedTime:
+          type: string
+          format: date-time
+          description: Data odebrania żądania w UTC
+          examples: 
+            - '2024-03-12T02:00:00.000Z'
+        status:
+          type: string
+          description: |
+            Status operacji odebrania i wstępnej walidacji żądania
+            - SUBMITTED - Zgłoszenie zostało poprawnie odebrane i będzie przetwarzane
+            - APPROVED - Dane zawarte w zgłoszeniu zostały zatwierdzone
+            - REJECTED - Zgłoszenie zostało odrzucone
+          enum:
+            - SUBMITTED
+            - APPROVED
+            - REJECTED
+        stdVersion:
+          type: string
+          maxLength: 10
+          description: Wersja standardów B2B
+          examples: 
+            - '1.0'
+        responseDetails:
+          type: array
+          description: Błędy, naruszenia i informacje zgłoszone w czasie przetwarzania danych
+            przesłanych danych
+          items:
+            $ref: "#/components/schemas/ResponseDetail"
+      required:
+      - serverMsgId
+      - status
+  securitySchemes: 
+    BearerAuth:
+      scheme: bearer
+      bearerFormat: JWT
+      type: http
+      description: Token JWT uzyskany po zalogowaniu do konta B2B
+  examples:
+    responseSubmitted:
+      summary: Odpowiedź na zgłoszenie - poprawne odebranie
+      value:
+        serverMsgId: '550e8400-e29b-41d4-a716-446655440000'
+        clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+        receivedTime: '2024-03-12T02:00:00.000Z'
+        status: SUBMITTED
+        stdVersion: '1.0'
+    responseRejected:
+      summary: Odpowiedź na zgłoszenie - wykryto błąd
+      value:
+        serverMsgId: '550e8400-e29b-41d4-a716-446655440000'
+        clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+        receivedTime: '2024-03-12T02:00:00.000Z'
+        status: REJECTED
+        stdVersion: '1.0'
+        responseDetails:
+          - severity: ERROR
+            code: XXX
+            field: data.dataPeriod
+            message: 'Niepoprawny okres zgłoszenia'
+    scheduleSubmission_MWE_1day_2series:
+      summary: 'Plan pracy MWE - 1 doba, 2 serie danych'
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: PLP
+          createdAt: '2024-09-12T11:23:34.567Z'
+          stdVersion: '1.0'
+        data:
+          mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+          dataPeriod:
+            start: '2025-09-12T22:00:00Z'
+            end: '2025-09-13T22:00:00Z'
+          timeSeries: 
+            - tsId: 1
+              businessType: MCSR
+              direction: G
+              measurementUnit: MAW
+              resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              curveType: A01
+              seriesPeriods:
+                - timeInterval: 
+                    start: '2025-09-12T22:00:00Z'
+                    end: '2025-09-13T22:00:00Z'
+                  resolution: PT15M
+                  continuousSeriesPoints: [
+                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
+                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
+                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
+                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
+                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
+                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
+                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
+                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234
+                  ]
+            - tsId: 2
+              businessType: MCKN
+              direction: G
+              measurementUnit: MAW
+              resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              curveType: A01
+              seriesPeriods:
+                - timeInterval: 
+                    start: '2025-09-12T22:00:00Z'
+                    end: '2025-09-13T22:00:00Z'
+                  resolution: PT15M
+                  continuousSeriesPoints: [
+                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
+                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
+                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
+                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
+                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
+                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
+                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
+                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234
+                  ]
+    availabilitySubmission_MWE_1year_2series:
+      summary: 'Harmonogram dyspozycyjności MWE - 1 rok, 2 serie danych'
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: HRM
+          createdAt: '2024-09-12T11:23:34.567Z'
+          stdVersion: '1.0'
+        data:
+          mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+          dataPeriod:
+            start: '2025-09-12T22:00:00Z'
+            end: '2026-09-12T22:00:00Z'
+          timeSeries: 
+            - tsId: 1
+              businessType: MINE
+              direction: G
+              measurementUnit: MAW
+              resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              curveType: A03
+              seriesPeriods:
+                - timeInterval: 
+                    start: '2025-09-12T22:00:00Z'
+                    end: '2026-09-12T22:00:00Z'
+                  resolution: PT1H
+                  seriesPoints:
+                    - position: 1
+                      quantity: 5.123
+                    - position: 25
+                      quantity: 0
+                    - position: 49
+                      quantity: 5.123
+            - tsId: 2
+              businessType: MAXE
+              direction: G
+              measurementUnit: MAW
+              resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              curveType: A01
+              seriesPeriods:
+                - timeInterval: 
+                    start: '2025-09-12T22:00:00Z'
+                    end: '2026-09-12T22:00:00Z'
+                  resolution: PT15M
+                  seriesPoints:
+                    - position: 1
+                      quantity: 16.789
+                    - position: 97
+                      quantity: 0
+                    - position: 183
+                      quantity: 16.789
+    outageSubmission_MWE_new:
+      summary: Zgłoszenie postoju MWE
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: POS
+          createdAt: '2024-09-12T11:23:34.567Z'
+          stdVersion: '1.0'
+        data:
+          operationType: U
+          changeDescription: 'Opis przyczyny zgłoszenia'
+          outage: 
+            unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+            unavailabilityPeriod:
+              start: '2025-03-12T23:00:00Z'
+              startOccurred: false
+              end: '2025-03-13T23:00:00Z'
+              endOccurred: false
+            mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            orderNo: 1
+            businessType: POS
+            direction: G
+            recoverable: false
+            reasonDescription:
+              reasonCode: WE
+              categoryCode: D001
+              description: 'Dodatkowy opis przyczyny niedostępności'
+    outageSubmission_MWE_modification:
+      summary: Zgłoszenie zmiany postoju MWE
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: POS
+          createdAt: '2024-09-12T11:23:34.567Z'
+          stdVersion: '1.0'
+        data:
+          operationType: M
+          changeDescription: 'Opis przyczyny zgłoszenia'
+          outage: 
+            unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+            unavailabilityPeriod:
+              start: '2025-04-12T23:00:00Z'
+              startOccurred: false
+              end: '2025-04-13T23:00:00Z'
+              endOccurred: false
+            mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            orderNo: 2
+            businessType: POS
+            direction: G
+            recoverable: false
+            reasonDescription:
+              reasonCode: WE
+              categoryCode: D001
+              description: 'Dodatkowy opis przyczyny niedostępności'
+    outageSubmission_MWE_withdraw:
+      summary: Zgłoszenie wycofania postoju
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: POS
+          createdAt: '2024-09-12T11:23:34.567Z'
+          stdVersion: '1.0'
+        data:
+          operationType: W
+          changeDescription: 'Opis przyczyny zgłoszenia wycofania postoju'
+          outage: 
+            unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+            mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            orderNo: 3
+    derateSubmission_MWE_new:
+      summary: Zgłoszenie ubytku MWE
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: UBT
+          createdAt: '2024-09-12T11:23:34.567Z'
+          stdVersion: '1.0'
+        data:
+          operationType: U
+          changeDescription: 'Opis przyczyny zgłoszenia'
+          derate: 
+            unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+            unavailabilityPeriod:
+              start: '2025-03-12T23:00:00Z'
+              startOccurred: false
+              end: '2025-03-13T23:00:00Z'
+              endOccurred: false
+            mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            orderNo: 1
+            businessType: UBTD
+            direction: G
+            recoverable: false
+            reasonDescription:
+              reasonCode: WE
+              categoryCode: D001
+              description: 'Dodatkowy opis przyczyny niedostępności'
+            timeSeries:
+              - tsId: 1
+                recoverableFlag: UOBW
+                measurementUnit: MAW
+                curveType: A03
+                seriesPeriods:
+                  - timeInterval:
+                      start: '2025-03-12T23:00:00Z'
+                      end: '2025-03-13T23:00:00Z'
+                    resolution: PT1H
+                    seriesPoints:
+                      - position: 1
+                        quantity: 1.234
+                      - position: 3
+                        quantity: 4.567
+    derateSubmission_MWE_modification:
+      summary: Zgłoszenie zmiany ubytku MWE
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: UBT
+          createdAt: '2024-09-12T11:23:34.567Z'
+          stdVersion: '1.0'
+        data:
+          operationType: M
+          changeDescription: 'Opis przyczyny zgłoszenia'
+          derate: 
+            unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+            unavailabilityPeriod:
+              start: '2025-03-13T23:00:00Z'
+              startOccurred: false
+              end: '2025-03-14T23:00:00Z'
+              endOccurred: false
+            mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            orderNo: 2
+            businessType: UBTD
+            direction: G
+            recoverable: false
+            reasonDescription:
+              reasonCode: WE
+              categoryCode: D001
+              description: 'Dodatkowy opis przyczyny niedostępności'
+            timeSeries:
+              - tsId: 1
+                recoverableFlag: UOBW
+                measurementUnit: MAW
+                curveType: A03
+                seriesPeriods:
+                  - timeInterval:
+                      start: '2025-03-13T23:00:00Z'
+                      end: '2025-03-14T23:00:00Z'
+                    resolution: PT1H
+                    seriesPoints:
+                      - position: 1
+                        quantity: 5.234
+                      - position: 3
+                        quantity: 2.567
+    derateSubmission_MWE_withdraw:
+      summary: Zgłoszenie wycofania ubytku
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: UBT
+          createdAt: '2024-09-12T11:23:34.567Z'
+          stdVersion: '1.0'
+        data:
+          operationType: W
+          changeDescription: 'Opis przyczyny zgłoszenia wycofania ubytku'
+          derate: 
+            unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+            mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            orderNo: 3
+    controlMalfunctionSubmission_MWE_new:
+      summary: Zgłoszenie niesprawności układu regulacji MWE
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: NUR
+          createdAt: '2024-09-12T11:23:34.567Z'
+          stdVersion: '1.0'
+        data:
+          operationType: U
+          changeDescription: 'Opis przyczyny zgłoszenia'
+          controlMalfunction: 
+            unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+            unavailabilityPeriod:
+              start: '2025-03-12T23:00:00Z'
+              startOccurred: false
+              end: '2025-03-13T23:00:00Z'
+              endOccurred: false
+            mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            orderNo: 1
+            businessType: FCRG
+            direction: G
+            reasonDescription: 'Dodatkowy opis przyczyny niedostępności'
+    controlMalfunctionSubmission_MWE_modification:
+      summary: Zgłoszenie zmiany niesprawności układu regulacji MWE
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: NUR
+          createdAt: '2024-09-12T11:23:34.567Z'
+          stdVersion: '1.0'
+        data:
+          operationType: M
+          changeDescription: 'Opis przyczyny zgłoszenia'
+          controlMalfunction: 
+            unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+            unavailabilityPeriod:
+              start: '2025-04-12T23:00:00Z'
+              startOccurred: false
+              end: '2025-04-13T23:00:00Z'
+              endOccurred: false
+            mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            orderNo: 2
+            businessType: FCRG
+            direction: G
+            reasonDescription: 'Dodatkowy opis przyczyny niedostępności'
+    controlMalfunctionSubmission_MWE_withdraw:
+      summary: Zgłoszenie wycofania niesprawności układu regulacji
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: NUR
+          createdAt: '2024-09-12T11:23:34.567Z'
+          stdVersion: '1.0'
+        data:
+          operationType: W
+          changeDescription: 'Opis przyczyny zgłoszenia wycofania postoju'
+          controlMalfunction: 
+            unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+            mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            orderNo: 3
+    dispatchInstructionSubmission:
+      summary: 'Polecenia ruchowe OSD - MIN, MAX - 2 godziny'
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: PRU
+          createdAt: '2024-09-12T11:23:34.567Z'
+          stdVersion: '1.0'
+        data:
+          mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+          dataPeriod:
+            start: '2025-09-12T22:00:00Z'
+            end: '2025-09-13T00:00:00Z'
+          timeSeries: 
+            - tsId: 1
+              businessType: OMAX
+              direction: G
+              measurementUnit: MAW
+              resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              curveType: A01
+              seriesPeriods:
+                - timeInterval: 
+                    start: '2025-09-12T22:00:00Z'
+                    end: '2025-09-13T00:00:00Z'
+                  resolution: PT15M
+                  continuousSeriesPoints: [
+                    2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345
+                  ]
+            - tsId: 2
+              businessType: OMIN
+              direction: G
+              measurementUnit: MAW
+              resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              curveType: A01
+              seriesPeriods:
+                - timeInterval: 
+                    start: '2025-09-12T22:00:00Z'
+                    end: '2025-09-13T00:00:00Z'
+                  resolution: PT15M
+                  continuousSeriesPoints: [
+                    0.123, 0.123, 0.123, 0.123, 0.123, 0.123, 0.123, 0.123
+                  ]
+    dispatchInstructionSubmission_withdraw:
+      summary: 'Usunięcie wartości polecenia ruchowego OSD'
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: PRU
+          createdAt: '2024-09-12T11:23:34.567Z'
+          stdVersion: '1.0'
+        data:
+          mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+          dataPeriod:
+            start: '2025-09-12T22:00:00Z'
+            end: '2025-09-13T00:00:00Z'
+          timeSeries: 
+            - tsId: 1
+              businessType: OMAX
+              direction: G
+              measurementUnit: MAW
+              resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              curveType: A01
+              seriesPeriods:
+                - timeInterval: 
+                    start: '2025-09-12T22:00:00Z'
+                    end: '2025-09-13T00:00:00Z'
+                  resolution: PT15M
+                  continuousSeriesPoints: [
+                    null, null, null, null, null, null, null, null
+                  ]
+            - tsId: 2
+              businessType: OMIN
+              direction: G
+              measurementUnit: MAW
+              resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              curveType: A01
+              seriesPeriods:
+                - timeInterval: 
+                    start: '2025-09-12T22:00:00Z'
+                    end: '2025-09-13T00:00:00Z'
+                  resolution: PT15M
+                  continuousSeriesPoints: [
+                    null, null, null, null, null, null, null, null
+                  ]
+    exchangeScheduleSubmission_1Y:
+      summary: 'Zgłoszenie salda wymiany - horyzont 1 roku'
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: WYM
+          createdAt: '2024-09-12T11:23:34.567Z'
+          stdVersion: '1.0'
+        data:
+          mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+          dataPeriod:
+            start: '2025-12-31T23:00:00Z'
+            end: '2026-12-31T23:00:00Z'
+          timeSeries: 
+            - tsId: 1
+              businessType: WYM
+              measurementUnit: MAW
+              resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              curveType: A01
+              seriesPeriods:
+                - timeInterval: 
+                    start: '2025-12-31T23:00:00Z'
+                    end: '2026-12-31T23:00:00Z'
+                  resolution: P1M
+                  continuousSeriesPoints: [
+                    2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345
+                  ]
+    exchangeScheduleSubmission_1M:
+      summary: 'Zgłoszenie salda wymiany - horyzont 1 miesiąc'
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: WYM
+          createdAt: '2024-09-12T11:23:34.567Z'
+          stdVersion: '1.0'
+        data:
+          mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+          dataPeriod:
+            start: '2025-12-31T23:00:00Z'
+            end: '2026-01-31T23:00:00Z'
+          timeSeries: 
+            - tsId: 1
+              businessType: WYM
+              measurementUnit: MAW
+              resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              curveType: A01
+              seriesPeriods:
+                - timeInterval: 
+                    start: '2025-12-31T23:00:00Z'
+                    end: '2026-01-31T23:00:00Z'
+                  resolution: P1D
+                  continuousSeriesPoints: [
+                    2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345,
+                    2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345,
+                    2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345
+                  ]
+    exchangeScheduleSubmission_1D:
+      summary: 'Zgłoszenie salda wymiany - horyzont 1 dzień'
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: WYM
+          createdAt: '2024-09-12T11:23:34.567Z'
+          stdVersion: '1.0'
+        data:
+          mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+          dataPeriod:
+            start: '2025-12-31T23:00:00Z'
+            end: '2026-01-01T23:00:00Z'
+          timeSeries: 
+            - tsId: 1
+              businessType: WYM
+              measurementUnit: MAW
+              resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              curveType: A01
+              seriesPeriods:
+                - timeInterval: 
+                    start: '2025-12-31T23:00:00Z'
+                    end: '2026-01-01T23:00:00Z'
+                  resolution: PT1H
+                  continuousSeriesPoints: [
+                    2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345,
+                    2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345
+                  ]
+    storageCapacitySubmission_1year:
+      summary: 'Pojemność użytkowa magazynu - 1 rok'
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: PUZ
+          createdAt: '2024-09-12T11:23:34.567Z'
+          stdVersion: '1.0'
+        data:
+          mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+          dataPeriod:
+            start: '2025-09-12T22:00:00Z'
+            end: '2026-09-12T22:00:00Z'
+          timeSeries: 
+            - tsId: 1
+              businessType: PUZ
+              measurementUnit: MWH
+              resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              curveType: A03
+              seriesPeriods:
+                - timeInterval: 
+                    start: '2025-09-12T22:00:00Z'
+                    end: '2026-09-12T22:00:00Z'
+                  resolution: PT1H
+                  seriesPoints:
+                    - position: 1
+                      quantity: 10.500
+                    - position: 241
+                      quantity: 10.100
+                    - position: 481
+                      quantity: 9.800
