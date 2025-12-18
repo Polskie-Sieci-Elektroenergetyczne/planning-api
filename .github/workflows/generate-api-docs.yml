@@ -1,0 +1,36 @@
+name: Generate and Deploy API Docs
+
+on:
+  push:
+    branches: ["main", "master"]  # Trigger on push to main
+    paths:
+      - '.github/workflows/generate-api-docs.yml'
+      - 'specs/planning-openapi.yml'
+
+# Permissions required to push the generated HTML to the gh-pages branch
+permissions:
+  contents: write
+
+jobs:
+  generate-api-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Prepare Folders
+        run: mkdir -p dist
+
+      - name: Generate OpenAPI documentation
+        run: npx @redocly/cli build-docs specs/planning-openapi.yml -o dist/index.html     
+      
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
