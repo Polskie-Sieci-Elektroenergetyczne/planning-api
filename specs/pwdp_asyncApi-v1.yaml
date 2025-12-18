@@ -1,0 +1,1007 @@
+asyncapi: 3.0.0
+info:
+  title: PWDP B2B API
+  version: 0.0.1
+  description: |
+    Specyfikacja asynchronicznego API na potrzeby zgłaszania danych planistycznych
+defaultContentType: application/json
+servers:
+  amqp-cluster:
+    host: '${PSE_AMQP}'
+    protocol: amqps
+    protocolVersion: '1.0.0'
+    description: B2B AMQP broker    
+channels:
+  pwdp.submission:
+    address: pwdp.submission
+    messages:
+      TimeSeriesSubmission:
+        $ref: "#/components/messages/TimeSeriesSubmission"
+      OutageSubmission:
+        $ref: "#/components/messages/OutageSubmission"
+      DerateSubmission:
+        $ref: "#/components/messages/DerateSubmission"
+      ControlMalfunctionSubmission:
+        $ref: "#/components/messages/ControlMalfunctionSubmission"
+    description: Kanał do wysyłania do OSP zgłoszeń danych planistycznych
+  pwdp.submissionresponse.{entityId}:
+    address: 'pwdp.submissionresponse.{entityId}'
+    parameters:
+      entityId:
+        description: Unikalny identyfikator podmiotu.
+    messages:
+      ProcessingStatusResponse:
+        $ref: '#/components/messages/ProcessingStatusResponse'
+    description: Kanał z odpowiedziami na zgłoszenia danych planistycznych
+  pwdp.datachange.{entityId}:
+    address: 'pwdp.datachange.{entityId}'
+    parameters:
+      entityId:
+        description: Unikalny identyfikator podmiotu.
+    messages:
+      OutageChange:
+        $ref: '#/components/messages/OutageChange'
+      DerateChange:
+        $ref: '#/components/messages/DerateChange'
+      ControlMalfunctionChange:
+        $ref: '#/components/messages/ControlMalfunctionChange'
+    description: Kanał z powiadomieniami o zmianach w danych planistycznych
+operations:
+  sendSubmission:
+    action: send
+    channel:
+      $ref: "#/channels/pwdp.submission"
+    title: Przesłanie zgłoszenia danych planistycznych
+    description: Wysłanie zgłoszenia danych planistycznych
+    messages:
+      - $ref: "#/channels/pwdp.submission/messages/TimeSeriesSubmission"
+      - $ref: "#/channels/pwdp.submission/messages/OutageSubmission"
+      - $ref: "#/channels/pwdp.submission/messages/DerateSubmission"
+      - $ref: "#/channels/pwdp.submission/messages/ControlMalfunctionSubmission"
+  receiveSubmissionResponse:
+    action: receive
+    channel:
+      $ref: "#/channels/pwdp.submissionresponse.{entityId}"
+    title: "Udostępnianie informacji o statusie przetworzenia zgłoszenia"
+    description: |
+      Odebranie informacji o statusie przetworzenia zgłoszenia
+    messages:
+      - $ref: "#/components/messages/ProcessingStatusResponse"     
+  receiveDataChange:
+    action: receive
+    channel:
+      $ref: "#/channels/pwdp.datachange.{entityId}"
+    title: Zmiana danych planistycznych
+    description: |
+      Odebranie informacji o zmianie danych planistycznych, w zakresie:
+        - postojów
+        - ubytków
+        - niesprawności układów regulacji
+    messages:
+      - $ref: "#/channels/pwdp.datachange.{entityId}/messages/OutageChange"
+      - $ref: "#/channels/pwdp.datachange.{entityId}/messages/DerateChange"
+components:
+  messages:
+    TimeSeriesSubmission:
+      name: Zgłoszenie danych w postaci grafików
+      title: Zgłoszenie danych w postaci grafików
+      description: |
+        Umożliwia zgłoszenie:
+          - planów pracy
+          - harmonogramów dyspozycyjności
+          - poleceń ruchowych OSD
+          - salda wymiany 
+          - pojemności użytkowej
+      contentType: application/json
+      payload:
+         $ref: "#/components/schemas/TimeSeriesSubmission"
+    OutageSubmission:
+      name: Zgłoszenie postoju
+      title: Zgłoszenie postoju
+      description: |
+        Umożliwia zgłoszenie postoju
+      contentType: application/json
+      payload:
+         $ref: "#/components/schemas/OutageSubmission"
+    DerateSubmission:
+      name: Zgłoszenie ubytku
+      title: Zgłoszenie ubytku
+      description: |
+        Umożliwia zgłoszenie ubytku
+      contentType: application/json
+      payload:
+         $ref: "#/components/schemas/DerateSubmission"
+    ControlMalfunctionSubmission:
+      name: Zgłoszenie niesprawności układu regulacji
+      title: Zgłoszenie niesprawności układu regulacji
+      description: |
+        Umożliwia zgłoszenie niesprawności układu regulacji
+      contentType: application/json
+      payload:
+         $ref: "#/components/schemas/ControlMalfunctionSubmission"
+    ProcessingStatusResponse:
+      payload:
+        $ref: "#/components/schemas/ProcessingStatusResponse"
+      contentType: application/json
+      name: ProcessingStatusResponse
+      title: ProcessingStatusResponse
+      description: Informacja o statusie przetwarzenia zgłoszenia
+      examples:
+        - name: responseApproved
+          summary: Odpowiedź na zgłoszenie - przyjęcie zgłoszonych danych do planu
+          payload:
+            serverMsgId: '550e8400-e29b-41d4-a716-446655440000'
+            clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+            receivedTime: '2024-03-12T02:00:00.000Z'
+            status: APPROVED
+            stdVersion: '1.0'
+    OutageChange:
+      name: Informacja o zmianie postoju
+      title: Informacja o zmianie postoju
+      description: |
+        Umożliwia przekazanie informacji o zmianie postoju
+      contentType: application/json
+      payload:
+        oneOf:
+          - $ref: "#/components/schemas/OutageData"
+          - $ref: "#/components/schemas/OutageWithdrawData"
+    DerateChange:
+      name: Informacja o zmianie ubytku
+      title: Informacja o zmianie ubytku
+      description: |
+        Umożliwia przekazanie informacji o zmianie ubytku
+      contentType: application/json
+      payload:
+        oneOf:
+          - $ref: "#/components/schemas/DerateData"
+          #- $ref: "#/components/schemas/DerateWithdrawData"
+    ControlMalfunctionChange:
+      name: Informacja o zmianie ubytku
+      title: Informacja o zmianie ubytku
+      description: |
+        Umożliwia przekazanie informacji o zmianie ubytku
+      contentType: application/json
+      payload:
+        oneOf:
+          - $ref: "#/components/schemas/ControlMalfunctionData"
+          #- $ref: "#/components/schemas/ControlMalfunctionWithdrawData"     
+  schemas:
+    ResourceMrid:
+      type: string
+      description: Identyfikator mRID obiektu
+      examples: 
+        - '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+      maxLength: 60
+    SubmissionMeta:
+      type: object
+      description: Nagłówek zgłoszenia danych planistycznych
+      properties: 
+        senderId:
+          type: integer
+          format: int32
+          description: Identyfikator podmiotu wysyłającego zgłoszenie
+          examples: 
+            - 10999
+        responsiblePartyId:
+          type: integer
+          format: int32
+          description: Identyfikator podmiotu odpowiedzialnego za dokonanie zgłoszenia
+          examples: 
+            - 10111
+        clientMsgId:
+          type: string
+          description: Opcjonalne ID żądania nadane przez klienta API
+          examples: 
+            - '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          maxLength: 36
+        type:
+          type: string
+          enum:
+            - POS
+            - UBT
+            - NUR
+            - HRM
+            - PUZ
+            - PLP
+            - PRU
+            - WYM
+          description: Typ komunikatu zgłoszenia
+          examples: 
+            - PLP
+        createdAt:
+          type: string
+          format: date-time
+          description: Czas utworzenia zgłoszenia w UTC
+          examples: 
+            - '2024-03-21T01:23:34.567Z'
+        stdVersion:
+          type: string
+          maxLength: 10
+          description: Wersja standardów B2B
+          examples: 
+            - '1.0'
+      required:
+        - senderId
+        - responsiblePartyId
+        - clientMsgId
+        - type
+        - createdAt
+    TimeSeriesContinuous:
+      allOf:
+        - $ref: "#/components/schemas/TimeSeries"
+        - type: object
+          required: 
+            - seriesPeriods
+          properties:
+            seriesPeriods:
+              type: array
+              items:
+                $ref: "#/components/schemas/SeriesPeriodContinuous"
+              description: >
+                Okresy serii danych o stałej rozdzielczości z podanymi 
+                wartościami dla wszystkich punktów czasowych
+    TimeSeriesPoints:
+      allOf:
+        - $ref: "#/components/schemas/TimeSeries"
+        - type: object
+          required: 
+            - seriesPeriods
+          properties:
+            seriesPeriods:
+              type: array
+              items:
+                $ref: "#/components/schemas/SeriesPeriodPoints"
+              description: >
+                Okresy serii danych o stałej rozdzielczości z podanymi 
+                wartościami dla punktów, w których następuje zmiana wartości
+    TimeSeries:
+      type: object
+      description: >
+        Zestaw danych dla wybranego parametru obejmujący wektor (serię) wartości
+        wraz z wielkościami dla wskazanego parametru wybranego obiektu
+      required:
+        - tsId
+        - businessType
+        - measurementUnit
+        - resourceMrid
+        - curveType
+      properties:
+        tsId:
+          type: integer
+          format: int32
+          description: Identyfikator serii, unikalny w ramach zgłoszenia
+          examples:
+            - 1
+            - 2
+        businessType:
+          type: string
+          maxLength: 5
+          description: Typ opisujący serię danych
+          examples:
+            - MCSR
+        direction:
+          $ref: "#/components/schemas/Direction"
+        measurementUnit:
+          type: string
+          description: |
+            Jednostka miary dla wartości
+            - MAW - megawat
+            - MWH - megawatogodzina
+            - FLAG - wartość numeryczna interpretowana zgodnie z businessType
+          enum:
+            - MAW
+            - MWH
+            - FLAG
+        resourceMrid:
+          $ref: "#/components/schemas/ResourceMrid"
+          description: Identyfikator obiektu, którego dotyczy seria danych
+        curveType:
+          type: string
+          enum:
+            - A01
+            - A03
+          description: Typ krzywej określający sposób przekazywania wartości w seriesPeriod
+          examples:
+            - A01
+    SeriesPeriodContinuous:
+      type: object
+      description: Seria danych w podanym okresie (szereg czasowy)
+      properties:
+        timeInterval:
+          $ref: "#/components/schemas/TimeInterval"
+          description: Przedział czasowy - zakres szeregu czasowego
+        resolution:
+          $ref: "#/components/schemas/Resolution"
+        continuousSeriesPoints:
+          type: array
+          description: >
+            Lista wartości dla kolejnych punktów w czasie dla zadanego
+            okresu, zgodnie z przyjętą rozdzielczością
+          items:
+            type: [number, "null"]
+          examples: 
+            - [12.345, 10.001]
+      required:
+        - resolution
+        - timeInterval
+        - continuousSeriesPoints
+    SeriesPeriodPoints:
+      type: object
+      description: Seria danych w podanym okresie (szereg czasowy)
+      properties:
+        timeInterval:
+          $ref: "#/components/schemas/TimeInterval"
+          description: Przedział czasowy - zakres szeregu czasowego
+        resolution:
+          $ref: "#/components/schemas/Resolution"
+        seriesPoints:
+          type: array
+          description: Tablica punktów i wartości
+          items:
+            $ref: "#/components/schemas/SeriesPoint"
+      required:
+        - resolution
+        - timeInterval
+        - seriesPoints
+    SeriesPoint:
+      type: object
+      description: Wartość parametru w danym punkcie czasu (np. na daną godzinę)
+      properties:
+        position:
+          type: integer
+          format: int32
+          description: >
+            Kolejny numer pozycji (punktu czasowego), interpertowany w
+            zależności od SeriesPeriod.timeInterval oraz SeriesPeriod.resolution
+          examples: 
+            - 1
+        quantity:
+          type: [number, "null"]
+          description: "Wartość dla wskazanego punktu czasowego oraz wielkości"
+          examples: 
+            - 42.128
+      required:
+        - position
+        - quantity
+    TimeSeriesData:
+      type: object
+      description: Dane grafikowe
+      properties:
+        mainResourceMrid:
+          $ref:  "#/components/schemas/ResourceMrid"
+          description: Identyfikator obiektu, którego dotyczy zgłoszenie
+        dataPeriod:
+          $ref: "#/components/schemas/TimeInterval"
+          description: Przedział czasowy określający zakres przekazywanych danych
+        timeSeries:
+          type: array
+          description: Serie danych
+          items:
+            $ref: "#/components/schemas/TimeSeries"
+      required:
+        - dataPeriod
+        - timeSeries
+        - mainResourceMrid
+    TimeSeriesSubmission:
+      type: object
+      description: Zgłoszenie w postaci serii danych
+      properties: 
+        meta:
+          $ref: "#/components/schemas/SubmissionMeta"
+        data:
+          $ref: "#/components/schemas/TimeSeriesData" 
+      required:
+        - meta
+        - data
+    Unavailability:
+      type: object
+      description: Dane niedostępności
+      properties:
+        unavailabilityMrid:
+          type: string
+          format: uuid
+          description: |
+            Identyfikator niedostępności. 
+            Nadawany przez zgłaszającego podczas zgłoszenia nowej niedostępności.
+          examples: 
+            - 'd8736017-d25d-4952-a3cf-0fa83560e16f'
+        unavailabilityPeriod:
+          $ref: '#/components/schemas/TimeIntervalMarks'
+          description: Przedział czasowy niedostępności
+        mainResourceMrid:
+          $ref:  "#/components/schemas/ResourceMrid"
+          description: Identyfikator obiektu, którego dotyczy niedostępność
+        isComponent:
+          type: boolean
+          description: Czy niedostępność dotyczy tylko jednej ze składowych obiektu
+          default: false
+          examples: 
+            - true
+        resourceComponentMrid:
+          $ref:  "#/components/schemas/ResourceMrid"
+          description: >
+            Identyfikator składowej obiektu, której dotyczy niedostępność. 
+            Wymagany w przypadku gdy isComponent = true
+          examples:
+            - '_e8736017-d25d-4952-a3cf-0fa83560e0000'
+        orderNo:
+          type: integer
+          format: int32
+          description: |
+            Numer kolejnego zgłoszenia (nie mniejszy niż 1) w ramach niedostępności o określonym identyfikatorze. Dla kolejnych dokumentów dotyczących zgłaszanej niedyspozycyjności numer powinien być rosnący.
+            Pole służące prawidłowej kolejności obsługi zgłoszeń. 
+          examples: 
+            - 1
+            - 2
+        businessType:
+          type: string
+          maxLength: 5
+          description: Typ danych
+          examples: 
+            - POS
+        direction:
+          $ref:  "#/components/schemas/Direction"
+      required:
+        - unavailabilityMrid
+        - unavailabilityPeriod
+        - mainResourceMrid
+        - orderNo
+        - businessType
+    UnavailabilityWithdraw:
+      type: object
+      description: Dane wycofywanej niedostępności
+      properties:
+        unavailabilityMrid:
+          type: string
+          format: uuid
+          description: |
+            Identyfikator niedostępności. 
+            Nadawany przez zgłaszającego podczas zgłoszenia nowej niedostępności.
+          examples: 
+            - 'd8736017-d25d-4952-a3cf-0fa83560e16f'
+        mainResourceMrid:
+          $ref:  "#/components/schemas/ResourceMrid"
+          description: Identyfikator obiektu, którego dotyczy wycofywana niedostępność
+        orderNo:
+          type: integer
+          format: int32
+          description: |
+            Numer kolejnego zgłoszenia (nie mniejszy niż 1) w ramach niedostępności o określonym identyfikatorze. Dla kolejnych dokumentów dotyczących zgłaszanej niedyspozycyjności numer powinien być rosnący.
+            Pole służące prawidłowej kolejności obsługi zgłoszeń. 
+      required:
+        - unavailabilityMrid
+        - mainResourceMrid
+        - orderNo
+    OutageSubmission:
+      type: object
+      description: Zgłoszenie postoju
+      properties: 
+        meta:
+          $ref: "#/components/schemas/SubmissionMeta" 
+        data:
+          oneOf: 
+            - $ref: "#/components/schemas/OutageData"
+            - $ref: "#/components/schemas/OutageWithdrawData"
+      required:
+        - meta
+        - data
+    OutageDataWrapper:
+      type: object
+      description: Dane zgłoszenia postoju
+      properties:
+        operationType:
+              $ref: "#/components/schemas/OperationType"
+        changeDescription:
+          type: string
+          maxLength: 512
+          description: |
+            Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia, tj. aktualizacji bądź wycofania tym zgłoszeniem postoju.
+
+            Dla każdego zgłoszenia może być inna przyczyna zmiany.
+          examples: 
+            - 'Opis przyczyny zgłoszenia'
+      required:
+        - operationType
+    OutageData:
+      allOf:
+        - $ref: "#/components/schemas/OutageDataWrapper"
+        - type: object
+          description: Dane zgłoszenia postoju
+          properties: 
+            outage:
+              $ref: "#/components/schemas/Outage"
+          required:
+            - outage
+    OutageWithdrawData:
+      allOf:
+        - $ref: "#/components/schemas/OutageDataWrapper"
+        - type: object
+          description: Dane zgłoszenia wycofania postoju
+          properties: 
+            outage:
+              $ref: "#/components/schemas/UnavailabilityWithdraw"
+          required:
+            - outage
+    Outage:
+      allOf:
+        - $ref: "#/components/schemas/Unavailability"
+        - type: object
+          description: Dane postoju
+          properties:
+            recoverable:
+              type: boolean
+              description: |
+                Zdolność odzyskania dyspozycyjności
+                - true – odzyskanie możliwe
+                - false – odzyskanie niemożliwe
+            reasonDescription:
+              $ref: '#/components/schemas/ReasonDescription'
+            startupSchedule:
+              $ref: '#/components/schemas/StartupSchedule'
+          required:
+            - recoverable
+            - reasonDescription
+    StartupSchedule:
+      type: object
+      description: 'Uruchomienie dodatkowe'
+      properties:
+        synchroTime:
+          type: integer
+          description: >
+            Czas od rozpoczęcia uruchamiania do synchronizacji,
+            określany w minutach jako wielokrotność OREB
+          examples:
+            - 15
+        pminTime:
+          type: integer
+          description: > 
+            Czas od synchronizacji do osiągnięcia Pmin, określany w
+            minutach jako wielokrotność OREB
+          examples:
+            - 30
+        measurementUnit:
+          type: string
+          description: Pole określające jednostkę dla podawanych poziomów mocy
+          enum:
+            - MAW
+        curveType:
+          type: string
+          description: Typ krzywej określający sposób przekazywania wartości
+          enum:
+            - A01
+        resolution:
+          $ref: "#/components/schemas/Resolution"
+        continuousSeriesPoints:
+          type: array
+          description: >
+            Lista wartości dla kolejnych punktów w czasie dla zadanego 
+            okresu, zgodnie z przyjętą rozdzielczością
+          items:
+            type: number
+          examples: 
+            - [12.345, 10.001]
+      required:
+        - synchroTime
+        - pminTime
+        - measurementUnit
+        - curveType
+        - resolution
+        - continuousSeriesPoints
+    DerateSubmission:
+      type: object
+      description: Zgłoszenie ubytku
+      properties: 
+        meta:          
+          $ref: "#/components/schemas/SubmissionMeta" 
+        data:
+          $ref: "#/components/schemas/DerateData"
+      required:
+        - meta
+        - data
+    DerateData:
+      type: object
+      description: Dane zgłoszenia ubytku
+      properties: 
+        operationType:
+          $ref: "#/components/schemas/OperationType"
+        changeDescription:
+          type: string
+          maxLength: 512
+          description: |
+            Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia, tj. aktualizacji bądź wycofania tym zgłoszeniem niedostępności.
+
+            Dla każdego zgłoszenia może być inna przyczyna zmiany.
+          examples: 
+            - 'Opis przyczyny zgłoszenia'
+        derate:
+          oneOf:
+            - $ref: "#/components/schemas/Derate"
+            - $ref: "#/components/schemas/UnavailabilityWithdraw"
+      required:
+        - operationType
+        - derate
+    Derate:
+      allOf:
+        - $ref: "#/components/schemas/Unavailability"
+        - type: object
+          description: Dane ubytku
+          properties:
+            recoverable:
+              type: boolean
+              description: |
+                Zdolność odzyskania dyspozycyjności
+                - true – odzyskanie możliwe
+                - false – odzyskanie niemożliwe
+            reasonDescription:
+              $ref: '#/components/schemas/ReasonDescription'
+            timeSeries:
+              type: array
+              description: Serie danych planu pracy
+              items:
+                $ref: "#/components/schemas/DerateTimeSeries"
+          required:
+            - recoverable
+            - reasonDescription
+            - timeSeries
+    DerateTimeSeries:
+      type: object
+      description: Zestaw danych dla wybranego parametru obejmujący wektor (serię)
+        \ wartości wraz z wielkościami dla wskazanego parametru wybranego obiektu
+      properties:
+        tsId:
+          type: integer
+          format: int32
+          description: Identyfikator serii, unikalny w ramach zgłoszenia
+          examples:
+            - 1
+            - 2
+        recoverableFlag:
+          type: string
+          enum: 
+            - UOBW
+            - UPOD
+          description: | 
+            Pole powiązane z polem zdolności odzyskania dyspozycyjności (recoverable).
+
+            Pole odróżniające sekcję  z parametrami ubytku zgodnie z oczekiwaniami zgłaszającego od sekcji z parametrami potencjalnego ubytku, przewidywanego w sytuacji możliwego odzyskania dyspozycyjności.
+
+            Dopuszczalne wartości:
+            - UOBW - ubytek zgłaszany, obowiązujący zgodnie z oczekiwaniami zgłaszającego
+            - UPOD - potencjalny ubytek, przewidywany po możliwym odzyskaniu dyspozycyjności
+
+            Sekcja z wartością UOBW powinna wystąpić w każdym zgłoszeniu ubytku.
+
+            Sekcja z wartością UPOD ma charakter informacyjny i jest opcjonalna. Może wystąpić wyłącznie, jeśli jest podana sekcja z wartością UOBW, a także jeśli pole zdolności odzyskania dyspozycyjności wskazuje, że odzyskanie jest możliwe.
+        measurementUnit:
+          type: string
+          description: Jednostka miary dla wartości
+          enum: 
+            - MAW
+        curveType:
+          type: string
+          enum: 
+            - A03
+          description: Typ krzywej określający sposób przekazywania wartości
+        seriesPeriods:
+          type: array
+          description: Tablica serii danych w podanych okresach
+          items:
+            $ref: "#/components/schemas/SeriesPeriodPoints"
+      required:
+        - tsId
+        - recoverableFlag
+        - measurementUnit
+        - curveType
+        - seriesPeriods
+    ControlMalfunctionSubmission:
+      type: object
+      description: Zgłoszenie niesprawności układu regulacji
+      properties: 
+        meta:          
+          $ref: "#/components/schemas/SubmissionMeta" 
+        data:
+          $ref: "#/components/schemas/ControlMalfunctionData"
+          description: Dane zgłoszenia niesprawności układu regulacji
+      required:
+        - meta
+        - data
+    ControlMalfunctionData:
+      type: object
+      properties: 
+        operationType:
+          $ref: "#/components/schemas/OperationType"
+        changeDescription:
+          type: string
+          maxLength: 512
+          description: |
+            Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia, tj. aktualizacji bądź wycofania tym zgłoszeniem niedostępności.
+
+            Dla każdego zgłoszenia może być inna przyczyna zmiany.
+          examples: 
+            - 'Opis przyczyny zgłoszenia'
+        controlMalfunction:
+          oneOf:
+            - $ref: "#/components/schemas/ControlMalfunction"
+            - $ref: "#/components/schemas/UnavailabilityWithdraw"
+      required:
+        - operationType
+        - controlMalfunction
+    ControlMalfunction:
+      allOf:
+        - $ref: "#/components/schemas/Unavailability"
+        - type: object
+          description: Niesprawność układu regulacji
+          properties:
+            reasonDescription:
+              type: string
+              description: Dodatkowy opis przyczyny niedostępności
+              maxLength: 512
+              examples: 
+                - 'Dodatkowy opis przyczyny niedostępności'
+    ReasonDescription:
+      type: object
+      description: Przyczyna niedostępności 
+      properties:
+        reasonCode:
+          type: string
+          description: Kod przyczyny
+          maxLength: 2
+          examples: 
+            - WE
+        categoryCode:
+          type: string
+          description: Kod szczegółowej kategorii przyczyny
+          maxLength: 4
+          examples: 
+            - D001
+        description:
+          type: string
+          description: Dodatkowy opis przyczyny niedostępności
+          maxLength: 512
+          examples: 
+            - 'Dodatkowy opis przyczyny niedostępności'
+      required:
+        - reasonCode
+        - categoryCode
+    Resolution:
+      type: string
+      description: |
+        Rozdzielczość serii danych: 
+          - PT1M - 1 minuta
+          - PT5M - 5 minut
+          - PT15M - 15 minut
+          - PT1H - godzina
+          - PT60M - godzina
+          - P1D - doba
+          - P1M – miesiąc
+      enum:
+        - PT1M
+        - PT5M
+        - PT15M
+        - PT1H
+        - PT60M
+        - P1D
+        - P1M
+      examples: 
+        - PT15M
+    Direction:
+      type: string 
+      enum: 
+        - G
+        - P
+        - C
+      description: |
+        Kierunek, którego dotyczą dane:
+          - G - generacja
+          - P - pobór
+          - C - całkowity
+      examples:
+        - G
+    OperationType:
+      type: string
+      enum:
+        - U
+        - M
+        - W
+      description: |
+        Rodzaj operacji związany ze zgłoszeniem
+          - U - utworzenie
+          - M - modyfikacja
+          - W - wycofanie
+    TimeInterval:
+      type: object
+      description: Przedział czasu
+      properties:
+        start:
+          type: string
+          format: date-time
+          description: Data i godzina początku okresu w UTC
+          examples: 
+            - '2024-03-12T02:00:00Z'
+        end:
+          type: string
+          format: date-time
+          description: Data i godzina końca okresu w UTC
+          examples: 
+            - '2024-03-13T02:00:00Z'
+      required:
+      - end
+      - start
+    TimeIntervalMarks:
+      type: object
+      description: Przedział czasu z określeniem wykonania początku i końca
+      properties:
+        start:
+          type: string
+          format: date-time
+          description: Data i godzina początku okresu w UTC
+          examples: 
+            - '2024-03-12T02:00:00Z'
+        startOccurred:
+          type: boolean
+          description: Określa czy początek niedostepności miał już miejsce
+        end:
+          type: string
+          format: date-time
+          description: Data i godzina końca okresu w UTC
+          examples: 
+            - '2024-03-13T02:00:00Z'
+        endOccurred:
+          type: boolean
+          description: Określa czy koniec niedostepności miał już miejsce
+      required:
+      - start
+      - startOccurred
+      - end
+      - endOccurred
+    ResponseDetail:
+      type: object
+      description: Opis naruszeń walidacji w czasie przetwarzenia przesłanych dokumentów
+      properties:
+        severity:
+          type: string
+          description: Stopień naruszenia walidacji powstałego w czasie przetwarzania
+          enum:
+          - INFO
+          - WARN
+          - ERROR
+          examples: 
+            - WARN
+        code:
+          type: string
+          description: Kod naruszenia walidacji powstałego w czasie przetwarzania
+          maxLength: 10
+          examples: 
+            - XXX
+        field:
+          type: string
+          description: wskazanie na element w zgłoszeniu
+          examples: 
+            - 'data.timePeriod.point[1289].value'
+        message:
+          type: string
+          description: Opis naruszenia walidacji powstałego w czasie przetwarzania
+          examples: 
+            - 'Wartość z grafiku przekracza 100% wartości maksymalnej mocy netto'
+      required:
+      - message
+      - severity
+      - code
+    SubmitResponse:
+      type: object
+      description: Odpowiedź potwierdzająca przyjęcie przesłanych danych do przetwarzania
+      properties:
+        serverMsgId:
+          type: string
+          format: uuid
+          description: >
+            Unikalne ID nadane przez system PSE, które służy do identyfikacji
+            procesu przesłania danych"
+          examples: 
+            - '550e8400-e29b-41d4-a716-446655440000'
+        clientMsgId:
+          type: string
+          description: Opcjonalne ID żądania nadane przez klienta API
+          examples: 
+            - '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          maxLength: 36
+        receivedTime:
+          type: string
+          format: date-time
+          description: Data odebrania żądania w UTC
+          examples: 
+            - '2024-03-12T02:00:00.000Z'
+        status:
+          type: string
+          description: |
+            Status operacji odebrania i wstępnej walidacji żądania
+            - SUBMITTED - Zgłoszenie zostało poprawnie odebrane i będzie przetwarzane
+            - APPROVED - Dane zawarte w zgłoszeniu zostały zatwierdzone
+            - REJECTED - Zgłoszenie zostało odrzucone
+          enum:
+            - SUBMITTED
+            - APPROVED
+            - REJECTED
+        stdVersion:
+          type: string
+          maxLength: 10
+          description: Wersja standardów B2B
+          examples: 
+            - '1.0'
+        responseDetails:
+          type: array
+          description: Błędy, naruszenia i informacje zgłoszone w czasie wstępnej walidacji
+            przesłanych danych
+          items:
+            $ref: "#/components/schemas/ResponseDetail"
+      required:
+      - receivedTime
+      - serverMsgId
+      - status
+    ErrorResponse:
+      type: object
+      description: Odpowiedź z serwera w przypadku błędu
+      properties:
+        message:
+          type: string
+          description: Opis błędu
+          examples: 
+            - 'Błąd przetwarzania'
+        errorDetails:
+          type: string
+          description: Szczegóły przyczyny błędu
+          examples: 
+            - 'Brak elementu o podanym mRID'
+      required:
+      - errorDetails
+      - message
+    ProcessingStatusResponse:
+      type: object
+      description: Odpowiedź na zapytanie o status przetwarzania przesłanego dokumentu
+      properties:
+        serverMsgId:
+          type: string
+          format: uuid
+          description: >
+            Unikalne ID nadane przez system PSE, które służy do identyfikacji
+            procesu przesłania danych
+          examples: 
+            - '550e8400-e29b-41d4-a716-446655440000'
+        clientMsgId:
+          type: string
+          description: Opcjonalne ID żądania nadane przez klienta API
+          examples: 
+            - '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          maxLength: 36
+        receivedTime:
+          type: string
+          format: date-time
+          description: Data odebrania żądania w UTC
+          examples: 
+            - '2024-03-12T02:00:00.000Z'
+        status:
+          type: string
+          description: |
+            Status operacji odebrania i wstępnej walidacji żądania
+            - SUBMITTED - Zgłoszenie zostało poprawnie odebrane i będzie przetwarzane
+            - APPROVED - Dane zawarte w zgłoszeniu zostały zatwierdzone
+            - REJECTED - Zgłoszenie zostało odrzucone
+          enum:
+            - SUBMITTED
+            - APPROVED
+            - REJECTED
+        stdVersion:
+          type: string
+          maxLength: 10
+          description: Wersja standardów B2B
+          examples: 
+            - '1.0'
+        responseDetails:
+          type: array
+          description: Błędy, naruszenia i informacje zgłoszone w czasie przetwarzania danych
+            przesłanych danych
+          items:
+            $ref: "#/components/schemas/ResponseDetail"
+      required:
+      - serverMsgId
+      - status

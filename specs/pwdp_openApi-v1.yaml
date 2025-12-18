@@ -832,26 +832,18 @@ components:
         meta:
           $ref: "#/components/schemas/SubmissionMeta" 
         data:
-          oneOf:
+          oneOf: 
             - $ref: "#/components/schemas/OutageData"
             - $ref: "#/components/schemas/OutageWithdrawData"
-          discriminator: 
-            propertyName: operationType
-            mapping:
-              U: "#/components/schemas/OutageData"
-              M: "#/components/schemas/OutageData"
-              W: "#/components/schemas/OutageWithdrawData"
       required:
         - meta
         - data
-    OutageData:
+    OutageDataWrapper:
       type: object
       description: Dane zgłoszenia postoju
-      properties: 
+      properties:
         operationType:
-          allOf:
-            - $ref: "#/components/schemas/OperationType"
-            - enum: [U, M]
+              $ref: "#/components/schemas/OperationType"
         changeDescription:
           type: string
           maxLength: 512
@@ -861,33 +853,34 @@ components:
             Dla każdego zgłoszenia może być inna przyczyna zmiany.
           examples: 
             - 'Opis przyczyny zgłoszenia'
-        outage:
-          $ref: "#/components/schemas/Outage"
       required:
         - operationType
-        - outage
+      discriminator: 
+        propertyName: operationType
+        mapping:
+          U: "#/components/schemas/OutageData"
+          M: "#/components/schemas/OutageData"
+          W: "#/components/schemas/OutageWithdrawData"
+    OutageData:
+      allOf:
+        - $ref: "#/components/schemas/OutageDataWrapper"
+        - type: object
+          description: Dane zgłoszenia postoju
+          properties: 
+            outage:
+              $ref: "#/components/schemas/Outage"
+          required:
+            - outage
     OutageWithdrawData:
-      type: object
-      description: Dane zgłoszenia wycofania postoju
-      properties: 
-        operationType:
-          allOf:
-            - $ref: "#/components/schemas/OperationType"
-            - enum: [W]
-        changeDescription:
-          type: string
-          maxLength: 512
-          description: |
-            Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia, tj. aktualizacji bądź wycofania tym zgłoszeniem postoju.
-
-            Dla każdego zgłoszenia może być inna przyczyna zmiany.
-          examples: 
-            - 'Opis przyczyny zgłoszenia'
-        outage:
-          $ref: "#/components/schemas/UnavailabilityWithdraw"
-      required:
-        - operationType
-        - outage
+      allOf:
+        - $ref: "#/components/schemas/OutageDataWrapper"
+        - type: object
+          description: Dane zgłoszenia wycofania postoju
+          properties: 
+            outage:
+              $ref: "#/components/schemas/UnavailabilityWithdraw"
+          required:
+            - outage
     Outage:
       allOf:
         - $ref: "#/components/schemas/Unavailability"
