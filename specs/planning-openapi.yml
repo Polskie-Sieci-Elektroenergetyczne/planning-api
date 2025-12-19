@@ -331,9 +331,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/TimeSeriesData"
+                $ref: "#/components/schemas/TimeSeriesData"
               examples:
                 availability_MWE_1year_2series:
                   $ref: '#/components/examples/availability_MWE_1year_2series'
@@ -421,9 +419,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/TimeSeriesData"
+                $ref: "#/components/schemas/TimeSeriesData"
       security: 
         - BearerAuth: []
   /pwdp/api/v1/resources/{mainResourceMrid}/exchange-schedules:
@@ -442,9 +438,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/TimeSeriesData"
+                $ref: "#/components/schemas/TimeSeriesData"
       security: 
         - BearerAuth: []
   /pwdp/api/v1/resources/{mainResourceMrid}/storage-capacities:
@@ -463,9 +457,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/TimeSeriesData"
+                $ref: "#/components/schemas/TimeSeriesData"
       security: 
         - BearerAuth: []
 components:
