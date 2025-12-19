@@ -503,6 +503,7 @@ components:
       schema:
         type: string
         format: date-time
+        pattern: 'Z$'
       example: '2024-03-12T02:00:00Z'
     End:
       name: end
@@ -512,6 +513,7 @@ components:
       schema:
         type: string
         format: date-time
+        pattern: 'Z$'
       example: '2024-03-13T02:00:00Z'
   schemas:
     ResourceMrid:
@@ -559,6 +561,7 @@ components:
         createdAt:
           type: string
           format: date-time
+          pattern: 'Z$'
           description: Czas utworzenia zgłoszenia w UTC
           examples: 
             - '2024-03-21T01:23:34.567Z'
@@ -644,13 +647,7 @@ components:
           $ref: "#/components/schemas/ResourceMrid"
           description: Identyfikator obiektu, którego dotyczy seria danych
         curveType:
-          type: string
-          enum:
-            - A01
-            - A03
-          description: Typ krzywej określający sposób przekazywania wartości w seriesPeriod
-          examples:
-            - A01
+          $ref: "#/components/schemas/CurveType"
       discriminator:
         propertyName: curveType
         mapping:
@@ -832,55 +829,49 @@ components:
         meta:
           $ref: "#/components/schemas/SubmissionMeta" 
         data:
+          type: object
+          required:
+            - operationType
+          properties:
+            operationType:
+              $ref: "#/components/schemas/OperationType"
+            changeDescription:
+              type: string
+              maxLength: 512
+              description: |
+                Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia, tj. aktualizacji bądź wycofania tym zgłoszeniem postoju.
+
+                Dla każdego zgłoszenia może być inna przyczyna zmiany.
+              examples: 
+                - 'Opis przyczyny zgłoszenia'
           oneOf: 
             - $ref: "#/components/schemas/OutageData"
             - $ref: "#/components/schemas/OutageWithdrawData"
+          discriminator: 
+            propertyName: operationType
+            mapping:
+              U: "#/components/schemas/OutageData"
+              M: "#/components/schemas/OutageData"
+              W: "#/components/schemas/OutageWithdrawData"
       required:
         - meta
         - data
-    OutageDataWrapper:
+    OutageData:
       type: object
       description: Dane zgłoszenia postoju
-      properties:
-        operationType:
-              $ref: "#/components/schemas/OperationType"
-        changeDescription:
-          type: string
-          maxLength: 512
-          description: |
-            Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia, tj. aktualizacji bądź wycofania tym zgłoszeniem postoju.
-
-            Dla każdego zgłoszenia może być inna przyczyna zmiany.
-          examples: 
-            - 'Opis przyczyny zgłoszenia'
+      properties: 
+        outage:
+          $ref: "#/components/schemas/Outage"
       required:
-        - operationType
-      discriminator: 
-        propertyName: operationType
-        mapping:
-          U: "#/components/schemas/OutageData"
-          M: "#/components/schemas/OutageData"
-          W: "#/components/schemas/OutageWithdrawData"
-    OutageData:
-      allOf:
-        - $ref: "#/components/schemas/OutageDataWrapper"
-        - type: object
-          description: Dane zgłoszenia postoju
-          properties: 
-            outage:
-              $ref: "#/components/schemas/Outage"
-          required:
-            - outage
+        - outage
     OutageWithdrawData:
-      allOf:
-        - $ref: "#/components/schemas/OutageDataWrapper"
-        - type: object
-          description: Dane zgłoszenia wycofania postoju
-          properties: 
-            outage:
-              $ref: "#/components/schemas/UnavailabilityWithdraw"
-          required:
-            - outage
+      type: object
+      description: Dane zgłoszenia wycofania postoju
+      properties: 
+        outage:
+          $ref: "#/components/schemas/UnavailabilityWithdraw"
+      required:
+        - outage
     Outage:
       allOf:
         - $ref: "#/components/schemas/Unavailability"
@@ -953,7 +944,30 @@ components:
         meta:          
           $ref: "#/components/schemas/SubmissionMeta" 
         data:
-          $ref: "#/components/schemas/DerateData"
+          type: object
+          required:
+            - operationType
+          properties:
+            operationType:
+              $ref: "#/components/schemas/OperationType"
+            changeDescription:
+              type: string
+              maxLength: 512
+              description: |
+                Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia.
+
+                Dla każdego zgłoszenia może być inna przyczyna zmiany.
+              examples: 
+                - 'Opis przyczyny zgłoszenia'
+          oneOf: 
+            - $ref: "#/components/schemas/DerateData"
+            - $ref: "#/components/schemas/DerateWithdrawData"
+          discriminator: 
+            propertyName: operationType
+            mapping:
+              U: "#/components/schemas/DerateData"
+              M: "#/components/schemas/DerateData"
+              W: "#/components/schemas/DerateWithdrawData"
       required:
         - meta
         - data
@@ -961,23 +975,17 @@ components:
       type: object
       description: Dane zgłoszenia ubytku
       properties: 
-        operationType:
-          $ref: "#/components/schemas/OperationType"
-        changeDescription:
-          type: string
-          maxLength: 512
-          description: |
-            Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia, tj. aktualizacji bądź wycofania tym zgłoszeniem niedostępności.
-
-            Dla każdego zgłoszenia może być inna przyczyna zmiany.
-          examples: 
-            - 'Opis przyczyny zgłoszenia'
         derate:
-          oneOf:
-            - $ref: "#/components/schemas/Derate"
-            - $ref: "#/components/schemas/UnavailabilityWithdraw"
+          $ref: "#/components/schemas/Derate"
       required:
-        - operationType
+        - derate
+    DerateWithdrawData:
+      type: object
+      description: Dane zgłoszenia wycofania ubytku
+      properties: 
+        derate:
+          $ref: "#/components/schemas/UnavailabilityWithdraw"
+      required:
         - derate
     Derate:
       allOf:
@@ -1059,31 +1067,48 @@ components:
         meta:          
           $ref: "#/components/schemas/SubmissionMeta" 
         data:
-          $ref: "#/components/schemas/ControlMalfunctionData"
-          description: Dane zgłoszenia niesprawności układu regulacji
+          type: object
+          required:
+            - operationType
+          properties:
+            operationType:
+              $ref: "#/components/schemas/OperationType"
+            changeDescription:
+              type: string
+              maxLength: 512
+              description: |
+                Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia.
+
+                Dla każdego zgłoszenia może być inna przyczyna zmiany.
+              examples: 
+                - 'Opis przyczyny zgłoszenia'
+          oneOf: 
+            - $ref: "#/components/schemas/ControlMalfunctionData"
+            - $ref: "#/components/schemas/ControlMalfunctionWithdrawData"
+          discriminator: 
+            propertyName: operationType
+            mapping:
+              U: "#/components/schemas/ControlMalfunctionData"
+              M: "#/components/schemas/ControlMalfunctionData"
+              W: "#/components/schemas/ControlMalfunctionWithdrawData"
       required:
         - meta
         - data
     ControlMalfunctionData:
       type: object
-      properties: 
-        operationType:
-          $ref: "#/components/schemas/OperationType"
-        changeDescription:
-          type: string
-          maxLength: 512
-          description: |
-            Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia, tj. aktualizacji bądź wycofania tym zgłoszeniem niedostępności.
-
-            Dla każdego zgłoszenia może być inna przyczyna zmiany.
-          examples: 
-            - 'Opis przyczyny zgłoszenia'
+      description: Dane zgłoszenia niesprawności regulacji
+      properties:
         controlMalfunction:
-          oneOf:
-            - $ref: "#/components/schemas/ControlMalfunction"
-            - $ref: "#/components/schemas/UnavailabilityWithdraw"
+          $ref: "#/components/schemas/ControlMalfunction"
       required:
-        - operationType
+        - controlMalfunction
+    ControlMalfunctionWithdrawData:
+      type: object
+      description: Dane zgłoszenia wycofania ubytku
+      properties: 
+        controlMalfunction:
+          $ref: "#/components/schemas/UnavailabilityWithdraw"
+      required:
         - controlMalfunction
     ControlMalfunction:
       allOf:
@@ -1156,6 +1181,17 @@ components:
           - C - całkowity
       examples:
         - G
+    CurveType:
+      type: string
+      enum:
+        - A01
+        - A03
+      description: |
+        Typ sposobu przekazywania wartości
+          - A01 - wszystkie punkty
+          - A03 - tylko punkty zmian
+      examples:
+        - A01
     OperationType:
       type: string
       enum:
@@ -1174,12 +1210,14 @@ components:
         start:
           type: string
           format: date-time
+          pattern: 'Z$'
           description: Data i godzina początku okresu w UTC
           examples: 
             - '2024-03-12T02:00:00Z'
         end:
           type: string
           format: date-time
+          pattern: 'Z$'
           description: Data i godzina końca okresu w UTC
           examples: 
             - '2024-03-13T02:00:00Z'
@@ -1193,6 +1231,7 @@ components:
         start:
           type: string
           format: date-time
+          pattern: 'Z$'
           description: Data i godzina początku okresu w UTC
           examples: 
             - '2024-03-12T02:00:00Z'
@@ -1202,6 +1241,7 @@ components:
         end:
           type: string
           format: date-time
+          pattern: 'Z$'
           description: Data i godzina końca okresu w UTC
           examples: 
             - '2024-03-13T02:00:00Z'
@@ -1267,6 +1307,7 @@ components:
         receivedTime:
           type: string
           format: date-time
+          pattern: 'Z$'
           description: Data odebrania żądania w UTC
           examples: 
             - '2024-03-12T02:00:00.000Z'
@@ -1335,6 +1376,7 @@ components:
         receivedTime:
           type: string
           format: date-time
+          pattern: 'Z$'
           description: Data odebrania żądania w UTC
           examples: 
             - '2024-03-12T02:00:00.000Z'
@@ -1393,7 +1435,7 @@ components:
             field: data.dataPeriod
             message: 'Niepoprawny okres zgłoszenia'
     scheduleSubmission_MWE_1day_2series:
-      summary: 'Plan pracy MWE - 1 doba, 2 serie danych'
+      summary: 'Plan pracy MWE - 1 doba, 2 serie danych (skrócona tablica wartości)'
       value:
         meta: 
           senderId: 10999
@@ -1420,14 +1462,8 @@ components:
                     end: '2025-09-13T22:00:00Z'
                   resolution: PT15M
                   continuousSeriesPoints: [
-                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
-                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
-                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
-                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
-                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
-                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
-                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
-                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234
+                        1.234, 1.234, 1.234
+                        # ... 93 kolejne wiersze
                   ]
             - tsId: 2
               businessType: MCKN
@@ -1441,14 +1477,8 @@ components:
                     end: '2025-09-13T22:00:00Z'
                   resolution: PT15M
                   continuousSeriesPoints: [
-                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
-                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
-                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
-                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
-                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
-                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
-                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 
-                    1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234, 1.234
+                    1.234, 1.234, 1.234
+                    # ... 93 kolejne wiersze
                   ]
     availabilitySubmission_MWE_1year_2series:
       summary: 'Harmonogram dyspozycyjności MWE - 1 rok, 2 serie danych'
@@ -1750,7 +1780,7 @@ components:
             mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
             orderNo: 3
     dispatchInstructionSubmission:
-      summary: 'Polecenia ruchowe OSD - MIN, MAX - 2 godziny'
+      summary: 'Polecenia ruchowe OSD - MIN, MAX - 2 godziny (skrócona lista wartości)'
       value:
         meta: 
           senderId: 10999
@@ -1777,7 +1807,7 @@ components:
                     end: '2025-09-13T00:00:00Z'
                   resolution: PT15M
                   continuousSeriesPoints: [
-                    2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345
+                    2.345, 2.345, 2.345
                   ]
             - tsId: 2
               businessType: OMIN
@@ -1791,10 +1821,10 @@ components:
                     end: '2025-09-13T00:00:00Z'
                   resolution: PT15M
                   continuousSeriesPoints: [
-                    0.123, 0.123, 0.123, 0.123, 0.123, 0.123, 0.123, 0.123
+                    0.123, 0.123, 0.123
                   ]
     dispatchInstructionSubmission_withdraw:
-      summary: 'Usunięcie wartości polecenia ruchowego OSD'
+      summary: 'Usunięcie wartości polecenia ruchowego OSD (skrócona lista wartości)'
       value:
         meta: 
           senderId: 10999
@@ -1821,7 +1851,7 @@ components:
                     end: '2025-09-13T00:00:00Z'
                   resolution: PT15M
                   continuousSeriesPoints: [
-                    null, null, null, null, null, null, null, null
+                    null, null, null
                   ]
             - tsId: 2
               businessType: OMIN
@@ -1835,10 +1865,10 @@ components:
                     end: '2025-09-13T00:00:00Z'
                   resolution: PT15M
                   continuousSeriesPoints: [
-                    null, null, null, null, null, null, null, null
+                    null, null, null
                   ]
     exchangeScheduleSubmission_1Y:
-      summary: 'Zgłoszenie salda wymiany - horyzont 1 roku'
+      summary: 'Zgłoszenie salda wymiany - horyzont 1 roku (skrócona lista wartości)'
       value:
         meta: 
           senderId: 10999
@@ -1864,10 +1894,10 @@ components:
                     end: '2026-12-31T23:00:00Z'
                   resolution: P1M
                   continuousSeriesPoints: [
-                    2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345
+                    2.345, 2.345, 2.345
                   ]
     exchangeScheduleSubmission_1M:
-      summary: 'Zgłoszenie salda wymiany - horyzont 1 miesiąc'
+      summary: 'Zgłoszenie salda wymiany - horyzont 1 miesiąc (skrócona lista wartości)'
       value:
         meta: 
           senderId: 10999
@@ -1893,12 +1923,10 @@ components:
                     end: '2026-01-31T23:00:00Z'
                   resolution: P1D
                   continuousSeriesPoints: [
-                    2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345,
-                    2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345,
-                    2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345
+                    2.345, 2.345, 2.345
                   ]
     exchangeScheduleSubmission_1D:
-      summary: 'Zgłoszenie salda wymiany - horyzont 1 dzień'
+      summary: 'Zgłoszenie salda wymiany - horyzont 1 dzień (skrócona lista wartości)'
       value:
         meta: 
           senderId: 10999
@@ -1924,11 +1952,10 @@ components:
                     end: '2026-01-01T23:00:00Z'
                   resolution: PT1H
                   continuousSeriesPoints: [
-                    2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345,
-                    2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345, 2.345
+                    2.345, 2.345, 2.345
                   ]
     storageCapacitySubmission_1year:
-      summary: 'Pojemność użytkowa magazynu - 1 rok'
+      summary: 'Pojemność użytkowa magazynu - 1 rok (skrócona lista wartości)'
       value:
         meta: 
           senderId: 10999

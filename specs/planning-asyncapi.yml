@@ -80,6 +80,7 @@ operations:
     messages:
       - $ref: "#/channels/pwdp.datachange.{entityId}/messages/OutageChange"
       - $ref: "#/channels/pwdp.datachange.{entityId}/messages/DerateChange"
+      - $ref: "#/channels/pwdp.datachange.{entityId}/messages/ControlMalfunctionChange"
 components:
   messages:
     TimeSeriesSubmission:
@@ -95,7 +96,314 @@ components:
       contentType: application/json
       payload:
          $ref: "#/components/schemas/TimeSeriesSubmission"
-    OutageSubmission:
+      examples:
+        - name: scheduleSubmission_MWE_1day_2series
+          summary: 'Plan pracy MWE - 1 doba, 2 serie danych (skrócona tablica wartości)'
+          payload:
+            meta: 
+              senderId: 10999
+              responsiblePartyId: 10111
+              clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: PLP
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              dataPeriod:
+                start: '2025-09-12T22:00:00Z'
+                end: '2025-09-13T22:00:00Z'
+              timeSeries: 
+                - tsId: 1
+                  businessType: MCSR
+                  direction: G
+                  measurementUnit: MAW
+                  resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                  curveType: A01
+                  seriesPeriods:
+                    - timeInterval: 
+                        start: '2025-09-12T22:00:00Z'
+                        end: '2025-09-13T22:00:00Z'
+                      resolution: PT15M
+                      continuousSeriesPoints: [                        
+                        1.234, 1.234, 1.234
+                        # ... 93 kolejne wiersze
+                      ]
+                - tsId: 2
+                  businessType: MCKN
+                  direction: G
+                  measurementUnit: MAW
+                  resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                  curveType: A01
+                  seriesPeriods:
+                    - timeInterval: 
+                        start: '2025-09-12T22:00:00Z'
+                        end: '2025-09-13T22:00:00Z'
+                      resolution: PT15M
+                      continuousSeriesPoints: [
+                        1.234, 1.234, 1.234
+                        # ... 93 kolejne wiersze
+                      ]
+        - name: availabilitySubmission_MWE_1year_2series
+          summary: 'Harmonogram dyspozycyjności MWE - 1 rok, 2 serie danych'
+          payload:
+            meta: 
+              senderId: 10999
+              responsiblePartyId: 10111
+              clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: HRM
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              dataPeriod:
+                start: '2025-09-12T22:00:00Z'
+                end: '2026-09-12T22:00:00Z'
+              timeSeries: 
+                - tsId: 1
+                  businessType: MINE
+                  direction: G
+                  measurementUnit: MAW
+                  resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                  curveType: A03
+                  seriesPeriods:
+                    - timeInterval: 
+                        start: '2025-09-12T22:00:00Z'
+                        end: '2026-09-12T22:00:00Z'
+                      resolution: PT1H
+                      seriesPoints:
+                        - position: 1
+                          quantity: 5.123
+                        - position: 25
+                          quantity: 0
+                        - position: 49
+                          quantity: 5.123
+                - tsId: 2
+                  businessType: MAXE
+                  direction: G
+                  measurementUnit: MAW
+                  resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                  curveType: A01
+                  seriesPeriods:
+                    - timeInterval: 
+                        start: '2025-09-12T22:00:00Z'
+                        end: '2026-09-12T22:00:00Z'
+                      resolution: PT15M
+                      seriesPoints:
+                        - position: 1
+                          quantity: 16.789
+                        - position: 97
+                          quantity: 0
+                        - position: 183
+                          quantity: 16.789
+        - name: dispatchInstructionSubmission
+          summary: 'Polecenia ruchowe OSD - MIN, MAX - 2 godziny (skrócona lista wartości)'
+          payload:
+            meta: 
+              senderId: 10999
+              responsiblePartyId: 10111
+              clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: PRU
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              dataPeriod:
+                start: '2025-09-12T22:00:00Z'
+                end: '2025-09-13T00:00:00Z'
+              timeSeries: 
+                - tsId: 1
+                  businessType: OMAX
+                  direction: G
+                  measurementUnit: MAW
+                  resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                  curveType: A01
+                  seriesPeriods:
+                    - timeInterval: 
+                        start: '2025-09-12T22:00:00Z'
+                        end: '2025-09-13T00:00:00Z'
+                      resolution: PT15M
+                      continuousSeriesPoints: [
+                        2.345, 2.345, 2.345
+                      ]
+                - tsId: 2
+                  businessType: OMIN
+                  direction: G
+                  measurementUnit: MAW
+                  resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                  curveType: A01
+                  seriesPeriods:
+                    - timeInterval: 
+                        start: '2025-09-12T22:00:00Z'
+                        end: '2025-09-13T00:00:00Z'
+                      resolution: PT15M
+                      continuousSeriesPoints: [
+                        0.123, 0.123, 0.123
+                      ]
+        - name: dispatchInstructionSubmission_withdraw
+          summary: 'Usunięcie wartości polecenia ruchowego OSD (skrócona lista wartości)'
+          payload:
+            meta: 
+              senderId: 10999
+              responsiblePartyId: 10111
+              clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: PRU
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              dataPeriod:
+                start: '2025-09-12T22:00:00Z'
+                end: '2025-09-13T00:00:00Z'
+              timeSeries: 
+                - tsId: 1
+                  businessType: OMAX
+                  direction: G
+                  measurementUnit: MAW
+                  resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                  curveType: A01
+                  seriesPeriods:
+                    - timeInterval: 
+                        start: '2025-09-12T22:00:00Z'
+                        end: '2025-09-13T00:00:00Z'
+                      resolution: PT15M
+                      continuousSeriesPoints: [
+                        null, null, null
+                      ]
+                - tsId: 2
+                  businessType: OMIN
+                  direction: G
+                  measurementUnit: MAW
+                  resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                  curveType: A01
+                  seriesPeriods:
+                    - timeInterval: 
+                        start: '2025-09-12T22:00:00Z'
+                        end: '2025-09-13T00:00:00Z'
+                      resolution: PT15M
+                      continuousSeriesPoints: [
+                        null, null, null
+                      ]
+        - name: exchangeScheduleSubmission_1Y
+          summary: 'Zgłoszenie salda wymiany - horyzont 1 roku (skrócona lista wartości)'
+          payload:
+            meta: 
+              senderId: 10999
+              responsiblePartyId: 10111
+              clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: WYM
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              dataPeriod:
+                start: '2025-12-31T23:00:00Z'
+                end: '2026-12-31T23:00:00Z'
+              timeSeries: 
+                - tsId: 1
+                  businessType: WYM
+                  measurementUnit: MAW
+                  resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                  curveType: A01
+                  seriesPeriods:
+                    - timeInterval: 
+                        start: '2025-12-31T23:00:00Z'
+                        end: '2026-12-31T23:00:00Z'
+                      resolution: P1M
+                      continuousSeriesPoints: [
+                        2.345, 2.345, 2.345
+                      ]
+        - name: exchangeScheduleSubmission_1M
+          summary: 'Zgłoszenie salda wymiany - horyzont 1 miesiąc (skrócona lista wartości)'
+          payload:
+            meta: 
+              senderId: 10999
+              responsiblePartyId: 10111
+              clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: WYM
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              dataPeriod:
+                start: '2025-12-31T23:00:00Z'
+                end: '2026-01-31T23:00:00Z'
+              timeSeries: 
+                - tsId: 1
+                  businessType: WYM
+                  measurementUnit: MAW
+                  resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                  curveType: A01
+                  seriesPeriods:
+                    - timeInterval: 
+                        start: '2025-12-31T23:00:00Z'
+                        end: '2026-01-31T23:00:00Z'
+                      resolution: P1D
+                      continuousSeriesPoints: [
+                        2.345, 2.345, 2.345
+                      ]
+        - name: exchangeScheduleSubmission_1D
+          summary: 'Zgłoszenie salda wymiany - horyzont 1 dzień (skrócona lista wartości)'
+          payload:
+            meta: 
+              senderId: 10999
+              responsiblePartyId: 10111
+              clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: WYM
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              dataPeriod:
+                start: '2025-12-31T23:00:00Z'
+                end: '2026-01-01T23:00:00Z'
+              timeSeries: 
+                - tsId: 1
+                  businessType: WYM
+                  measurementUnit: MAW
+                  resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                  curveType: A01
+                  seriesPeriods:
+                    - timeInterval: 
+                        start: '2025-12-31T23:00:00Z'
+                        end: '2026-01-01T23:00:00Z'
+                      resolution: PT1H
+                      continuousSeriesPoints: [
+                        2.345, 2.345, 2.345 
+                      ]
+        - name: storageCapacitySubmission_1year
+          summary: 'Pojemność użytkowa magazynu - 1 rok'
+          payload:
+            meta: 
+              senderId: 10999
+              responsiblePartyId: 10111
+              clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: PUZ
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              dataPeriod:
+                start: '2025-09-12T22:00:00Z'
+                end: '2026-09-12T22:00:00Z'
+              timeSeries: 
+                - tsId: 1
+                  businessType: PUZ
+                  measurementUnit: MWH
+                  resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                  curveType: A03
+                  seriesPeriods:
+                    - timeInterval: 
+                        start: '2025-09-12T22:00:00Z'
+                        end: '2026-09-12T22:00:00Z'
+                      resolution: PT1H
+                      seriesPoints:
+                        - position: 1
+                          quantity: 10.500
+                        - position: 241
+                          quantity: 10.100
+                        - position: 481
+                          quantity: 9.800
+    OutageSubmission:      
       name: Zgłoszenie postoju
       title: Zgłoszenie postoju
       description: |
@@ -103,6 +411,82 @@ components:
       contentType: application/json
       payload:
          $ref: "#/components/schemas/OutageSubmission"
+      examples:
+        - name: outageSubmission_MWE_new
+          summary: Zgłoszenie postoju MWE
+          payload:
+            meta: 
+              senderId: 10999
+              responsiblePartyId: 10111
+              clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: POS
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: U
+              changeDescription: 'Opis przyczyny zgłoszenia'
+              outage: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                unavailabilityPeriod:
+                  start: '2025-03-12T23:00:00Z'
+                  startOccurred: false
+                  end: '2025-03-13T23:00:00Z'
+                  endOccurred: false
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 1
+                businessType: POS
+                direction: G
+                recoverable: false
+                reasonDescription:
+                  reasonCode: WE
+                  categoryCode: D001
+                  description: 'Dodatkowy opis przyczyny niedostępności'
+        - name: outageSubmission_MWE_modification
+          summary: Zgłoszenie zmiany postoju MWE
+          payload:
+            meta: 
+              senderId: 10999
+              responsiblePartyId: 10111
+              clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: POS
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: M
+              changeDescription: 'Opis przyczyny zgłoszenia'
+              outage: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                unavailabilityPeriod:
+                  start: '2025-04-12T23:00:00Z'
+                  startOccurred: false
+                  end: '2025-04-13T23:00:00Z'
+                  endOccurred: false
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 2
+                businessType: POS
+                direction: G
+                recoverable: false
+                reasonDescription:
+                  reasonCode: WE
+                  categoryCode: D001
+                  description: 'Dodatkowy opis przyczyny niedostępności'
+        - name: outageSubmission_MWE_withdraw
+          summary: Zgłoszenie wycofania postoju
+          payload:
+            meta: 
+              senderId: 10999
+              responsiblePartyId: 10111
+              clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: POS
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: W
+              changeDescription: 'Opis przyczyny zgłoszenia wycofania postoju'
+              outage: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 3
     DerateSubmission:
       name: Zgłoszenie ubytku
       title: Zgłoszenie ubytku
@@ -111,6 +495,112 @@ components:
       contentType: application/json
       payload:
          $ref: "#/components/schemas/DerateSubmission"
+      examples:
+        - name: derateSubmission_MWE_new
+          summary: Zgłoszenie ubytku MWE
+          payload:
+            meta: 
+              senderId: 10999
+              responsiblePartyId: 10111
+              clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: UBT
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: U
+              changeDescription: 'Opis przyczyny zgłoszenia'
+              derate: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                unavailabilityPeriod:
+                  start: '2025-03-12T23:00:00Z'
+                  startOccurred: false
+                  end: '2025-03-13T23:00:00Z'
+                  endOccurred: false
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 1
+                businessType: UBTD
+                direction: G
+                recoverable: false
+                reasonDescription:
+                  reasonCode: WE
+                  categoryCode: D001
+                  description: 'Dodatkowy opis przyczyny niedostępności'
+                timeSeries:
+                  - tsId: 1
+                    recoverableFlag: UOBW
+                    measurementUnit: MAW
+                    curveType: A03
+                    seriesPeriods:
+                      - timeInterval:
+                          start: '2025-03-12T23:00:00Z'
+                          end: '2025-03-13T23:00:00Z'
+                        resolution: PT1H
+                        seriesPoints:
+                          - position: 1
+                            quantity: 1.234
+                          - position: 3
+                            quantity: 4.567
+        - name: derateSubmission_MWE_modification
+          summary: Zgłoszenie zmiany ubytku MWE
+          payload:
+            meta: 
+              senderId: 10999
+              responsiblePartyId: 10111
+              clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: UBT
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: M
+              changeDescription: 'Opis przyczyny zgłoszenia'
+              derate: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                unavailabilityPeriod:
+                  start: '2025-03-13T23:00:00Z'
+                  startOccurred: false
+                  end: '2025-03-14T23:00:00Z'
+                  endOccurred: false
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 2
+                businessType: UBTD
+                direction: G
+                recoverable: false
+                reasonDescription:
+                  reasonCode: WE
+                  categoryCode: D001
+                  description: 'Dodatkowy opis przyczyny niedostępności'
+                timeSeries:
+                  - tsId: 1
+                    recoverableFlag: UOBW
+                    measurementUnit: MAW
+                    curveType: A03
+                    seriesPeriods:
+                      - timeInterval:
+                          start: '2025-03-13T23:00:00Z'
+                          end: '2025-03-14T23:00:00Z'
+                        resolution: PT1H
+                        seriesPoints:
+                          - position: 1
+                            quantity: 5.234
+                          - position: 3
+                            quantity: 2.567
+        - name: derateSubmission_MWE_withdraw
+          summary: Zgłoszenie wycofania ubytku
+          payload:
+            meta: 
+              senderId: 10999
+              responsiblePartyId: 10111
+              clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: UBT
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: W
+              changeDescription: 'Opis przyczyny zgłoszenia wycofania ubytku'
+              derate: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 3
     ControlMalfunctionSubmission:
       name: Zgłoszenie niesprawności układu regulacji
       title: Zgłoszenie niesprawności układu regulacji
@@ -119,6 +609,74 @@ components:
       contentType: application/json
       payload:
          $ref: "#/components/schemas/ControlMalfunctionSubmission"
+      examples:
+        - name: controlMalfunctionSubmission_MWE_new
+          summary: Zgłoszenie niesprawności układu regulacji MWE
+          payload:
+            meta: 
+              senderId: 10999
+              responsiblePartyId: 10111
+              clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: NUR
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: U
+              changeDescription: 'Opis przyczyny zgłoszenia'
+              controlMalfunction: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                unavailabilityPeriod:
+                  start: '2025-03-12T23:00:00Z'
+                  startOccurred: false
+                  end: '2025-03-13T23:00:00Z'
+                  endOccurred: false
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 1
+                businessType: FCRG
+                direction: G
+                reasonDescription: 'Dodatkowy opis przyczyny niedostępności'
+        - name: controlMalfunctionSubmission_MWE_modification
+          summary: Zgłoszenie zmiany niesprawności układu regulacji MWE
+          payload:
+            meta: 
+              senderId: 10999
+              responsiblePartyId: 10111
+              clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: NUR
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: M
+              changeDescription: 'Opis przyczyny zgłoszenia'
+              controlMalfunction: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                unavailabilityPeriod:
+                  start: '2025-04-12T23:00:00Z'
+                  startOccurred: false
+                  end: '2025-04-13T23:00:00Z'
+                  endOccurred: false
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 2
+                businessType: FCRG
+                direction: G
+                reasonDescription: 'Dodatkowy opis przyczyny niedostępności'
+        - name: controlMalfunctionSubmission_MWE_withdraw
+          summary: Zgłoszenie wycofania niesprawności układu regulacji
+          payload:
+            meta: 
+              senderId: 10999
+              responsiblePartyId: 10111
+              clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: NUR
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: W
+              changeDescription: 'Opis przyczyny zgłoszenia wycofania postoju'
+              controlMalfunction: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 3
     ProcessingStatusResponse:
       payload:
         $ref: "#/components/schemas/ProcessingStatusResponse"
@@ -135,6 +693,19 @@ components:
             receivedTime: '2024-03-12T02:00:00.000Z'
             status: APPROVED
             stdVersion: '1.0'
+        - name: responseRejected
+          summary: Odpowiedź na zgłoszenie - wykryto błąd
+          payload:
+            serverMsgId: '550e8400-e29b-41d4-a716-446655440000'
+            clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+            receivedTime: '2024-03-12T02:00:00.000Z'
+            status: REJECTED
+            stdVersion: '1.0'
+            responseDetails:
+              - severity: ERROR
+                code: XXX
+                field: data.dataPeriod
+                message: 'Niepoprawny okres zgłoszenia'
     OutageChange:
       name: Informacja o zmianie postoju
       title: Informacja o zmianie postoju
@@ -142,9 +713,83 @@ components:
         Umożliwia przekazanie informacji o zmianie postoju
       contentType: application/json
       payload:
-        oneOf:
-          - $ref: "#/components/schemas/OutageData"
-          - $ref: "#/components/schemas/OutageWithdrawData"
+        $ref: "#/components/schemas/OutageChange"
+      examples:
+        - name: outageChange_MWE_new
+          summary: Komunikat informujący o utworzeniu nowego postoju
+          payload:
+            meta: 
+              receiverId: 10999
+              responsiblePartyId: 10111
+              serverMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: IPOS
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: U
+              changeDescription: 'Opis przyczyny utworzenia'
+              outage: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                unavailabilityPeriod:
+                  start: '2025-03-12T23:00:00Z'
+                  startOccurred: false
+                  end: '2025-03-13T23:00:00Z'
+                  endOccurred: false
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 1
+                businessType: POS
+                direction: G
+                recoverable: false
+                reasonDescription:
+                  reasonCode: WE
+                  categoryCode: D001
+                  description: 'Dodatkowy opis przyczyny niedostępności'
+        - name: outageChange_MWE_modification
+          summary: Komunikat informujący o zmianie postoju MWE
+          payload:
+            meta: 
+              receiverId: 10999
+              responsiblePartyId: 10111
+              serverMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: IPOS
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: M
+              changeDescription: 'Opis przyczyny zmiany'
+              outage: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                unavailabilityPeriod:
+                  start: '2025-04-12T23:00:00Z'
+                  startOccurred: false
+                  end: '2025-04-13T23:00:00Z'
+                  endOccurred: false
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 2
+                businessType: POS
+                direction: G
+                recoverable: false
+                reasonDescription:
+                  reasonCode: WE
+                  categoryCode: D001
+                  description: 'Dodatkowy opis przyczyny niedostępności'
+        - name: outageChange_MWE_withdraw
+          summary: Komunikat informujący o wycofaniu postoju
+          payload:
+            meta: 
+              receiverId: 10999
+              responsiblePartyId: 10111
+              serverMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: IPOS
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: W
+              changeDescription: 'Opis przyczyny zmiany'
+              outage: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 3
     DerateChange:
       name: Informacja o zmianie ubytku
       title: Informacja o zmianie ubytku
@@ -152,19 +797,189 @@ components:
         Umożliwia przekazanie informacji o zmianie ubytku
       contentType: application/json
       payload:
-        oneOf:
-          - $ref: "#/components/schemas/DerateData"
-          #- $ref: "#/components/schemas/DerateWithdrawData"
+        $ref: "#/components/schemas/DerateChange"
+      examples:
+        - name: derateChange_MWE_new
+          summary: Komunikat informujący o utworzeniu ubytku MWE
+          payload:
+            meta: 
+              receiverId: 10999
+              responsiblePartyId: 10111
+              serverMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: IUBT
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: U
+              changeDescription: 'Opis przyczyny zmiany'
+              derate: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                unavailabilityPeriod:
+                  start: '2025-03-12T23:00:00Z'
+                  startOccurred: false
+                  end: '2025-03-13T23:00:00Z'
+                  endOccurred: false
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 1
+                businessType: UBTD
+                direction: G
+                recoverable: false
+                reasonDescription:
+                  reasonCode: WE
+                  categoryCode: D001
+                  description: 'Dodatkowy opis przyczyny niedostępności'
+                timeSeries:
+                  - tsId: 1
+                    recoverableFlag: UOBW
+                    measurementUnit: MAW
+                    curveType: A03
+                    seriesPeriods:
+                      - timeInterval:
+                          start: '2025-03-12T23:00:00Z'
+                          end: '2025-03-13T23:00:00Z'
+                        resolution: PT1H
+                        seriesPoints:
+                          - position: 1
+                            quantity: 1.234
+                          - position: 3
+                            quantity: 4.567
+        - name: derateChange_MWE_modification
+          summary: Komunikat informujący o zmianie ubytku MWE
+          payload:
+            meta: 
+              receiverId: 10999
+              responsiblePartyId: 10111
+              serverMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: IUBT
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: M
+              changeDescription: 'Opis przyczyny zmiany'
+              derate: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                unavailabilityPeriod:
+                  start: '2025-03-13T23:00:00Z'
+                  startOccurred: false
+                  end: '2025-03-14T23:00:00Z'
+                  endOccurred: false
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 2
+                businessType: UBTD
+                direction: G
+                recoverable: false
+                reasonDescription:
+                  reasonCode: WE
+                  categoryCode: D001
+                  description: 'Dodatkowy opis przyczyny niedostępności'
+                timeSeries:
+                  - tsId: 1
+                    recoverableFlag: UOBW
+                    measurementUnit: MAW
+                    curveType: A03
+                    seriesPeriods:
+                      - timeInterval:
+                          start: '2025-03-13T23:00:00Z'
+                          end: '2025-03-14T23:00:00Z'
+                        resolution: PT1H
+                        seriesPoints:
+                          - position: 1
+                            quantity: 5.234
+                          - position: 3
+                            quantity: 2.567
+        - name: derateChange_MWE_withdraw
+          summary: Komunikat informujący o wycofaniu ubytku
+          payload:
+            meta: 
+              receiverId: 10999
+              responsiblePartyId: 10111
+              serverMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: IUBT
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: W
+              changeDescription: 'Opis przyczyny wycofania'
+              derate: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 3
     ControlMalfunctionChange:
-      name: Informacja o zmianie ubytku
-      title: Informacja o zmianie ubytku
+      name: Informacja o zmianie niesprawności układu regulacji
+      title: Informacja o zmianie niesprawności układu regulacji
       description: |
-        Umożliwia przekazanie informacji o zmianie ubytku
+        Umożliwia przekazanie informacji o zmianie niesprawności układu regulacji
       contentType: application/json
       payload:
-        oneOf:
-          - $ref: "#/components/schemas/ControlMalfunctionData"
-          #- $ref: "#/components/schemas/ControlMalfunctionWithdrawData"     
+        $ref: "#/components/schemas/ControlMalfunctionChange"
+      examples:
+        - name: controlMalfunctionChange_MWE_new
+          summary: Komunikat o utworzeniu niesprawności układu regulacji MWE
+          payload:
+            meta: 
+              receiverId: 10999
+              responsiblePartyId: 10111
+              serverMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: INUR
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: U
+              changeDescription: 'Opis przyczyny zmiany'
+              controlMalfunction: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                unavailabilityPeriod:
+                  start: '2025-03-12T23:00:00Z'
+                  startOccurred: false
+                  end: '2025-03-13T23:00:00Z'
+                  endOccurred: false
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 1
+                businessType: FCRG
+                direction: G
+                reasonDescription: 'Dodatkowy opis przyczyny niedostępności'
+        - name: controlMalfunctionChange_MWE_modification
+          summary: Komunikat o zmianie niesprawności układu regulacji MWE
+          payload:
+            meta: 
+              receiverId: 10999
+              responsiblePartyId: 10111
+              serverMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: INUR
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: M
+              changeDescription: 'Opis przyczyny zmianie'
+              controlMalfunction: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                unavailabilityPeriod:
+                  start: '2025-04-12T23:00:00Z'
+                  startOccurred: false
+                  end: '2025-04-13T23:00:00Z'
+                  endOccurred: false
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 2
+                businessType: FCRG
+                direction: G
+                reasonDescription: 'Dodatkowy opis przyczyny niedostępności'
+        - name: controlMalfunctionChange_MWE_withdraw
+          summary: Komunikat o wyofaniu niesprawności układu regulacji MWE
+          payload:
+            meta: 
+              receiverId: 10999
+              responsiblePartyId: 10111
+              serverMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+              type: INUR
+              createdAt: '2024-09-12T11:23:34.567Z'
+              stdVersion: '1.0'
+            data:
+              operationType: W
+              changeDescription: 'Opis przyczyny zmiany'
+              controlMalfunction: 
+                unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+                mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+                orderNo: 3
   schemas:
     ResourceMrid:
       type: string
@@ -211,6 +1026,7 @@ components:
         createdAt:
           type: string
           format: date-time
+          pattern: 'Z$'
           description: Czas utworzenia zgłoszenia w UTC
           examples: 
             - '2024-03-21T01:23:34.567Z'
@@ -296,13 +1112,7 @@ components:
           $ref: "#/components/schemas/ResourceMrid"
           description: Identyfikator obiektu, którego dotyczy seria danych
         curveType:
-          type: string
-          enum:
-            - A01
-            - A03
-          description: Typ krzywej określający sposób przekazywania wartości w seriesPeriod
-          examples:
-            - A01
+          $ref: "#/components/schemas/CurveType"
     SeriesPeriodContinuous:
       type: object
       description: Seria danych w podanym okresie (szereg czasowy)
@@ -479,49 +1289,43 @@ components:
         meta:
           $ref: "#/components/schemas/SubmissionMeta" 
         data:
+          type: object
+          required:
+            - operationType
+          properties:
+            operationType:
+              $ref: "#/components/schemas/OperationType"
+            changeDescription:
+              type: string
+              maxLength: 512
+              description: |
+                Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia, tj. aktualizacji bądź wycofania tym zgłoszeniem postoju.
+
+                Dla każdego zgłoszenia może być inna przyczyna zmiany.
+              examples: 
+                - 'Opis przyczyny zgłoszenia'
           oneOf: 
             - $ref: "#/components/schemas/OutageData"
             - $ref: "#/components/schemas/OutageWithdrawData"
       required:
         - meta
         - data
-    OutageDataWrapper:
+    OutageData:
       type: object
       description: Dane zgłoszenia postoju
-      properties:
-        operationType:
-              $ref: "#/components/schemas/OperationType"
-        changeDescription:
-          type: string
-          maxLength: 512
-          description: |
-            Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia, tj. aktualizacji bądź wycofania tym zgłoszeniem postoju.
-
-            Dla każdego zgłoszenia może być inna przyczyna zmiany.
-          examples: 
-            - 'Opis przyczyny zgłoszenia'
+      properties: 
+        outage:
+          $ref: "#/components/schemas/Outage"
       required:
-        - operationType
-    OutageData:
-      allOf:
-        - $ref: "#/components/schemas/OutageDataWrapper"
-        - type: object
-          description: Dane zgłoszenia postoju
-          properties: 
-            outage:
-              $ref: "#/components/schemas/Outage"
-          required:
-            - outage
+        - outage
     OutageWithdrawData:
-      allOf:
-        - $ref: "#/components/schemas/OutageDataWrapper"
-        - type: object
-          description: Dane zgłoszenia wycofania postoju
-          properties: 
-            outage:
-              $ref: "#/components/schemas/UnavailabilityWithdraw"
-          required:
-            - outage
+      type: object
+      description: Dane zgłoszenia wycofania postoju
+      properties: 
+        outage:
+          $ref: "#/components/schemas/UnavailabilityWithdraw"
+      required:
+        - outage
     Outage:
       allOf:
         - $ref: "#/components/schemas/Unavailability"
@@ -594,7 +1398,24 @@ components:
         meta:          
           $ref: "#/components/schemas/SubmissionMeta" 
         data:
-          $ref: "#/components/schemas/DerateData"
+          type: object
+          required:
+            - operationType
+          properties:
+            operationType:
+              $ref: "#/components/schemas/OperationType"
+            changeDescription:
+              type: string
+              maxLength: 512
+              description: |
+                Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia.
+
+                Dla każdego zgłoszenia może być inna przyczyna zmiany.
+              examples: 
+                - 'Opis przyczyny zgłoszenia'
+          oneOf: 
+            - $ref: "#/components/schemas/DerateData"
+            - $ref: "#/components/schemas/DerateWithdrawData"
       required:
         - meta
         - data
@@ -602,23 +1423,17 @@ components:
       type: object
       description: Dane zgłoszenia ubytku
       properties: 
-        operationType:
-          $ref: "#/components/schemas/OperationType"
-        changeDescription:
-          type: string
-          maxLength: 512
-          description: |
-            Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia, tj. aktualizacji bądź wycofania tym zgłoszeniem niedostępności.
-
-            Dla każdego zgłoszenia może być inna przyczyna zmiany.
-          examples: 
-            - 'Opis przyczyny zgłoszenia'
         derate:
-          oneOf:
-            - $ref: "#/components/schemas/Derate"
-            - $ref: "#/components/schemas/UnavailabilityWithdraw"
+          $ref: "#/components/schemas/Derate"
       required:
-        - operationType
+        - derate
+    DerateWithdrawData:
+      type: object
+      description: Dane zgłoszenia wycofania ubytku
+      properties: 
+        derate:
+          $ref: "#/components/schemas/UnavailabilityWithdraw"
+      required:
         - derate
     Derate:
       allOf:
@@ -700,31 +1515,42 @@ components:
         meta:          
           $ref: "#/components/schemas/SubmissionMeta" 
         data:
-          $ref: "#/components/schemas/ControlMalfunctionData"
-          description: Dane zgłoszenia niesprawności układu regulacji
+          type: object
+          required:
+            - operationType
+          properties:
+            operationType:
+              $ref: "#/components/schemas/OperationType"
+            changeDescription:
+              type: string
+              maxLength: 512
+              description: |
+                Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia.
+
+                Dla każdego zgłoszenia może być inna przyczyna zmiany.
+              examples: 
+                - 'Opis przyczyny zgłoszenia'
+          oneOf: 
+            - $ref: "#/components/schemas/ControlMalfunctionData"
+            - $ref: "#/components/schemas/ControlMalfunctionWithdrawData"
       required:
         - meta
         - data
     ControlMalfunctionData:
       type: object
-      properties: 
-        operationType:
-          $ref: "#/components/schemas/OperationType"
-        changeDescription:
-          type: string
-          maxLength: 512
-          description: |
-            Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia, tj. aktualizacji bądź wycofania tym zgłoszeniem niedostępności.
-
-            Dla każdego zgłoszenia może być inna przyczyna zmiany.
-          examples: 
-            - 'Opis przyczyny zgłoszenia'
+      description: Dane zgłoszenia niesprawności regulacji
+      properties:
         controlMalfunction:
-          oneOf:
-            - $ref: "#/components/schemas/ControlMalfunction"
-            - $ref: "#/components/schemas/UnavailabilityWithdraw"
+          $ref: "#/components/schemas/ControlMalfunction"
       required:
-        - operationType
+        - controlMalfunction
+    ControlMalfunctionWithdrawData:
+      type: object
+      description: Dane zgłoszenia wycofania ubytku
+      properties: 
+        controlMalfunction:
+          $ref: "#/components/schemas/UnavailabilityWithdraw"
+      required:
         - controlMalfunction
     ControlMalfunction:
       allOf:
@@ -797,6 +1623,17 @@ components:
           - C - całkowity
       examples:
         - G
+    CurveType:
+      type: string
+      enum:
+        - A01
+        - A03
+      description: |
+        Typ sposobu przekazywania wartości
+          - A01 - wszystkie punkty
+          - A03 - tylko punkty zmian
+      examples:
+        - A01
     OperationType:
       type: string
       enum:
@@ -815,12 +1652,14 @@ components:
         start:
           type: string
           format: date-time
+          pattern: 'Z$'
           description: Data i godzina początku okresu w UTC
           examples: 
             - '2024-03-12T02:00:00Z'
         end:
           type: string
           format: date-time
+          pattern: 'Z$'
           description: Data i godzina końca okresu w UTC
           examples: 
             - '2024-03-13T02:00:00Z'
@@ -834,6 +1673,7 @@ components:
         start:
           type: string
           format: date-time
+          pattern: 'Z$'
           description: Data i godzina początku okresu w UTC
           examples: 
             - '2024-03-12T02:00:00Z'
@@ -843,6 +1683,7 @@ components:
         end:
           type: string
           format: date-time
+          pattern: 'Z$'
           description: Data i godzina końca okresu w UTC
           examples: 
             - '2024-03-13T02:00:00Z'
@@ -908,6 +1749,7 @@ components:
         receivedTime:
           type: string
           format: date-time
+          pattern: 'Z$'
           description: Data odebrania żądania w UTC
           examples: 
             - '2024-03-12T02:00:00.000Z'
@@ -976,6 +1818,7 @@ components:
         receivedTime:
           type: string
           format: date-time
+          pattern: 'Z$'
           description: Data odebrania żądania w UTC
           examples: 
             - '2024-03-12T02:00:00.000Z'
@@ -1005,3 +1848,131 @@ components:
       required:
       - serverMsgId
       - status
+    ChangeMeta:
+      type: object
+      description: Nagłówek informacji o zmianie danych planistycznych
+      properties: 
+        receiverId:
+          type: integer
+          format: int32
+          description: Identyfikator podmiotu do którego kierowane jest powioadomienie o zmiania
+          examples: 
+            - 10999
+        responsiblePartyId:
+          type: integer
+          format: int32
+          description: Identyfikator podmiotu odpowiedzialnego za dokonanie zgłoszenia
+          examples: 
+            - 10111
+        serverMsgId:
+          type: string
+          format: uuid
+          description: ID dokumentu o zmianie nieostępności
+          examples: 
+            - '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+        type:
+          type: string
+          enum:
+            - IPOS
+            - IUBT
+            - INUR
+          description: Typ komunikatu informacji o zmianie
+          examples: 
+            - IPOS
+        createdAt:
+          type: string
+          format: date-time
+          pattern: 'Z$'
+          description: Czas utworzenia informacji w UTC
+          examples: 
+            - '2024-03-21T01:23:34.567Z'
+        stdVersion:
+          type: string
+          maxLength: 10
+          description: Wersja standardów B2B
+          examples: 
+            - '1.0'
+      required:
+        - receiverId
+        - responsiblePartyId
+        - serverMsgId
+        - type
+        - createdAt
+    OutageChange:
+      type: object
+      description: Informacja o zmianie postoju
+      properties: 
+        meta:
+          $ref: "#/components/schemas/ChangeMeta" 
+        data:
+          type: object
+          required:
+            - operationType
+          properties:
+            operationType:
+              $ref: "#/components/schemas/OperationType"
+            changeDescription:
+              type: string
+              maxLength: 512
+              description: |
+                Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia
+              examples: 
+                - 'Opis przyczyny zmiany'
+          oneOf: 
+            - $ref: "#/components/schemas/OutageData"
+            - $ref: "#/components/schemas/OutageWithdrawData"
+      required:
+        - meta
+        - data
+    DerateChange:
+      type: object
+      description: Informacja o zmianie ubytku
+      properties: 
+        meta:
+          $ref: "#/components/schemas/ChangeMeta" 
+        data:
+          type: object
+          required:
+            - operationType
+          properties:
+            operationType:
+              $ref: "#/components/schemas/OperationType"
+            changeDescription:
+              type: string
+              maxLength: 512
+              description: |
+                Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia
+              examples: 
+                - 'Opis przyczyny zmiany'
+          oneOf: 
+            - $ref: "#/components/schemas/DerateData"
+            - $ref: "#/components/schemas/DerateWithdrawData"
+      required:
+        - meta
+        - data
+    ControlMalfunctionChange:
+      type: object
+      description: Informacja o zmianie niesprawności układu regulacji
+      properties: 
+        meta:
+          $ref: "#/components/schemas/ChangeMeta" 
+        data:
+          type: object
+          required:
+            - operationType
+          properties:
+            operationType:
+              $ref: "#/components/schemas/OperationType"
+            changeDescription:
+              type: string
+              maxLength: 512
+              description: |
+                Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia
+              examples: 
+                - 'Opis przyczyny zmiany'
+          oneOf: 
+            - $ref: "#/components/schemas/ControlMalfunctionData"
+            - $ref: "#/components/schemas/ControlMalfunctionWithdrawData"
+      required:
+        - meta
+        - data
