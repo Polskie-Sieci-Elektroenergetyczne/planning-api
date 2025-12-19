@@ -380,6 +380,9 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Derate"
+              examples:
+                derates_list:
+                  $ref: '#/components/examples/derates_list'
       security: 
         - BearerAuth: []
   /pwdp/api/v1/resources/{mainResourceMrid}/control-malfunctions:
@@ -401,6 +404,9 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/ControlMalfunction"
+              examples:
+                controlMalfunctions_list:
+                  $ref: '#/components/examples/controlMalfunctions_list'
       security: 
         - BearerAuth: []
   /pwdp/api/v1/resources/{mainResourceMrid}/dispatch-instructions:
@@ -420,6 +426,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TimeSeriesData"
+              examples:
+                dispatchInstruction_min_max:
+                  $ref: '#/components/examples/dispatchInstruction_min_max'
       security: 
         - BearerAuth: []
   /pwdp/api/v1/resources/{mainResourceMrid}/exchange-schedules:
@@ -439,6 +448,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TimeSeriesData"
+              examples:
+                exchangeSchedule_1D:
+                  $ref: '#/components/examples/exchangeSchedule_1D'
       security: 
         - BearerAuth: []
   /pwdp/api/v1/resources/{mainResourceMrid}/storage-capacities:
@@ -458,6 +470,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TimeSeriesData"
+              examples:
+                storageCapacity_1year:
+                  $ref: '#/components/examples/storageCapacity_1year'
       security: 
         - BearerAuth: []
 components:
@@ -2062,7 +2077,7 @@ components:
                   - position: 183
                     quantity: 16.789
     outages_list:
-      summary: Lista niedostępności
+      summary: Lista postojów
       value:
         - unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
           unavailabilityPeriod:
@@ -2095,7 +2110,7 @@ components:
             categoryCode: D001
             description: 'Dodatkowy opis przyczyny niedostępności'
     derates_list:
-      summary: Lista niedostępności
+      summary: Lista ubytków
       value:
         - unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
           unavailabilityPeriod:
@@ -2157,3 +2172,99 @@ components:
                       quantity: 2.234
                     - position: 3
                       quantity: 0.567
+    controlMalfunctions_list:
+      summary: Lista niesprawności układów regulacji
+      value:
+        - unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+          unavailabilityPeriod:
+            start: '2025-04-12T23:00:00Z'
+            startOccurred: false
+            end: '2025-04-13T23:00:00Z'
+            endOccurred: false
+          mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+          orderNo: 2
+          businessType: FCRG
+          direction: G
+          reasonDescription: 'Dodatkowy opis przyczyny niedostępności'
+    dispatchInstruction_min_max:
+      summary: 'Polecenia ruchowe OSD - MIN, MAX - 2 godziny (skrócona lista wartości)'
+      value:
+        mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+        dataPeriod:
+          start: '2025-09-12T22:00:00Z'
+          end: '2025-09-13T00:00:00Z'
+        timeSeries: 
+          - tsId: 1
+            businessType: OMAX
+            direction: G
+            measurementUnit: MAW
+            resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            curveType: A01
+            seriesPeriods:
+              - timeInterval: 
+                  start: '2025-09-12T22:00:00Z'
+                  end: '2025-09-13T00:00:00Z'
+                resolution: PT15M
+                continuousSeriesPoints: [
+                  2.345, 2.345, 2.345
+                ]
+          - tsId: 2
+            businessType: OMIN
+            direction: G
+            measurementUnit: MAW
+            resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            curveType: A01
+            seriesPeriods:
+              - timeInterval: 
+                  start: '2025-09-12T22:00:00Z'
+                  end: '2025-09-13T00:00:00Z'
+                resolution: PT15M
+                continuousSeriesPoints: [
+                  0.123, 0.123, 0.123
+                ]
+    exchangeSchedule_1D:
+      summary: 'Salda wymiany - horyzont 1 dzień (skrócona lista wartości)'
+      value:
+        mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+        dataPeriod:
+          start: '2025-12-31T23:00:00Z'
+          end: '2026-01-01T23:00:00Z'
+        timeSeries: 
+          - tsId: 1
+            businessType: WYM
+            measurementUnit: MAW
+            resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            curveType: A01
+            seriesPeriods:
+              - timeInterval: 
+                  start: '2025-12-31T23:00:00Z'
+                  end: '2026-01-01T23:00:00Z'
+                resolution: PT1H
+                continuousSeriesPoints: [
+                  2.345, 2.345, 2.345
+                ]
+    storageCapacity_1year:
+      summary: 'Pojemność użytkowa magazynu - 1 rok (skrócona lista wartości)'
+      value:
+        mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+        dataPeriod:
+          start: '2025-09-12T22:00:00Z'
+          end: '2026-09-12T22:00:00Z'
+        timeSeries: 
+          - tsId: 1
+            businessType: PUZ
+            measurementUnit: MWH
+            resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            curveType: A03
+            seriesPeriods:
+              - timeInterval: 
+                  start: '2025-09-12T22:00:00Z'
+                  end: '2026-09-12T22:00:00Z'
+                resolution: PT1H
+                seriesPoints:
+                  - position: 1
+                    quantity: 10.500
+                  - position: 241
+                    quantity: 10.100
+                  - position: 481
+                    quantity: 9.800
