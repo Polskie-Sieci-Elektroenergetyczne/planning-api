@@ -503,7 +503,6 @@ components:
       schema:
         type: string
         format: date-time
-        pattern: 'Z$'
       example: '2024-03-12T02:00:00Z'
     End:
       name: end
@@ -513,7 +512,6 @@ components:
       schema:
         type: string
         format: date-time
-        pattern: 'Z$'
       example: '2024-03-13T02:00:00Z'
   schemas:
     ResourceMrid:
@@ -561,7 +559,6 @@ components:
         createdAt:
           type: string
           format: date-time
-          pattern: 'Z$'
           description: Czas utworzenia zgłoszenia w UTC
           examples: 
             - '2024-03-21T01:23:34.567Z'
@@ -1210,14 +1207,12 @@ components:
         start:
           type: string
           format: date-time
-          pattern: 'Z$'
           description: Data i godzina początku okresu w UTC
           examples: 
             - '2024-03-12T02:00:00Z'
         end:
           type: string
           format: date-time
-          pattern: 'Z$'
           description: Data i godzina końca okresu w UTC
           examples: 
             - '2024-03-13T02:00:00Z'
@@ -1231,7 +1226,6 @@ components:
         start:
           type: string
           format: date-time
-          pattern: 'Z$'
           description: Data i godzina początku okresu w UTC
           examples: 
             - '2024-03-12T02:00:00Z'
@@ -1241,7 +1235,6 @@ components:
         end:
           type: string
           format: date-time
-          pattern: 'Z$'
           description: Data i godzina końca okresu w UTC
           examples: 
             - '2024-03-13T02:00:00Z'
@@ -1307,7 +1300,6 @@ components:
         receivedTime:
           type: string
           format: date-time
-          pattern: 'Z$'
           description: Data odebrania żądania w UTC
           examples: 
             - '2024-03-12T02:00:00.000Z'
@@ -1376,7 +1368,6 @@ components:
         receivedTime:
           type: string
           format: date-time
-          pattern: 'Z$'
           description: Data odebrania żądania w UTC
           examples: 
             - '2024-03-12T02:00:00.000Z'
