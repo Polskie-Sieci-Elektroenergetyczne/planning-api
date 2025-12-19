@@ -310,6 +310,9 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TimeSeriesData"
+              examples:
+                schedule_MWE_1day_2series:
+                  $ref: '#/components/examples/schedule_MWE_1day_2series'
       security: 
         - BearerAuth: []
   /pwdp/api/v1/resources/{mainResourceMrid}/availabilities:
@@ -330,7 +333,10 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/TimeSeries"
+                  $ref: "#/components/schemas/TimeSeriesData"
+              examples:
+                availability_MWE_1year_2series:
+                  $ref: '#/components/examples/availability_MWE_1year_2series'
       security: 
         - BearerAuth: []
   /pwdp/api/v1/resources/{mainResourceMrid}/outages:
@@ -352,6 +358,9 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/Outage"
+              examples:
+                outages_list:
+                  $ref: '#/components/examples/outages_list'
       security: 
         - BearerAuth: []
   /pwdp/api/v1/resources/{mainResourceMrid}/derates:
@@ -414,7 +423,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/TimeSeries"
+                  $ref: "#/components/schemas/TimeSeriesData"
       security: 
         - BearerAuth: []
   /pwdp/api/v1/resources/{mainResourceMrid}/exchange-schedules:
@@ -435,7 +444,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/TimeSeries"
+                  $ref: "#/components/schemas/TimeSeriesData"
       security: 
         - BearerAuth: []
   /pwdp/api/v1/resources/{mainResourceMrid}/storage-capacities:
@@ -456,7 +465,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/TimeSeries"
+                  $ref: "#/components/schemas/TimeSeriesData"
       security: 
         - BearerAuth: []
 components:
@@ -1978,3 +1987,181 @@ components:
                       quantity: 10.100
                     - position: 481
                       quantity: 9.800
+    schedule_MWE_1day_2series:
+      summary: 'Plan pracy MWE - 1 doba, 2 serie danych (skrócona tablica wartości)'
+      value:        
+        mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+        dataPeriod:
+          start: '2025-09-12T22:00:00Z'
+          end: '2025-09-13T22:00:00Z'
+        timeSeries: 
+          - tsId: 1
+            businessType: MCSR
+            direction: G
+            measurementUnit: MAW
+            resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            curveType: A01
+            seriesPeriods:
+              - timeInterval: 
+                  start: '2025-09-12T22:00:00Z'
+                  end: '2025-09-13T22:00:00Z'
+                resolution: PT15M
+                continuousSeriesPoints: [
+                      1.234, 1.234, 1.234
+                      # ... 93 kolejne wiersze
+                ]
+          - tsId: 2
+            businessType: MCKN
+            direction: G
+            measurementUnit: MAW
+            resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            curveType: A01
+            seriesPeriods:
+              - timeInterval: 
+                  start: '2025-09-12T22:00:00Z'
+                  end: '2025-09-13T22:00:00Z'
+                resolution: PT15M
+                continuousSeriesPoints: [
+                  1.234, 1.234, 1.234
+                  # ... 93 kolejne wiersze
+                ]
+    availability_MWE_1year_2series:
+      summary: 'Harmonogram dyspozycyjności MWE - 1 rok, 2 serie danych'
+      value:
+        mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+        dataPeriod:
+          start: '2025-09-12T22:00:00Z'
+          end: '2026-09-12T22:00:00Z'
+        timeSeries: 
+          - tsId: 1
+            businessType: MINE
+            direction: G
+            measurementUnit: MAW
+            resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            curveType: A03
+            seriesPeriods:
+              - timeInterval: 
+                  start: '2025-09-12T22:00:00Z'
+                  end: '2026-09-12T22:00:00Z'
+                resolution: PT1H
+                seriesPoints:
+                  - position: 1
+                    quantity: 5.123
+                  - position: 25
+                    quantity: 0
+                  - position: 49
+                    quantity: 5.123
+          - tsId: 2
+            businessType: MAXE
+            direction: G
+            measurementUnit: MAW
+            resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            curveType: A01
+            seriesPeriods:
+              - timeInterval: 
+                  start: '2025-09-12T22:00:00Z'
+                  end: '2026-09-12T22:00:00Z'
+                resolution: PT15M
+                seriesPoints:
+                  - position: 1
+                    quantity: 16.789
+                  - position: 97
+                    quantity: 0
+                  - position: 183
+                    quantity: 16.789
+    outages_list:
+      summary: Lista niedostępności
+      value:
+        - unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+          unavailabilityPeriod:
+            start: '2025-03-12T23:00:00Z'
+            startOccurred: false
+            end: '2025-03-13T23:00:00Z'
+            endOccurred: false
+          mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+          orderNo: 1
+          businessType: POS
+          direction: G
+          recoverable: false
+          reasonDescription:
+            reasonCode: WE
+            categoryCode: D001
+            description: 'Dodatkowy opis przyczyny niedostępności'
+        - unavailabilityMrid: '43216017-d25d-4952-a3cf-0fa83560e160'
+          unavailabilityPeriod:
+            start: '2025-02-10T23:00:00Z'
+            startOccurred: true
+            end: '2025-02-13T23:00:00Z'
+            endOccurred: true
+          mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+          orderNo: 1
+          businessType: POS
+          direction: G
+          recoverable: false
+          reasonDescription:
+            reasonCode: WE
+            categoryCode: D001
+            description: 'Dodatkowy opis przyczyny niedostępności'
+    derates_list:
+      summary: Lista niedostępności
+      value:
+        - unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+          unavailabilityPeriod:
+            start: '2025-03-13T23:00:00Z'
+            startOccurred: false
+            end: '2025-03-14T23:00:00Z'
+            endOccurred: false
+          mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+          orderNo: 2
+          businessType: UBTD
+          direction: G
+          recoverable: false
+          reasonDescription:
+            reasonCode: WE
+            categoryCode: D001
+            description: 'Dodatkowy opis przyczyny niedostępności'
+          timeSeries:
+            - tsId: 1
+              recoverableFlag: UOBW
+              measurementUnit: MAW
+              curveType: A03
+              seriesPeriods:
+                - timeInterval:
+                    start: '2025-03-13T23:00:00Z'
+                    end: '2025-03-14T23:00:00Z'
+                  resolution: PT1H
+                  seriesPoints:
+                    - position: 1
+                      quantity: 5.234
+                    - position: 3
+                      quantity: 2.567
+        - unavailabilityMrid: '00006017-d25d-4952-a3cf-0fa83560ae21'
+          unavailabilityPeriod:
+            start: '2025-03-14T23:00:00Z'
+            startOccurred: false
+            end: '2025-03-15T23:00:00Z'
+            endOccurred: false
+          mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+          orderNo: 1
+          businessType: UBTD
+          direction: G
+          recoverable: false
+          reasonDescription:
+            reasonCode: WE
+            categoryCode: D001
+            description: 'Dodatkowy opis przyczyny niedostępności'
+          timeSeries:
+            - tsId: 1
+              recoverableFlag: UOBW
+              measurementUnit: MAW
+              curveType: A03
+              seriesPeriods:
+                - timeInterval:
+                    start: '2025-03-14T23:00:00Z'
+                    end: '2025-03-15T23:00:00Z'
+                  resolution: PT1H
+                  seriesPoints:
+                    - position: 1
+                      quantity: 2.234
+                    - position: 3
+                      quantity: 0.567
