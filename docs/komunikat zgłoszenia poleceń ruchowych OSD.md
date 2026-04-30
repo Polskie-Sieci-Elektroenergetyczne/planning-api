@@ -1,9 +1,13 @@
 # **Polecenia ruchowe OSD**
 
 ## Zgłoszenie poleceń ruchowych OSD
-Nadawca: OSDp
+---
+### Uczestnicy
 
-Odbiorca: OSP
+| Rola | Podmiot |
+|------|---------|
+| Nadawca zgłoszenia | OSDp (Operator Systemu Dystrybucyjnego) |
+| Odbiorca zgłoszenia | OSP (Operator Systemu Przesyłowego) |
 
 ### Charakterystyka komunikatu
 Zgłoszenie poleceń ruchowych OSD zawiera dane planistyczne dotyczące wskazanego przez OSD zakresu generacji w horyzoncie 9 dni.
@@ -20,7 +24,28 @@ Dane dotyczące poleceń ruchowych OSD powinny być przekazywane w sposób kompl
 
 Informacje otrzymywane w tym komunikacie stanowią podstawę tworzenia lub korygowania planów koordynacyjnych oraz ewidencjonowania stanów zasobów.
 
-### Status obsługi komunikatu
-**Zgłoszenie przyjęte** - dane dotyczące wskazanego (ograniczonego) przez OSD zakresu generacji są zaktualizowane o dane ze zgłoszenia.
+## Endpointy API
 
-**Zgłoszenie odrzucone** - dane dotyczące wskazanego (ograniczonego) przez OSD zakresu generacji pozostają bez aktualizacji o dane ze zgłoszenia.
+---
+
+### POST `.../dispatch-instruction-submissions`
+Przesłanie poleceń ruchowych OSD.
+
+| Parametr | Typ | Lokalizacja | Wymagany | Opis |
+|----------|-----|-------------|:--------:|------|
+| — | — | body | tak | Obiekt `DispatchInstructionSubmission` |
+
+**operationId:** `submitDispatchInstruction`  
+**Tag:** Planning Data Submissions  
+
+| Kod | Opis |
+|-----|------|
+| 202 | Przyjęto zgłoszenie do przetworzenia |
+| 400 | Nieprawidłowe dane |
+
+### Status obsługi komunikatu
+
+| Status | Opis |
+|--------|------|
+| Komunikat przyjęty | Dane dotyczące wskazanego (ograniczonego) przez OSD zakresu generacji są zaktualizowane o dane ze zgłoszenia. |
+| Komunikat odrzucony | Dane dotyczące wskazanego (ograniczonego) przez OSD zakresu generacji pozostają bez aktualizacji o dane ze zgłoszenia. |

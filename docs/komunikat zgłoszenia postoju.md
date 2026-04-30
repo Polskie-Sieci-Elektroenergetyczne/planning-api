@@ -1,9 +1,13 @@
 # **Postoje**
 
 ## Zgłoszenie postoju
-Nadawca: OSDp, Właściciel
+---
+### Uczestnicy
 
-Odbiorca: OSP
+| Rola | Podmiot |
+|------|---------|
+| Nadawca zgłoszenia | OSDp (Operator Systemu Dystrybucyjnego), Właściciel obiektu przyłączonego do sieci OSP |
+| Odbiorca zgłoszenia | OSP (Operator Systemu Przesyłowego) |
 
 ### Charakterystyka komunikatu
 Zgłoszenie postoju zawiera dane planistyczne dotyczące całkowitej niedyspozycyjności zasobu w horyzoncie 5 lat (60 miesięcy). 
@@ -26,7 +30,28 @@ W przypadku postoju już rozpoczętego dla zasobu powiązanego z JG<sub>W1</sub>
 
 Informacje otrzymywane w tym komunikacie stanowią podstawę tworzenia lub korygowania planów koordynacyjnych oraz ewidencjonowania stanów zasobów.
 
-### Status obsługi komunikatu
-**Zgłoszenie przyjęte** - postój zasobu jest zapisany w planie niedostępności w postaci zaktualizowanej o dane ze zgłoszenia.
+## Endpointy API
 
-**Zgłoszenie odrzucone** - postój zasobu nie jest zapisany w planie niedostępności w postaci zaktualizowanej o dane ze zgłoszenia.
+---
+
+### POST `.../outage-submissions`
+Zgłoszenie, modyfikacja lub wycofanie postoju.
+
+| Parametr | Typ | Lokalizacja | Wymagany | Opis |
+|----------|-----|-------------|:--------:|------|
+| — | — | body | tak | Obiekt `OutageSubmission` |
+
+**operationId:** `submitOutage`  
+**Tag:** Planning Data Submissions  
+
+| Kod | Opis |
+|-----|------|
+| 202 | Przyjęto zgłoszenie do przetworzenia |
+| 400 | Niepoprawne zgłoszenie |
+
+### Status obsługi komunikatu
+
+| Status | Opis |
+|--------|------|
+| Komunikat przyjęty | Postój zasobu jest zapisany w planie niedostępności w postaci zaktualizowanej o dane ze zgłoszenia. |
+| Komunikat odrzucony | Postój zasobu nie jest zapisany w planie niedostępności w postaci zaktualizowanej o dane ze zgłoszenia. |

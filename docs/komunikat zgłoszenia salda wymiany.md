@@ -1,9 +1,13 @@
 # **Saldo wymiany**
 
 ## Zgłoszenie salda wymiany
-Nadawca: OSDp
+---
+### Uczestnicy
 
-Odbiorca: OSP
+| Rola | Podmiot |
+|------|---------|
+| Nadawca zgłoszenia | OSDp (Operator Systemu Dystrybucyjnego) |
+| Odbiorca zgłoszenia | OSP (Operator Systemu Przesyłowego) |
 
 ### Charakterystyka komunikatu
 Zgłoszenie grafiku z saldem wymiany zawiera dane planistyczne dotyczące salda wymiany nierównoległej realizowanej poprzez sieć 110 kV na wskazanej linii wymiany, w całkowitym horyzoncie planowania 5 lat (60 miesięcy).
@@ -22,7 +26,28 @@ Dane dotyczące salda wymiany nierównoległej powinny być przekazywane w spos�
 
 Informacje otrzymywane w tym komunikacie stanowią podstawę tworzenia lub korygowania planów koordynacyjnych oraz ewidencjonowania stanów zasobów.
 
-### Status obsługi komunikatu
-**Zgłoszenie przyjęte** - wartości salda wymiany są zaktualizowane o dane ze zgłoszenia.
+## Endpointy API
 
-**Zgłoszenie odrzucone** - wartości salda wymiany nie są zaktualizowane o dane ze zgłoszenia.
+---
+
+### POST `.../exchange-schedule-submissions`
+Przesłanie planu wymiany 110kV.
+
+| Parametr | Typ | Lokalizacja | Wymagany | Opis |
+|----------|-----|-------------|:--------:|------|
+| — | — | body | tak | Obiekt `ExchangeScheduleSubmission` |
+
+**operationId:** `submitExchangeSchedule`  
+**Tag:** Planning Data Submissions  
+
+| Kod | Opis |
+|-----|------|
+| 202 | Przyjęto zgłoszenie do przetworzenia |
+| 400 | Niepoprawne zgłoszenie |
+
+### Status obsługi komunikatu
+
+| Status | Opis |
+|--------|------|
+| Komunikat przyjęty | Wartości salda wymiany są zaktualizowane o dane ze zgłoszenia. |
+| Komunikat odrzucony | Wartości salda wymiany nie są zaktualizowane o dane ze zgłoszenia. |

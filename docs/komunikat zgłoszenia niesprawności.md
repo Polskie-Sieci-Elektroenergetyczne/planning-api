@@ -1,9 +1,13 @@
 # **Niesprawności układu regulacji**
 
 ## Zgłoszenie niesprawności układu regulacji
-Nadawca: OSDp, Właściciel
+---
+### Uczestnicy
 
-Odbiorca: OSP
+| Rola | Podmiot |
+|------|---------|
+| Nadawca zgłoszenia | OSDp (Operator Systemu Dystrybucyjnego), Właściciel obiektu przyłączonego do sieci OSP |
+| Odbiorca zgłoszenia | OSP (Operator Systemu Przesyłowego) |
 
 ### Charakterystyka komunikatu
 Zgłoszenie niesprawności układu regulacji zawiera dane planistyczne dotyczące niesprawności układu regulacji pierwotnej, wtórnej, estymaty lub ARNE zasobu w horyzoncie 5 lat (60 miesięcy). 
@@ -22,7 +26,28 @@ W przypadku wskazania estymaty dokument przekazuje informację dotyczącą niesp
 
 Informacje otrzymywane w tym komunikacie stanowią podstawę tworzenia lub korygowania planów koordynacyjnych oraz ewidencjonowania stanów zasobów.
 
-### Status obsługi komunikatu
-**Zgłoszenie przyjęte** - niesprawność układu regulacji zasobu jest zapisana w planie niesprawności w postaci zaktualizowanej o dane ze zgłoszenia.
+## Endpointy API
 
-**Zgłoszenie odrzucone** - niesprawność układu regulacji zasobu nie jest zapisana w planie niesprawności w postaci zaktualizowanej o dane ze zgłoszenia.
+---
+
+### POST `.../control-malfunction-submissions`
+Zgłoszenie, modyfikacja lub wycofanie niesprawności układu regulacji.
+
+| Parametr | Typ | Lokalizacja | Wymagany | Opis |
+|----------|-----|-------------|:--------:|------|
+| — | — | body | tak | Obiekt `ControlMalfunctionSubmission` |
+
+**operationId:** `submitControlMalfunction`  
+**Tag:** Planning Data Submissions  
+
+| Kod | Opis |
+|-----|------|
+| 202 | Przyjęto zgłoszenie do przetworzenia |
+| 400 | Błędny format zgłoszenia |
+
+### Status obsługi komunikatu
+
+| Status | Opis |
+|--------|------|
+| Komunikat przyjęty | Niesprawność układu regulacji zasobu jest zapisana w planie niesprawności w postaci zaktualizowanej o dane ze zgłoszenia. |
+| Komunikat odrzucony | Niesprawność układu regulacji zasobu nie jest zapisana w planie niesprawności w postaci zaktualizowanej o dane ze zgłoszenia. |

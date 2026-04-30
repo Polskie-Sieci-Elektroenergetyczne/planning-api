@@ -1,9 +1,13 @@
 # **Plany pracy**
 
 ## Zgłoszenie planu pracy
-Nadawca: OSDp, Właściciel
+---
+### Uczestnicy
 
-Odbiorca: OSP
+| Rola | Podmiot |
+|------|---------|
+| Nadawca zgłoszenia | OSDp (Operator Systemu Dystrybucyjnego), Właściciel obiektu przyłączonego do sieci OSP |
+| Odbiorca zgłoszenia | OSP (Operator Systemu Przesyłowego) |
 
 ### Charakterystyka komunikatu
 Zgłoszenie planu pracy zawiera dane planistyczne dotyczące generacji i ew. poboru zasobu w horyzoncie 9 dni. 
@@ -44,7 +48,28 @@ W przypadku MWE wytwórczych dopuszczalne są jedynie serie danych w kierunku ge
 
 Informacje otrzymywane w tym komunikacie stanowią podstawę tworzenia lub korygowania planów koordynacyjnych oraz ewidencjonowania stanów zasobów.
 
-### Status obsługi komunikatu
-**Zgłoszenie przyjęte** - dane o pracy zasobu są zaktualizowane o dane ze zgłoszenia.
+## Endpointy API
 
-**Zgłoszenie odrzucone** - dane o pracy zasobu pozostają bez aktualizacji o dane ze zgłoszenia.
+---
+
+### POST `.../schedule-submissions`
+Przesłanie planu pracy.
+
+| Parametr | Typ | Lokalizacja | Wymagany | Opis |
+|----------|-----|-------------|:--------:|------|
+| — | — | body | tak | Obiekt `ScheduleSubmission` |
+
+**operationId:** `submitSchedule`  
+**Tag:** Planning Data Submissions  
+
+| Kod | Opis |
+|-----|------|
+| 202 | Zgłoszenie przyjęte do przetwarzania |
+| 400 | Nieprawidłowy format lub struktura zgłoszenia |
+
+### Status obsługi komunikatu
+
+| Status | Opis |
+|--------|------|
+| Komunikat przyjęty | Dane o pracy zasobu są zaktualizowane o dane ze zgłoszenia. |
+| Komunikat odrzucony | Dane o pracy zasobu pozostają bez aktualizacji o dane ze zgłoszenia. |

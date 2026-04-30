@@ -1,9 +1,13 @@
 # **Ubytki**
 
 ## Zgłoszenie ubytku
-Nadawca: OSDp, Właściciel
+---
+### Uczestnicy
 
-Odbiorca: OSP
+| Rola | Podmiot |
+|------|---------|
+| Nadawca zgłoszenia | OSDp (Operator Systemu Dystrybucyjnego), Właściciel obiektu przyłączonego do sieci OSP |
+| Odbiorca zgłoszenia | OSP (Operator Systemu Przesyłowego) |
 
 ### Charakterystyka komunikatu
 Zgłoszenie ubytku zawiera dane planistyczne dotyczące częściowej niedyspozycyjności zasobu w horyzoncie 5 lat (60 miesięcy). 
@@ -28,7 +32,28 @@ Jeśli zasób jest powiązany z JG w sposób mapowalny, tzn. w skład JG wchodzi
 
 Informacje otrzymywane w tym komunikacie stanowią podstawę tworzenia lub korygowania planów koordynacyjnych oraz ewidencjonowania stanów zasobów.
 
-### Status obsługi komunikatu
-**Zgłoszenie przyjęte** - ubytek dyspozycyjności zasobu jest zapisany w planie niedostępności w postaci zaktualizowanej o dane ze zgłoszenia.
+## Endpointy API
 
-**Zgłoszenie odrzucone** - ubytek dyspozycyjności zasobu nie jest zapisany w planie niedostępności w postaci zaktualizowanej o dane ze zgłoszenia.
+---
+
+### POST `.../derate-submissions`
+Zgłoszenie, modyfikacja lub wycofanie ubytku.
+
+| Parametr | Typ | Lokalizacja | Wymagany | Opis |
+|----------|-----|-------------|:--------:|------|
+| — | — | body | tak | Obiekt `DerateSubmission` |
+
+**operationId:** `submitDerate`  
+**Tag:** Planning Data Submissions  
+
+| Kod | Opis |
+|-----|------|
+| 202 | Przyjęto zgłoszenie do przetworzenia |
+| 400 | Nieprawidłowe dane |
+
+### Status obsługi komunikatu
+
+| Status | Opis |
+|--------|------|
+| Komunikat przyjęty | Ubytek dyspozycyjności zasobu jest zapisany w planie niedostępności w postaci zaktualizowanej o dane ze zgłoszenia. |
+| Komunikat odrzucony | Ubytek dyspozycyjności zasobu nie jest zapisany w planie niedostępności w postaci zaktualizowanej o dane ze zgłoszenia. |
