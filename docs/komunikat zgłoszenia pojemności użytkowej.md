@@ -1,9 +1,13 @@
 # **Pojemność użytkowa**
 
 ## Zgłoszenie pojemności użytkowej
-Nadawca: OSDp, Właściciel
+---
+### Uczestnicy
 
-Odbiorca: OSP
+| Rola | Podmiot |
+|------|---------|
+| Nadawca zgłoszenia | OSDp (Operator Systemu Dystrybucyjnego), Właściciel obiektu przyłączonego do sieci OSP |
+| Odbiorca zgłoszenia | OSP (Operator Systemu Przesyłowego) |
 
 ### Charakterystyka komunikatu
 Zgłoszenie pojemności użytkowej zawiera dane planistyczne dotyczące poziomu pojemności użytkowej MEE w horyzoncie 5 lat (60 miesięcy).
@@ -18,10 +22,29 @@ Dane dotyczące pojemności użytkowej powinny być przekazywane w sposób kompl
 
 Informacje otrzymywane w tym komunikacie stanowią podstawę tworzenia lub korygowania planów koordynacyjnych oraz ewidencjonowania stanów zasobów.
 
+## Endpointy API
+
+---
+
+### POST `.../storage-capacity-submissions`
+Przesłanie danych o zmianach pojemności użytkowej magazynów.
+
+| Parametr | Typ | Lokalizacja | Wymagany | Opis |
+|----------|-----|-------------|:--------:|------|
+| — | — | body | tak | Obiekt `StorageCapacitySubmission` |
+
+**operationId:** `submitStorageCapacity`  
+**Tag:** Planning Data Submissions  
+
+| Kod | Opis |
+|-----|------|
+| 202 | Przyjęto zgłoszenie do przetworzenia |
+| 400 | Błędne dane wejściowe |
+
 ### Status obsługi komunikatu
-**Zgłoszenie przyjęte** - pojemność użytkowa jest zaktualizowana o dane ze zgłoszenia.
 
-**Zgłoszenie odrzucone** - pojemność użytkowa pozostaje bez aktualizacji o dane ze zgłoszenia.
-
-
+| Status | Opis |
+|--------|------|
+| Komunikat przyjęty | Pojemność użytkowa jest zaktualizowana o dane ze zgłoszenia. |
+| Komunikat odrzucony | Pojemność użytkowa pozostaje bez aktualizacji o dane ze zgłoszenia. |
 	

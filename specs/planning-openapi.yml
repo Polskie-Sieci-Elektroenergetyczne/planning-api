@@ -1,22 +1,22 @@
 openapi: 3.1.0
 info:
-  title: API danych planistycznych
-  version: 0.0.1
+  title: B2B API dla usług wymiany danych planistycznych TSO
+  version: 1.0.0
 servers:
 - url: https://b2b.pse.pl/
-  description: B2B REST API server
+  description: B2B API for TSO Planning Data Exchange Services
 paths:
   /pwdp/api/v1/schedule-submissions:
     post:
       tags:
-      - Zgłoszenia danych planistycznych
-      summary: Przesłanie planu pracy 
+      - Planning Data Submissions
+      summary: Submit a work schedule
       operationId: submitSchedule
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TimeSeriesSubmission"
+              $ref: "#/components/schemas/ScheduleSubmission"
             examples:
               scheduleSubmission_MWE_1day_2series:
                 $ref: '#/components/examples/scheduleSubmission_MWE_1day_2series'
@@ -26,25 +26,19 @@ paths:
           $ref: '#/components/responses/Submitted'
         "400":
           $ref: '#/components/responses/Rejected'
-        "403":
-          description: Odmowa dostępu
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
       security: 
-        - BearerAuth: []
+        - mTLS: []
   /pwdp/api/v1/availability-submissions:
     post:
       tags:
-      - Zgłoszenia danych planistycznych
-      summary: Przesłanie zgłoszenia harmonogramu dyspozycyjności
+      - Planning Data Submissions
+      summary: Submit an availability schedule
       operationId: submitAvailability
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TimeSeriesSubmission"
+              $ref: "#/components/schemas/AvailabilitySubmission"
             examples:
               availabilitySubmission_MWE_1year_2series:
                 $ref: '#/components/examples/availabilitySubmission_MWE_1year_2series'
@@ -54,19 +48,13 @@ paths:
           $ref: '#/components/responses/Submitted'
         "400":
           $ref: '#/components/responses/Rejected'
-        "403":
-          description: Odmowa dostępu
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
       security: 
-        - BearerAuth: []
+        - mTLS: []
   /pwdp/api/v1/outage-submissions:
     post:
       tags:
-      - Zgłoszenia danych planistycznych
-      summary: Przesłanie zgłoszenia postoju
+      - Planning Data Submissions
+      summary: Submit an outage
       operationId: submitOutage
       requestBody:
         content:
@@ -86,19 +74,13 @@ paths:
           $ref: '#/components/responses/Submitted'
         "400":
           $ref: '#/components/responses/Rejected'
-        "403":
-          description: Odmowa dostępu
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
       security: 
-        - BearerAuth: []
+        - mTLS: []
   /pwdp/api/v1/derate-submissions:
     post:
       tags:
-      - Zgłoszenia danych planistycznych
-      summary: Przesłanie zgłoszenia ubytku
+      - Planning Data Submissions
+      summary: Submit a derate
       operationId: submitDerate
       requestBody:
         content:
@@ -118,19 +100,13 @@ paths:
           $ref: '#/components/responses/Submitted'
         "400":
           $ref: '#/components/responses/Rejected'
-        "403":
-          description: Odmowa dostępu
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
       security: 
-        - BearerAuth: []
+        - mTLS: []
   /pwdp/api/v1/control-malfunction-submissions:
     post:
       tags:
-      - Zgłoszenia danych planistycznych
-      summary: Przesłanie zgłoszenia niesprawności układu regulacji
+      - Planning Data Submissions
+      summary: Submit a control malfunction
       operationId: submitControlMalfunction
       requestBody:
         content:
@@ -150,25 +126,19 @@ paths:
           $ref: '#/components/responses/Submitted'
         "400":
           $ref: '#/components/responses/Rejected'
-        "403":
-          description: Odmowa dostępu
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
       security: 
-        - BearerAuth: []
+        - mTLS: []
   /pwdp/api/v1/dispatch-instruction-submissions:
     post:
       tags:
-      - Zgłoszenia danych planistycznych
-      summary: Przesłanie zgłoszenia polecenia ruchowego OSD
+      - Planning Data Submissions
+      summary: Submit a DSO's dispatch instruction
       operationId: submitDispatchInstruction
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TimeSeriesSubmission"
+              $ref: "#/components/schemas/DispatchInstructionSubmission"
             examples:
               dispatchInstructionSubmission:
                 $ref: '#/components/examples/dispatchInstructionSubmission'
@@ -180,25 +150,19 @@ paths:
           $ref: '#/components/responses/Submitted'
         "400":
           $ref: '#/components/responses/Rejected'
-        "403":
-          description: Odmowa dostępu
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
       security: 
-        - BearerAuth: []
+        - mTLS: []
   /pwdp/api/v1/exchange-schedule-submissions:
     post:
       tags:
-      - Zgłoszenia danych planistycznych
-      summary: Przesłanie zgłoszenia salda wymiany
+      - Planning Data Submissions
+      summary: Submit an exchange schedule
       operationId: submitExchangeSchedule
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TimeSeriesSubmission"
+              $ref: "#/components/schemas/ExchangeScheduleSubmission"
             examples:
               exchangeScheduleSubmission_1Y:
                 $ref: '#/components/examples/exchangeScheduleSubmission_1Y'
@@ -212,25 +176,19 @@ paths:
           $ref: '#/components/responses/Submitted'
         "400":
           $ref: '#/components/responses/Rejected'
-        "403":
-          description: Odmowa dostępu
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
       security: 
-        - BearerAuth: []
+        - mTLS: []
   /pwdp/api/v1/storage-capacity-submissions:
     post:
       tags:
-      - Zgłoszenia danych planistycznych
-      summary: Przesłanie zgłoszenia pojemności użytkowej
+      - Planning Data Submissions
+      summary: Submit a storage capacity
       operationId: submitStorageCapacity
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/TimeSeriesSubmission"
+              $ref: "#/components/schemas/StorageCapacitySubmission"
             examples:
               storageCapacitySubmission_1year:
                 $ref: '#/components/examples/storageCapacitySubmission_1year'
@@ -240,64 +198,45 @@ paths:
           $ref: '#/components/responses/Submitted'
         "400":
           $ref: '#/components/responses/Rejected'
-        "403":
-          description: Odmowa dostępu
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
       security: 
-        - BearerAuth: []
+        - mTLS: []
   /pwdp/api/v1/submissions/{serverMsgId}/status:
     get:
       tags:
-      - Zgłoszenia danych planistycznych
-      summary: Odczytanie statusu przetwarzania zgłoszenia danych planistycznych
+      - Planning Data Submissions
+      summary: Retrieve the processing status of a planning data submission
       operationId: getSubmissionProcessingStatus
       parameters:
       - name: serverMsgId
         in: path
-        description: "Unikalne ID zgłoszenia nadane przez system PSE"
+        description: Unique identifier of the submission assigned by the PSE system.
         required: true
         schema:
           format: uuid
-          description: "Unikalne ID zgłoszenia nadane przez system PSE"
-          examples: 
+          description: Unique identifier of the submission assigned by the PSE system.
+          examples:
             - '550e8400-e29b-41d4-a716-446655440000'
         example: 550e8400-e29b-41d4-a716-446655440000
       responses:
-        "500":
-          description: Wewnętrzny błąd serwera
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
         "200":
-          description: Poprawnie odczytano status przetwarzania przesłanego zgłoszenia
+          description: Successfully retrieved the processing status of the submitted data.
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ProcessingStatusResponse"
+                $ref: "#/components/schemas/SubmissionStatusResponse"
         "404":
-          description: Nie znaleziono danych przesłanego grafiku / harmonogramu dla
-            podanego serverRefId
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/ErrorResponse"
-        "403":
-          description: Odmowa dostępu
+          description: No submission data found for the provided serverMsgId
           content:
             application/json:
               schema:
                 $ref: "#/components/schemas/ErrorResponse"
       security: 
-        - BearerAuth: []
+        - mTLS: []
   /pwdp/api/v1/resources/{mainResourceMrid}/schedules:
     get:
-      summary: Pobranie planu pracy dla zasobu w zadanym zakresie dat
+      summary: Retrieve the work schedule for a resource within the specified date range
       tags:
-        - Aktualne dane planistyczne
+        - Current Planning Data
       operationId: listSchedules
       parameters:
         - $ref: '#/components/parameters/MainResourceMrid'
@@ -305,7 +244,7 @@ paths:
         - $ref: '#/components/parameters/End'
       responses:
         '200':
-          description: Lista serii danych planów pracy
+          description: List of work schedule time series
           content:
             application/json:
               schema:
@@ -313,13 +252,17 @@ paths:
               examples:
                 schedule_MWE_1day_2series:
                   $ref: '#/components/examples/schedule_MWE_1day_2series'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
       security: 
-        - BearerAuth: []
+        - mTLS: []
   /pwdp/api/v1/resources/{mainResourceMrid}/availabilities:
     get:
-      summary: Pobranie harmonogramu dyspozycyjności dla zasobu w zadanym zakresie dat
+      summary: Retrieve the availability schedule for a resource within the specified date range
       tags:
-        - Aktualne dane planistyczne
+        - Current Planning Data
       operationId: listAvailabilities
       parameters:
         - $ref: '#/components/parameters/MainResourceMrid'
@@ -327,7 +270,7 @@ paths:
         - $ref: '#/components/parameters/End'
       responses:
         '200':
-          description: Lista serii danych harmonogramów dyspozycyjności
+          description: List of availability schedule time series
           content:
             application/json:
               schema:
@@ -335,13 +278,17 @@ paths:
               examples:
                 availability_MWE_1year_2series:
                   $ref: '#/components/examples/availability_MWE_1year_2series'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
       security: 
-        - BearerAuth: []
+        - mTLS: []
   /pwdp/api/v1/resources/{mainResourceMrid}/outages:
     get:
-      summary: Pobranie postojów dla zasobu w zadanym zakresie dat
+      summary: Retrieve outages for a resource within the specified date range
       tags:
-        - Aktualne dane planistyczne
+        - Current Planning Data
       operationId: listOutages
       parameters:
         - $ref: '#/components/parameters/MainResourceMrid'
@@ -349,23 +296,52 @@ paths:
         - $ref: '#/components/parameters/End'
       responses:
         '200':
-          description: Lista postojów
+          description: List of outages
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Outage"
+                  $ref: "#/components/schemas/OutageView"
               examples:
                 outages_list:
                   $ref: '#/components/examples/outages_list'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
       security: 
-        - BearerAuth: []
+        - mTLS: []
+  /pwdp/api/v1/resources/{mainResourceMrid}/outages/{unavailabilityMrid}:
+    get:
+      summary: Retrieve outage data in the current plan
+      tags:
+        - Current Planning Data
+      operationId: getOutage
+      parameters:
+        - $ref: '#/components/parameters/MainResourceMrid'
+        - $ref: '#/components/parameters/UnavailabilityMrid'
+      responses:
+        '200':
+          description: Outage data in the current plan
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OutageView"
+              examples:
+                outage_view:
+                  $ref: '#/components/examples/outage_view'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security: 
+        - mTLS: []
   /pwdp/api/v1/resources/{mainResourceMrid}/derates:
     get:
-      summary: Pobranie ubytków dla zasobu w zadanym zakresie dat
+      summary: Retrieve derates for a resource within the specified date range
       tags:
-        - Aktualne dane planistyczne
+        - Current Planning Data
       operationId: listDerates
       parameters:
         - $ref: '#/components/parameters/MainResourceMrid'
@@ -373,23 +349,52 @@ paths:
         - $ref: '#/components/parameters/End'
       responses:
         '200':
-          description: Lista ubytków
+          description: List of derates
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/Derate"
+                  $ref: "#/components/schemas/DerateView"
               examples:
                 derates_list:
                   $ref: '#/components/examples/derates_list'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
       security: 
-        - BearerAuth: []
+        - mTLS: []
+  /pwdp/api/v1/resources/{mainResourceMrid}/derates/{unavailabilityMrid}:
+    get:
+      summary: Retrieve derate data in the current plan
+      tags:
+        - Current Planning Data
+      operationId: getDerate
+      parameters:
+        - $ref: '#/components/parameters/MainResourceMrid'
+        - $ref: '#/components/parameters/UnavailabilityMrid'
+      responses:
+        '200':
+          description: Derate data in the current plan
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/DerateView"
+              examples:
+                derate_view:
+                  $ref: '#/components/examples/derate_view'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security: 
+        - mTLS: []
   /pwdp/api/v1/resources/{mainResourceMrid}/control-malfunctions:
     get:
-      summary: Pobranie niesprawności układów regulacji dla zasobu w zadanym zakresie dat
+      summary: Retrieve control malfunctions for a resource within the specified date range
       tags:
-        - Aktualne dane planistyczne
+        - Current Planning Data
       operationId: listControlMalfunctions
       parameters:
         - $ref: '#/components/parameters/MainResourceMrid'
@@ -397,23 +402,52 @@ paths:
         - $ref: '#/components/parameters/End'
       responses:
         '200':
-          description: Lista niesprawności regulacji
+          description: List of control malfunctions
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/ControlMalfunction"
+                  $ref: "#/components/schemas/ControlMalfunctionView"
               examples:
                 controlMalfunctions_list:
                   $ref: '#/components/examples/controlMalfunctions_list'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
       security: 
-        - BearerAuth: []
+        - mTLS: []
+  /pwdp/api/v1/resources/{mainResourceMrid}/control-malfunctions/{unavailabilityMrid}:
+    get:
+      summary: Retrieve control malfunction data in the current plan
+      tags:
+        - Current Planning Data
+      operationId: getControlMalfunction
+      parameters:
+        - $ref: '#/components/parameters/MainResourceMrid'
+        - $ref: '#/components/parameters/UnavailabilityMrid'
+      responses:
+        '200':
+          description: Control malfunction data in the current plan
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ControlMalfunctionView"
+              examples:
+                controlMalfunction_view:
+                  $ref: '#/components/examples/controlMalfunction_view'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security: 
+        - mTLS: []
   /pwdp/api/v1/resources/{mainResourceMrid}/dispatch-instructions:
     get:
-      summary: Pobranie poleceń ruchowych OSD
+      summary: Retrieve DSO's dispatch instructions
       tags:
-        - Aktualne dane planistyczne
+        - Current Planning Data
       operationId: listDispatchInstructions
       parameters:
         - $ref: '#/components/parameters/MainResourceMrid'
@@ -421,7 +455,7 @@ paths:
         - $ref: '#/components/parameters/End'
       responses:
         '200':
-          description: Lista poleceń ruchowych OSD
+          description: List of dispatch instructions
           content:
             application/json:
               schema:
@@ -429,13 +463,17 @@ paths:
               examples:
                 dispatchInstruction_min_max:
                   $ref: '#/components/examples/dispatchInstruction_min_max'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
       security: 
-        - BearerAuth: []
+        - mTLS: []
   /pwdp/api/v1/resources/{mainResourceMrid}/exchange-schedules:
     get:
-      summary: Pobranie wartości salda wymiany
+      summary: Retrieve exchange schedule
       tags:
-        - Aktualne dane planistyczne
+        - Current Planning Data
       operationId: listExchangeSchedules
       parameters:
         - $ref: '#/components/parameters/MainResourceMrid'
@@ -443,7 +481,7 @@ paths:
         - $ref: '#/components/parameters/End'
       responses:
         '200':
-          description: Poprawnie udostępniono wartości salda wymiany
+          description: Exchange schedule values
           content:
             application/json:
               schema:
@@ -451,13 +489,17 @@ paths:
               examples:
                 exchangeSchedule_1D:
                   $ref: '#/components/examples/exchangeSchedule_1D'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
       security: 
-        - BearerAuth: []
+        - mTLS: []
   /pwdp/api/v1/resources/{mainResourceMrid}/storage-capacities:
     get:
-      summary: Pobranie wartości pojemności użytkowej
+      summary: Retrieve storage capacity values
       tags:
-        - Aktualne dane planistyczne
+        - Current Planning Data
       operationId: listStorageCapacities
       parameters:
         - $ref: '#/components/parameters/MainResourceMrid'
@@ -465,7 +507,7 @@ paths:
         - $ref: '#/components/parameters/End'
       responses:
         '200':
-          description: Poprawnie udostępniono wartości pojemności użytkowej
+          description: Storage capacity values
           content:
             application/json:
               schema:
@@ -473,49 +515,110 @@ paths:
               examples:
                 storageCapacity_1year:
                   $ref: '#/components/examples/storageCapacity_1year'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
       security: 
-        - BearerAuth: []
+        - mTLS: []
+  /pwdp/api/v1/planning/{entityId}/stream:
+    get:
+      summary: Subscribe to planning process events
+      tags:
+        - SSE Notifications
+      operationId: subscribeToEntityStream
+      description: |
+        Opens an SSE stream for the specified entity.
+         
+        Resuming the connection requires providing the Last-Event-ID header.
+      parameters:
+        - name: entityId
+          in: path
+          required: true
+          schema:
+            type: integer
+          description: Identyfikator podmiotu odbierającego powiadomienia o zdarzeniach
+        - name: Last-Event-ID
+          in: header
+          required: false
+          schema:
+            type: string
+          description: |
+            Identyfikator ostatniego otrzymanego zdarzenia.
+            Po podaniu tego parametru przekazywane są informacje o zdarzeniach, które wystąpiły po zdarzeniu o zadanym identyfikatorze.
+      responses:
+        '200':
+          description: Poprawnie nawiązano połączenie.
+          content:
+            text/event-stream:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/ConnectedEvent'
+                  - $ref: '#/components/schemas/HeartbeatEvent'
+                  - $ref: '#/components/schemas/UnavailabilityChangedEvent'
+                  - $ref: '#/components/schemas/SubmissionProcessedEvent'
 components:
   responses:
     Submitted:
-      description: Poprawnie odebrano dane wejściowe i rozpoczęto przetwarzanie
+      description: The input data was successfully received and processing has started
       content:
          application/json:
            schema:
-             $ref: "#/components/schemas/SubmitResponse"
+             $ref: "#/components/schemas/SubmissionStatusResponse"
            examples:
              responseSubmitted:
                $ref: '#/components/examples/responseSubmitted'
     Rejected:
-      description: Wykryto błąd w odebranych danych wejściowych
+      description: An error was detected in the received input data
       content:
          application/json:
            schema:
-             $ref: "#/components/schemas/SubmitResponse"
+             $ref: "#/components/schemas/SubmissionStatusResponse"
            examples:
              responseRejected:
                $ref: '#/components/examples/responseRejected'
-    InternalServerError:
-      description: Wewnętrzny błąd serwera
+    BadRequest:
+      description: Bad request – the input parameters are invalid or incomplete.
       content:
         application/json:
           schema:
             $ref: "#/components/schemas/ErrorResponse"
+          examples:
+            invalidParameters:
+              $ref: '#/components/examples/invalidParameters'
+    NotFound:
+      description: Resource not found – no data exists for the specified parameters.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorResponse"
+          examples:
+            notFound:
+              $ref: '#/components/examples/notFound'
   parameters:
     MainResourceMrid:
       name: mainResourceMrid
       in: path
       required: true
-      description: Identyfikator mRID obiektu
+      description: mRID identifier of the resource
       schema:
         type: string
         maxLength: 60
       example: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+    UnavailabilityMrid:
+      name: unavailabilityMrid
+      in: path
+      required: true
+      description: Unavailability identifier
+      schema:
+        type: string
+        format: uuid
+      example: '12346017-d25d-4952-a3cf-0fa83560e16f'
     Start:
       name: start
       in: query
       required: true
-      description: Data i czas początku zakresu w UTC
+      description: Start date and time of the range in UTC
       schema:
         type: string
         format: date-time
@@ -524,7 +627,7 @@ components:
       name: end
       in: query
       required: true
-      description: Data i czas końca zakresu w UTC
+      description: End date and time of the range in UTC
       schema:
         type: string
         format: date-time
@@ -532,97 +635,87 @@ components:
   schemas:
     ResourceMrid:
       type: string
-      description: Identyfikator mRID obiektu
-      examples: 
+      description: mRID identifier of the resource
+      examples:
         - '_d8736017-d25d-4952-a3cf-0fa83560e16f'
       maxLength: 60
     SubmissionMeta:
       type: object
-      description: Nagłówek zgłoszenia danych planistycznych
+      description: Submission header for planning data
       properties: 
         senderId:
           type: integer
           format: int32
-          description: Identyfikator podmiotu wysyłającego zgłoszenie
-          examples: 
+          description: Identifier of the entity submitting the request
+          examples:
             - 10999
         responsiblePartyId:
           type: integer
           format: int32
-          description: Identyfikator podmiotu odpowiedzialnego za dokonanie zgłoszenia
-          examples: 
+          description: Identifier of the entity responsible for submitting the request
+          examples:
             - 10111
         clientMsgId:
           type: string
-          description: Opcjonalne ID żądania nadane przez klienta API
-          examples: 
-            - '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           maxLength: 36
+          description: Submission ID assigned by the API client
+          examples:
+            - '4bfa71da-146b-4df9-b972-6a5ce18f2342'
         type:
           type: string
-          enum:
-            - POS
-            - UBT
-            - NUR
-            - HRM
-            - PUZ
-            - PLP
-            - PRU
-            - WYM
-          description: Typ komunikatu zgłoszenia
-          examples: 
-            - PLP
-        createdAt:
+          description: Type of the submission message
+        DSOcReceivedAt:
           type: string
           format: date-time
-          description: Czas utworzenia zgłoszenia w UTC
-          examples: 
-            - '2024-03-21T01:23:34.567Z'
-        stdVersion:
-          type: string
-          maxLength: 10
-          description: Wersja standardów B2B
-          examples: 
-            - '1.0'
+          description: >
+            Timestamp of original data received by the DSO (UTC) and transferred to this submission. Field only for the case when DSO is intermediary.
+          examples:
+            - '2024-03-21T01:23:24.567Z'
       required:
         - senderId
         - responsiblePartyId
         - clientMsgId
         - type
-        - createdAt
     TimeSeriesContinuous:
       allOf:
         - $ref: "#/components/schemas/TimeSeries"
         - type: object
-          required: 
-            - seriesPeriods
+          description: >
+           Every period (SeriesPeriodPoints) specifies a time interval and contains an ordered list of change points, 
+           each representing the value that becomes effective from the given position onward until the next change occurs. 
+           This structure is used when the dataset can be represented efficiently by specifying only value transitions
+           rather than full sequences of consecutive time-step values.
           properties:
             seriesPeriods:
               type: array
               items:
                 $ref: "#/components/schemas/SeriesPeriodContinuous"
               description: >
-                Okresy serii danych o stałej rozdzielczości z podanymi 
-                wartościami dla wszystkich punktów czasowych
+                Periods of a time series with fixed resolution, containing values for all time points
     TimeSeriesPoints:
       allOf:
         - $ref: "#/components/schemas/TimeSeries"
         - type: object
-          required: 
-            - seriesPeriods
+          description: >
+            A time series composed of one or more periods, each with its own defined temporal resolution. 
+            Every period (SeriesPeriodContinuous) specifies a time interval and provides an ordered list of 
+            values corresponding to all consecutive time steps within that interval, according to 
+            the resolution defined for that specific period. This structure is used when complete data must be 
+            supplied for every time point within each period.
           properties:
             seriesPeriods:
               type: array
               items:
                 $ref: "#/components/schemas/SeriesPeriodPoints"
               description: >
-                Okresy serii danych o stałej rozdzielczości z podanymi 
-                wartościami dla punktów, w których następuje zmiana wartości
+                Periods of a time series with fixed resolution, containing values only for points where the value changes
     TimeSeries:
       type: object
-      description: >
-        Zestaw danych dla wybranego parametru obejmujący wektor (serię) wartości
-        wraz z wielkościami dla wskazanego parametru wybranego obiektu
+      description: |
+        A time series representing a sequence of values for a specific parameter of a resource.
+        Each series is uniquely identified within a submission and contains metadata describing the business context, measurement unit, curve type, and the resource to which the data applies.
+        The actual values are provided through one or more time periods, whose structure depends on the curve type (continuous values for each interval or discrete points where values change).
+        TimeSeries objects are used consistently across schedules, availabilities, dispatch instructions, exchange schedules, and other planning datasets.
       required:
         - tsId
         - businessType
@@ -633,14 +726,14 @@ components:
         tsId:
           type: integer
           format: int32
-          description: Identyfikator serii, unikalny w ramach zgłoszenia
+          description: Series identifier, unique within the submission
           examples:
             - 1
             - 2
         businessType:
           type: string
           maxLength: 5
-          description: Typ opisujący serię danych
+          description: Business type describing the data series
           examples:
             - MCSR
         direction:
@@ -648,17 +741,17 @@ components:
         measurementUnit:
           type: string
           description: |
-            Jednostka miary dla wartości
-            - MAW - megawat
-            - MWH - megawatogodzina
-            - FLAG - wartość numeryczna interpretowana zgodnie z businessType
+            Unit of measurement for the values
+            - MAW - megawatt
+            - MWH - megawatt-hour
+            - FLAG - numeric value interpreted according to the businessType
           enum:
             - MAW
             - MWH
             - FLAG
         resourceMrid:
           $ref: "#/components/schemas/ResourceMrid"
-          description: Identyfikator obiektu, którego dotyczy seria danych
+          description: mRID identifier of the resource to which the data series applies
         curveType:
           $ref: "#/components/schemas/CurveType"
       discriminator:
@@ -668,21 +761,32 @@ components:
           A03: "#/components/schemas/TimeSeriesPoints"
     SeriesPeriodContinuous:
       type: object
-      description: Seria danych w podanym okresie (szereg czasowy)
+      description: >
+        Represents a continuous segment of a time series within a defined time interval.
+        Each segment specifies a fixed temporal resolution and provides a list of
+        consecutive data points aligned with that resolution.
       properties:
         timeInterval:
           $ref: "#/components/schemas/TimeInterval"
-          description: Przedział czasowy - zakres szeregu czasowego
+          description: >
+            UTC time interval defining the exact range covered by this period of the
+            time series. The interval determines how many data points are expected
+            based on the specified resolution.
         resolution:
           $ref: "#/components/schemas/Resolution"
+          description: >
+            Temporal granularity of the series (e.g., 15-minute hourly, daily, monthly). The
+            resolution defines the spacing between consecutive data points.
         continuousSeriesPoints:
           type: array
           description: >
-            Lista wartości dla kolejnych punktów w czasie dla zadanego
-            okresu, zgodnie z przyjętą rozdzielczością
+            Ordered list of values for consecutive time steps within the period,
+            aligned with the defined resolution. Null values may be used to indicate
+            missing or unavailable data.
+          minItems: 1
           items:
             type: [number, "null"]
-          examples: 
+          examples:
             - [12.345, 10.001]
       required:
         - resolution
@@ -690,16 +794,23 @@ components:
         - continuousSeriesPoints
     SeriesPeriodPoints:
       type: object
-      description: Seria danych w podanym okresie (szereg czasowy)
+      description: >
+        Represents a segment of a time series containing only the points where the value changes.
+        Each point specifies a positional index, while the actual timestamp is derived from the period’s timeInterval and resolution.
       properties:
         timeInterval:
           $ref: "#/components/schemas/TimeInterval"
-          description: Przedział czasowy - zakres szeregu czasowego
+          description: UTC time interval defining the range within which value-change points may occur.
         resolution:
           $ref: "#/components/schemas/Resolution"
+          description: Declared temporal resolution of the period. Used to interpret point positions and compute their actual timestamps.
         seriesPoints:
           type: array
-          description: Tablica punktów i wartości
+          minItems: 1
+          description: >
+            An array of points representing consecutive moments where the value changes. 
+            Each point specifies a positional index. 
+            Points may appear at irregular intervals as long as they fall within the defined time interval.
           items:
             $ref: "#/components/schemas/SeriesPoint"
       required:
@@ -708,98 +819,111 @@ components:
         - seriesPoints
     SeriesPoint:
       type: object
-      description: Wartość parametru w danym punkcie czasu (np. na daną godzinę)
+      description: >
+        Represents the value of a time series at a specific position within the period.
+        The timestamp is not stored directly and is derived from the point’s position, 
+        the period’s timeInterval and its resolution.
       properties:
         position:
           type: integer
           format: int32
           description: >
-            Kolejny numer pozycji (punktu czasowego), interpertowany w
-            zależności od SeriesPeriod.timeInterval oraz SeriesPeriod.resolution
+            Sequential index of the time step within the period. 
+            The actual timestamp is computed based on this index, the period’s time interval, and its resolution.
           examples: 
             - 1
         quantity:
           type: [number, "null"]
-          description: "Wartość dla wskazanego punktu czasowego oraz wielkości"
+          description: The value associated with the given time step.
           examples: 
             - 42.128
       required:
         - position
-        - quantity
     TimeSeriesData:
       type: object
-      description: Dane grafikowe
+      description: >
+        Container for planning or operational data expressed as one or more time series.
+        It identifies the resource to which the data applies, defines the time interval
+        covered by the dataset, and provides the collection of time-series structures
+        containing the actual values. Used in both submissions and retrieval endpoints
+        to represent schedules, availabilities, exchange programs, and other
+        planning-related datasets.
       properties:
         mainResourceMrid:
           $ref:  "#/components/schemas/ResourceMrid"
-          description: Identyfikator obiektu, którego dotyczy zgłoszenie
+          description: mRID identifier of the resource to which the data applies.
         dataPeriod:
           $ref: "#/components/schemas/TimeInterval"
-          description: Przedział czasowy określający zakres przekazywanych danych
+          description: Time interval defining the range of the provided data.
         timeSeries:
           type: array
-          description: Serie danych
+          description: Time series.
+          minItems: 1
           items:
             $ref: "#/components/schemas/TimeSeries"
       required:
         - dataPeriod
         - timeSeries
         - mainResourceMrid
-    TimeSeriesSubmission:
-      type: object
-      description: Zgłoszenie w postaci serii danych
-      properties: 
-        meta:
-          $ref: "#/components/schemas/SubmissionMeta"
-        data:
-          $ref: "#/components/schemas/TimeSeriesData" 
-      required:
-        - meta
-        - data
     Unavailability:
       type: object
-      description: Dane niedostępności
+      description: >
+          Represents a declared unavailability of a resource or one of its components.
+          The object identifies the unavailability instance, defines the affected time
+          interval, and specifies whether the event applies to the entire resource or
+          only a specific component. It also includes sequencing information to ensure
+          correct processing of subsequent updates related to the same unavailability.
       properties:
         unavailabilityMrid:
           type: string
           format: uuid
-          description: |
-            Identyfikator niedostępności. 
-            Nadawany przez zgłaszającego podczas zgłoszenia nowej niedostępności.
+          description: >
+            Unique identifier of the unavailability event. Assigned by the submitting
+            party when reporting a new unavailability. All subsequent updates or
+            withdrawals must reference the same identifier.
           examples: 
             - 'd8736017-d25d-4952-a3cf-0fa83560e16f'
         unavailabilityPeriod:
           $ref: '#/components/schemas/TimeIntervalMarks'
-          description: Przedział czasowy niedostępności
+          description: >
+            Time interval during which the resource or component is unavailable.
         mainResourceMrid:
           $ref:  "#/components/schemas/ResourceMrid"
-          description: Identyfikator obiektu, którego dotyczy niedostępność
+          description: >
+            Identifier of the resource affected by the unavailability.
         isComponent:
           type: boolean
-          description: Czy niedostępność dotyczy tylko jednej ze składowych obiektu
+          description: >
+            Indicates whether the unavailability applies only to a specific component
+            of the resource rather than the entire resource.
           default: false
           examples: 
             - true
         resourceComponentMrid:
           $ref:  "#/components/schemas/ResourceMrid"
           description: >
-            Identyfikator składowej obiektu, której dotyczy niedostępność. 
-            Wymagany w przypadku gdy isComponent = true
+            Identifier of the affected resource component. Required when
+            `isComponent = true`. Used to precisely indicate which part of the
+            resource is unavailable.
           examples:
             - '_e8736017-d25d-4952-a3cf-0fa83560e0000'
         orderNo:
           type: integer
           format: int32
-          description: |
-            Numer kolejnego zgłoszenia (nie mniejszy niż 1) w ramach niedostępności o określonym identyfikatorze. Dla kolejnych dokumentów dotyczących zgłaszanej niedyspozycyjności numer powinien być rosnący.
-            Pole służące prawidłowej kolejności obsługi zgłoszeń. 
+          minimum: 1
+          description: >
+            Sequential number of the submission related to this unavailability.
+            Must be greater than or equal to 1. Each subsequent update or withdrawal
+            for the same unavailability must use an incremented value. Ensures
+            correct chronological processing of related submissions.
           examples: 
             - 1
             - 2
         businessType:
           type: string
           maxLength: 5
-          description: Typ danych
+          description: >
+            Business classification of the unavailability data (e.g., `POS`).
           examples: 
             - POS
         direction:
@@ -812,91 +936,335 @@ components:
         - businessType
     UnavailabilityWithdraw:
       type: object
-      description: Dane wycofywanej niedostępności
+      description: >
+          Represents a withdrawal request for a previously reported unavailability.
+          This object identifies the unavailability to be withdrawn, specifies the
+          affected resource, and provides a sequential submission number to ensure
+          correct chronological processing of updates related to the same
+          unavailability event.
       properties:
         unavailabilityMrid:
           type: string
           format: uuid
-          description: |
-            Identyfikator niedostępności. 
-            Nadawany przez zgłaszającego podczas zgłoszenia nowej niedostępności.
+          description: >
+            Unique identifier of the unavailability event being withdrawn.
+            Originally assigned by the submitting party when the unavailability
+            was first reported. All withdrawal requests must reference this
+            identifier.
           examples: 
             - 'd8736017-d25d-4952-a3cf-0fa83560e16f'
         mainResourceMrid:
           $ref:  "#/components/schemas/ResourceMrid"
-          description: Identyfikator obiektu, którego dotyczy wycofywana niedostępność
+          description: >
+            Identifier of the resource for which the unavailability is being
+            withdrawn.
         orderNo:
           type: integer
           format: int32
-          description: |
-            Numer kolejnego zgłoszenia (nie mniejszy niż 1) w ramach niedostępności o określonym identyfikatorze. Dla kolejnych dokumentów dotyczących zgłaszanej niedyspozycyjności numer powinien być rosnący.
-            Pole służące prawidłowej kolejności obsługi zgłoszeń. 
+          description: >
+            Sequential number of the submission related to this unavailability.
+            Must be greater than or equal to 1. Each subsequent update or
+            withdrawal for the same unavailability must use an incremented value.
+            Ensures correct chronological processing of related submissions.
       required:
         - unavailabilityMrid
         - mainResourceMrid
         - orderNo
-    OutageSubmission:
+    ScheduleSubmission:
       type: object
-      description: Zgłoszenie postoju
+      description: >
+        Represents a complete work schedule submission for a specific resource.
+        The object combines metadata describing the submission context with the
+        time-series dataset containing the actual schedule values. Used by 
+        participants to provide planned generation, consumption, or other
+        resource-related schedules within a defined time interval.
       properties: 
         meta:
-          $ref: "#/components/schemas/SubmissionMeta" 
+          $ref: "#/components/schemas/ScheduleSubmissionMeta"
         data:
-          type: object
-          required:
-            - operationType
-          properties:
-            operationType:
-              $ref: "#/components/schemas/OperationType"
-            changeDescription:
-              type: string
-              maxLength: 512
-              description: |
-                Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia, tj. aktualizacji bądź wycofania tym zgłoszeniem postoju.
-
-                Dla każdego zgłoszenia może być inna przyczyna zmiany.
-              examples: 
-                - 'Opis przyczyny zgłoszenia'
-          oneOf: 
-            - $ref: "#/components/schemas/OutageData"
-            - $ref: "#/components/schemas/OutageWithdrawData"
-          discriminator: 
-            propertyName: operationType
-            mapping:
-              U: "#/components/schemas/OutageData"
-              M: "#/components/schemas/OutageData"
-              W: "#/components/schemas/OutageWithdrawData"
+          $ref: "#/components/schemas/TimeSeriesData"
+          description: >
+            The time-series dataset representing the submitted schedule. Contains
+            the resource identifier, the applicable time interval, and one or more
+            time series with the actual schedule values.
       required:
         - meta
         - data
-    OutageData:
+    ScheduleSubmissionMeta:
+      description: >
+        Metadata describing a work schedule submission. Extends the generic
+        submission metadata with a mandatory business type identifying the
+        submission as a planning schedule (PLP).
+      allOf:
+        - $ref: "#/components/schemas/SubmissionMeta"
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [PLP]
+              description: >
+                Business classification of the submission. For work schedule
+                submissions, the value must be `PLP`, indicating a planning
+                schedule dataset.
+          required: 
+            - type
+    AvailabilitySubmission:
       type: object
-      description: Dane zgłoszenia postoju
+      description: >
+        Represents a complete availability schedule submission for a specific resource.
+        The object combines submission metadata with the time-series dataset containing
+        the declared availability values. Used by participants to report the
+        expected availability of a resource within a defined time interval, including
+        planned operational constraints.
       properties: 
-        outage:
-          $ref: "#/components/schemas/Outage"
+        meta:
+          $ref: "#/components/schemas/AvailabilitySubmissionMeta"
+        data:
+          $ref: "#/components/schemas/TimeSeriesData"
+          description: >
+            The time-series dataset representing the declared availability of the
+            resource. Contains the resource identifier, the applicable time interval,
+            and one or more time series with the availability values.
       required:
-        - outage
+        - meta
+        - data
+    AvailabilitySubmissionMeta:
+      description: >
+        Metadata describing an availability schedule submission. Extends the generic
+        submission metadata with a mandatory business type identifying the dataset as
+        an availability report (HRM).
+      allOf:
+        - $ref: "#/components/schemas/SubmissionMeta"
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [HRM]
+              description: >
+                Business classification of the submission. For availability schedules,
+                the value must be `HRM`, indicating an availability dataset.
+          required: 
+            - type
+    DispatchInstructionSubmission:
+      type: object
+      description: >
+        Represents a complete dispatch instruction submission for a specific resource.
+        The object combines submission metadata with the time-series dataset containing
+        the instructed operating values. Used by distribution system
+        operators to communicate dispatch instructions that apply to a resource within
+        a defined time interval.
+      properties: 
+        meta:
+          $ref: "#/components/schemas/DispatchInstructionSubmissionMeta"
+        data:
+          $ref: "#/components/schemas/TimeSeriesData"
+          description: >
+            The time-series dataset representing the dispatch instruction. Contains
+            the resource identifier, the applicable time interval, and one or more
+            time series with the instructed operating values.
+      required:
+        - meta
+        - data
+    DispatchInstructionSubmissionMeta:
+      description: >
+        Metadata describing a dispatch instruction submission. Extends the generic
+        submission metadata with a mandatory business type identifying the dataset as
+        a dispatch instruction (PRU).
+      allOf:
+        - $ref: "#/components/schemas/SubmissionMeta"
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [PRU]
+              description: >
+                Business classification of the submission. For dispatch instructions,
+                the value must be `PRU`, indicating a dispatch instruction dataset.
+          required: 
+            - type
+    ExchangeScheduleSubmission:
+      type: object
+      description: >
+        Represents a complete exchange schedule submission for a specific 
+        interconnection. The object combines submission metadata with the time-series
+        dataset containing the scheduled exchange values. Used by
+        system operators to report planned cross-border exchanges within a
+        defined time interval.
+      properties: 
+        meta:
+          $ref: "#/components/schemas/ExchangeScheduleSubmissionMeta"
+        data:
+          $ref: "#/components/schemas/TimeSeriesData"
+          description: >
+            The time-series dataset representing the exchange schedule. Contains the
+            resource identifier, the applicable time interval, and time series with 
+            the scheduled exchange values.
+      required:
+        - meta
+        - data
+    ExchangeScheduleSubmissionMeta:
+      description: >
+        Metadata describing an exchange schedule submission. Extends the generic
+        submission metadata with a mandatory business type identifying the dataset as
+        an exchange schedule (WYM).
+      allOf:
+        - $ref: "#/components/schemas/SubmissionMeta"
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [WYM]
+              description: >
+                Business classification of the submission. For exchange schedules,
+                the value must be `WYM`, indicating an exchange schedule dataset.
+          required: 
+            - type
+    StorageCapacitySubmission:
+      type: object
+      description: >
+        Represents a complete storage capacity submission for an energy storage
+        resource. The object combines submission metadata with the time-series dataset
+        containing the declared storage capacity values.
+      properties: 
+        meta:
+          $ref: "#/components/schemas/StorageCapacitySubmissionMeta"
+        data:
+          $ref: "#/components/schemas/TimeSeriesData" 
+          description: >
+            The time-series dataset representing the storage capacity information.
+            Contains the resource identifier, the applicable time interval, and time series 
+            with the declared capacity values.
+      required:
+        - meta
+        - data
+    StorageCapacitySubmissionMeta:
+      description: >
+        Metadata describing a storage capacity submission. Extends the generic
+        submission metadata with a mandatory business type identifying the dataset as
+        a storage capacity report (PUZ).
+      allOf:
+        - $ref: "#/components/schemas/SubmissionMeta"
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [PUZ]
+              description: >
+                Business classification of the submission. For storage capacity
+                datasets, the value must be `PUZ`, indicating a storage capacity
+                submission.
+          required: 
+            - type
+    OutageSubmission:
+      type: object
+      description: >
+        Represents a complete outage submission for a specific resource. The object
+        combines submission metadata with the outage-related data, which may represent
+        the creation, modification, or withdrawal of an outage depending on the
+        operation type.
+      properties: 
+        meta:
+          $ref: "#/components/schemas/OutageSubmissionMeta" 
+        data:
+          $ref: "#/components/schemas/OutageSubmissionData" 
+      required:
+        - meta
+        - data
+    OutageSubmissionMeta:
+      description: >
+        Metadata describing an outage submission. Extends the generic submission
+        metadata with a mandatory business type identifying the dataset as an outage
+        report (POS).
+      allOf:
+        - $ref: "#/components/schemas/SubmissionMeta"
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [POS]
+              description: >
+                Business classification of the submission. For outage reports, the
+                value must be `POS`, indicating an outage dataset.
+          required: 
+            - type
+    OutageSubmissionData:
+      type: object
+      description: >
+        Base type for outage submission data. The final structure depends on the
+        value of `operationType`, which determines whether the submission represents
+        the creation, modification, or withdrawal of an outage.
+      properties: 
+        operationType:
+          $ref: "#/components/schemas/OperationType"
+        changeDescription:
+          type: string
+          maxLength: 512
+          description: >
+            Descriptive field explaining the reason for the change submitted
+            with this request, such as an update or withdrawal of an existing outage.
+            Each submission may provide a different justification.
+          examples: 
+            - 'Opis przyczyny zgłoszenia'
+      discriminator: 
+        propertyName: operationType
+        mapping:
+          CREATE: "#/components/schemas/OutageCreateData"
+          MODIFY: "#/components/schemas/OutageModifyData"
+          WITHDRAW: "#/components/schemas/OutageWithdrawData"
+      required:
+        - operationType
+    OutageCreateData:
+      description: >
+        Represents the data submitted when creating an outage. Extends
+        the base outage submission data with the full outage definition.
+      allOf:
+        - $ref: "#/components/schemas/OutageSubmissionData"
+        - type: object
+          required: 
+            - outage
+          properties:
+            outage:
+              $ref: "#/components/schemas/Outage"
+    OutageModifyData:
+      description: >
+        Represents the data submitted when modifying an outage. Extends
+        the base outage submission data with the full outage definition.
+      allOf:
+        - $ref: "#/components/schemas/OutageSubmissionData"
+        - type: object
+          required:
+            - outage
+          properties:
+            outage:
+              $ref: "#/components/schemas/Outage"
     OutageWithdrawData:
-      type: object
-      description: Dane zgłoszenia wycofania postoju
-      properties: 
-        outage:
-          $ref: "#/components/schemas/UnavailabilityWithdraw"
-      required:
-        - outage
+      description: >
+        Represents the data submitted when withdrawing an existing outage. Extends the
+        base outage submission data with the withdrawal-specific structure.
+      allOf:
+        - $ref: "#/components/schemas/OutageSubmissionData"
+        - type: object
+          required: 
+            - outage
+          properties:
+            outage:
+              $ref: "#/components/schemas/UnavailabilityWithdraw"
     Outage:
+      description: >
+        Represents the full definition of an outage, extending the generic
+        unavailability structure with additional attributes specific to outage
+        reporting. Includes recoverability information, a detailed reason description,
+        and an optional startup schedule describing the resource’s restart profile.
       allOf:
         - $ref: "#/components/schemas/Unavailability"
         - type: object
-          description: Dane postoju
           properties:
             recoverable:
               type: boolean
               description: |
-                Zdolność odzyskania dyspozycyjności
-                - true – odzyskanie możliwe
-                - false – odzyskanie niemożliwe
+                Indicates whether the resource is capable of recovering its availability:
+                - true – recovery is possible
+                - false – recovery is not possible.
             reasonDescription:
               $ref: '#/components/schemas/ReasonDescription'
             startupSchedule:
@@ -906,39 +1274,41 @@ components:
             - reasonDescription
     StartupSchedule:
       type: object
-      description: 'Uruchomienie dodatkowe'
+      description: >
+        Describes the startup characteristics of a resource following an outage.
       properties:
         synchroTime:
           type: integer
           description: >
-            Czas od rozpoczęcia uruchamiania do synchronizacji,
-            określany w minutach jako wielokrotność OREB
+            Time from the start of the startup process to synchronization, expressed
+            in minutes as a multiple of the balancing settlement period (OREB) interval.
           examples:
             - 15
         pminTime:
           type: integer
           description: > 
-            Czas od synchronizacji do osiągnięcia Pmin, określany w
-            minutach jako wielokrotność OREB
+            Time from synchronization to reaching Pmin, expressed in minutes as a
+            multiple of the balancing settlement period (OREB) interval.
           examples:
             - 30
         measurementUnit:
           type: string
-          description: Pole określające jednostkę dla podawanych poziomów mocy
+          description: Unit of measurement for the provided power levels.
           enum:
             - MAW
         curveType:
           type: string
-          description: Typ krzywej określający sposób przekazywania wartości
+          description: Curve type defining how the startup values are represented.
           enum:
             - A01
         resolution:
           $ref: "#/components/schemas/Resolution"
         continuousSeriesPoints:
           type: array
+          minItems: 1
           description: >
-            Lista wartości dla kolejnych punktów w czasie dla zadanego 
-            okresu, zgodnie z przyjętą rozdzielczością
+            Array of numerical values representing consecutive points in time for the
+            defined startup period, according to the specified resolution.
           items:
             type: number
           examples: 
@@ -950,73 +1320,141 @@ components:
         - curveType
         - resolution
         - continuousSeriesPoints
+    OutageView:
+      description: >
+        Represents the current state of an outage within the active planning dataset.
+        Extends the outage definition with a status indicating whether the outage is
+        active or has been withdrawn.
+      allOf:
+        - $ref: "#/components/schemas/Outage"
+        - type: object
+          description: Dane postoju w aktualnym planie
+          properties:
+            state:
+              type: string
+              enum:
+                - ACTIVE
+                - WITHDRAWN
+              description: |
+                Current state of the outage within the plan:
+                - ACTIVE – the outage is active in the plan
+                - WITHDRAWN – the outage has been withdrawn.
+          required:
+            - state
     DerateSubmission:
       type: object
-      description: Zgłoszenie ubytku
+      description: >
+        Represents a complete derate submission for a specific resource. The object
+        combines submission metadata with the derate-related payload, which may
+        represent the creation, modification, or withdrawal of a derate depending on
+        the declared operation type.
       properties: 
         meta:          
-          $ref: "#/components/schemas/SubmissionMeta" 
+          $ref: "#/components/schemas/DerateSubmissionMeta" 
         data:
-          type: object
-          required:
-            - operationType
-          properties:
-            operationType:
-              $ref: "#/components/schemas/OperationType"
-            changeDescription:
-              type: string
-              maxLength: 512
-              description: |
-                Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia.
-
-                Dla każdego zgłoszenia może być inna przyczyna zmiany.
-              examples: 
-                - 'Opis przyczyny zgłoszenia'
-          oneOf: 
-            - $ref: "#/components/schemas/DerateData"
-            - $ref: "#/components/schemas/DerateWithdrawData"
-          discriminator: 
-            propertyName: operationType
-            mapping:
-              U: "#/components/schemas/DerateData"
-              M: "#/components/schemas/DerateData"
-              W: "#/components/schemas/DerateWithdrawData"
+          $ref: "#/components/schemas/DerateSubmissionData" 
       required:
         - meta
         - data
-    DerateData:
+    DerateSubmissionMeta:
+      description: >
+        Metadata describing a derate submission. Extends the generic submission
+        metadata with a mandatory business type identifying the dataset as a derate
+        report (UBT).
+      allOf:
+        - $ref: "#/components/schemas/SubmissionMeta"
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [UBT]
+              description: >
+                Business classification of the submission. For derate reports, the value must be UBT.
+          required: 
+            - type
+    DerateSubmissionData:
+      description: >
+        Base type for derate submission data. The final structure depends on the
+        value of `operationType`, which determines whether the submission represents
+        the creation, modification, or withdrawal of a derate.
       type: object
-      description: Dane zgłoszenia ubytku
-      properties: 
-        derate:
-          $ref: "#/components/schemas/Derate"
+      properties:
+        operationType:
+          $ref: "#/components/schemas/OperationType"
+        changeDescription:
+          type: string
+          maxLength: 512
+          description: |
+            Descriptive field explaining the reason for the change submitted with this request. Each submission may provide a different justification.
+          examples: 
+            - 'Opis przyczyny zgłoszenia'
+      discriminator: 
+        propertyName: operationType
+        mapping:
+          CREATE: "#/components/schemas/DerateCreateData"
+          MODIFY: "#/components/schemas/DerateModifyData"
+          WITHDRAW: "#/components/schemas/DerateWithdrawData"
       required:
-        - derate
+        - operationType
+    DerateCreateData:
+      description: >
+        Represents the data submitted when creating a derate. Extends
+        the base derate submission data with the full derate definition.
+      allOf: 
+        - $ref: "#/components/schemas/DerateSubmissionData"
+        - type: object
+          properties: 
+            derate:
+              $ref: "#/components/schemas/Derate"
+          required:
+            - derate
+    DerateModifyData:
+      description: >
+        Represents the data submitted when modifying a derate. Extends
+        the base derate submission data with the full derate definition.
+      allOf:
+        - $ref: "#/components/schemas/DerateSubmissionData"
+        - type: object
+          properties:
+            derate:
+              $ref: "#/components/schemas/Derate"
+          required:
+            - derate
     DerateWithdrawData:
-      type: object
-      description: Dane zgłoszenia wycofania ubytku
-      properties: 
-        derate:
-          $ref: "#/components/schemas/UnavailabilityWithdraw"
-      required:
-        - derate
+      description: >
+        Represents the data submitted when withdrawing an existing derate.
+      allOf:
+        - $ref: "#/components/schemas/DerateSubmissionData"
+        - type: object
+          description: Dane zgłoszenia wycofania ubytku
+          properties: 
+            derate:
+              $ref: "#/components/schemas/UnavailabilityWithdraw"
+          required:
+            - derate
     Derate:
+      description: >
+        Represents the full definition of a derate, extending the generic
+        unavailability structure with additional attributes specific to derate
+        reporting.
       allOf:
         - $ref: "#/components/schemas/Unavailability"
         - type: object
-          description: Dane ubytku
           properties:
             recoverable:
               type: boolean
               description: |
-                Zdolność odzyskania dyspozycyjności
-                - true – odzyskanie możliwe
-                - false – odzyskanie niemożliwe
+                Indicates whether the resource is capable of recovering its availability:
+                - true – recovery is possible
+                - false – recovery is not possible.
             reasonDescription:
               $ref: '#/components/schemas/ReasonDescription'
             timeSeries:
               type: array
-              description: Serie danych planu pracy
+              minItems: 1
+              description: >
+                List of time-series datasets describing the derate values for the affected
+                resource. Must contain at least one series.
               items:
                 $ref: "#/components/schemas/DerateTimeSeries"
           required:
@@ -1025,13 +1463,17 @@ components:
             - timeSeries
     DerateTimeSeries:
       type: object
-      description: Zestaw danych dla wybranego parametru obejmujący wektor (serię)
-        \ wartości wraz z wielkościami dla wskazanego parametru wybranego obiektu
+      description: >
+        Represents a set of derate values for a specific parameter of the resource.
+        Contains a unique series identifier, a flag indicating whether the series
+        represents the declared derate or a potential derate after possible recovery,
+        the measurement unit, curve type, and a list of period-based data points.
       properties:
         tsId:
           type: integer
           format: int32
-          description: Identyfikator serii, unikalny w ramach zgłoszenia
+          description: >
+            Identifier of the time series, unique within the submission.
           examples:
             - 1
             - 2
@@ -1040,31 +1482,28 @@ components:
           enum: 
             - UOBW
             - UPOD
-          description: | 
-            Pole powiązane z polem zdolności odzyskania dyspozycyjności (recoverable).
-
-            Pole odróżniające sekcję  z parametrami ubytku zgodnie z oczekiwaniami zgłaszającego od sekcji z parametrami potencjalnego ubytku, przewidywanego w sytuacji możliwego odzyskania dyspozycyjności.
-
-            Dopuszczalne wartości:
-            - UOBW - ubytek zgłaszany, obowiązujący zgodnie z oczekiwaniami zgłaszającego
-            - UPOD - potencjalny ubytek, przewidywany po możliwym odzyskaniu dyspozycyjności
-
-            Sekcja z wartością UOBW powinna wystąpić w każdym zgłoszeniu ubytku.
-
-            Sekcja z wartością UPOD ma charakter informacyjny i jest opcjonalna. Może wystąpić wyłącznie, jeśli jest podana sekcja z wartością UOBW, a także jeśli pole zdolności odzyskania dyspozycyjności wskazuje, że odzyskanie jest możliwe.
+          description: >
+            Flag associated with the recoverability attribute. Distinguishes between the
+            declared derate (`UOBW`) and the potential derate after possible recovery
+            (`UPOD`). The `UOBW` section is mandatory. The `UPOD` section is optional and
+            allowed only if recovery is possible.
         measurementUnit:
           type: string
-          description: Jednostka miary dla wartości
+          description: Unit of measurement for the provided values. Allowed value MAW.
           enum: 
             - MAW
         curveType:
           type: string
           enum: 
             - A03
-          description: Typ krzywej określający sposób przekazywania wartości
+          description: >
+            Curve type defining how the derate values are represented. Allowed value: A03.
         seriesPeriods:
           type: array
-          description: Tablica serii danych w podanych okresach
+          minItems: 1
+          description: >
+            Array of period-based data series describing the derate values over time.
+            Must contain at least one element.
           items:
             $ref: "#/components/schemas/SeriesPeriodPoints"
       required:
@@ -1073,87 +1512,183 @@ components:
         - measurementUnit
         - curveType
         - seriesPeriods
+    DerateView:
+      description: >
+        Represents the current state of a derate within the active planning dataset.
+        Extends the derate definition with a status indicating whether the derate is
+        active or has been withdrawn from the plan.
+      allOf:
+        - $ref: "#/components/schemas/Derate"
+        - type: object
+          properties:
+            state:
+              type: string
+              enum:
+                - ACTIVE
+                - WITHDRAWN
+              description: |
+                Current status of the derate within the active plan:
+                - ACTIVE – the derate is active in the plan
+                - WITHDRAWN – the derate has been withdrawn.
+          required:
+            - state
     ControlMalfunctionSubmission:
       type: object
-      description: Zgłoszenie niesprawności układu regulacji
+      description: >
+        Represents a complete control malfunction submission for a specific resource.
+        The object combines submission metadata with the malfunction-related payload,
+        which may represent the creation, modification, or withdrawal of a control
+        malfunction depending on the declared operation type.
       properties: 
         meta:          
-          $ref: "#/components/schemas/SubmissionMeta" 
+          $ref: "#/components/schemas/ControlMalfunctionSubmissionMeta"
         data:
-          type: object
-          required:
-            - operationType
-          properties:
-            operationType:
-              $ref: "#/components/schemas/OperationType"
-            changeDescription:
-              type: string
-              maxLength: 512
-              description: |
-                Pole opisowe z informacją o przyczynie zmiany przekazywanej za pomocą tego zgłoszenia.
-
-                Dla każdego zgłoszenia może być inna przyczyna zmiany.
-              examples: 
-                - 'Opis przyczyny zgłoszenia'
-          oneOf: 
-            - $ref: "#/components/schemas/ControlMalfunctionData"
-            - $ref: "#/components/schemas/ControlMalfunctionWithdrawData"
-          discriminator: 
-            propertyName: operationType
-            mapping:
-              U: "#/components/schemas/ControlMalfunctionData"
-              M: "#/components/schemas/ControlMalfunctionData"
-              W: "#/components/schemas/ControlMalfunctionWithdrawData"
+          $ref: "#/components/schemas/ControlMalfunctionSubmissionData"
       required:
         - meta
         - data
-    ControlMalfunctionData:
+    ControlMalfunctionSubmissionMeta:
+      description: >
+        Metadata describing a control malfunction submission. Extends the generic
+        submission metadata with a mandatory business type identifying the dataset as
+        a control malfunction report (NUR).
+      allOf:
+        - $ref: "#/components/schemas/SubmissionMeta"
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [NUR]
+          description: >
+            Business classification of the submission. For control malfunction reports,
+            the value must be `NUR`, indicating a control malfunction dataset.
+          required: 
+            - type
+    ControlMalfunctionSubmissionData:
+      description: >
+        Base type for control malfunction submission data. The final structure depends
+        on the value of `operationType`, which determines whether the submission
+        represents the creation, modification, or withdrawal of a control malfunction.
       type: object
-      description: Dane zgłoszenia niesprawności regulacji
       properties:
-        controlMalfunction:
-          $ref: "#/components/schemas/ControlMalfunction"
+        operationType:
+          $ref: "#/components/schemas/OperationType"
+        changeDescription:
+          type: string
+          maxLength: 512
+          description: >
+            Descriptive field explaining the reason for the change submitted with
+            this request. Each submission may provide a different justification.
+          examples: 
+            - 'Opis przyczyny zgłoszenia'
+      discriminator: 
+        propertyName: operationType
+        mapping:
+          CREATE: "#/components/schemas/ControlMalfunctionCreateData"
+          MODIFY: "#/components/schemas/ControlMalfunctionModifyData"
+          WITHDRAW: "#/components/schemas/ControlMalfunctionWithdrawData"
       required:
-        - controlMalfunction
+        - operationType
+    ControlMalfunctionCreateData:
+      description: >
+        Represents the data submitted when creating a control
+        malfunction.
+      allOf:
+        - $ref: "#/components/schemas/ControlMalfunctionSubmissionData"
+        - type: object
+          properties:
+            controlMalfunction:
+              $ref: "#/components/schemas/ControlMalfunction"
+          required:
+            - controlMalfunction
+    ControlMalfunctionModifyData:
+      description: >
+        Represents the data submitted when modifying a control
+        malfunction.
+      allOf:
+        - $ref: "#/components/schemas/ControlMalfunctionSubmissionData"
+        - type: object
+          properties:
+            controlMalfunction:
+              $ref: "#/components/schemas/ControlMalfunction"
+          required:
+            - controlMalfunction
     ControlMalfunctionWithdrawData:
-      type: object
-      description: Dane zgłoszenia wycofania ubytku
-      properties: 
-        controlMalfunction:
-          $ref: "#/components/schemas/UnavailabilityWithdraw"
-      required:
-        - controlMalfunction
+      description: >
+        Represents the data submitted when withdrawing an existing control
+        malfunction.
+      allOf:
+        - $ref: "#/components/schemas/ControlMalfunctionSubmissionData"
+        - type: object
+          properties: 
+            controlMalfunction:
+              $ref: "#/components/schemas/UnavailabilityWithdraw"
+          required:
+            - controlMalfunction
     ControlMalfunction:
+      description: >
+        Represents the full definition of a control malfunction, extending the generic
+        unavailability structure with additional descriptive information specific to
+        failures of the control or regulation system.
       allOf:
         - $ref: "#/components/schemas/Unavailability"
         - type: object
-          description: Niesprawność układu regulacji
           properties:
             reasonDescription:
               type: string
-              description: Dodatkowy opis przyczyny niedostępności
+              description: >
+                Additional descriptive information explaining the reason for the control
+                malfunction.
               maxLength: 512
               examples: 
                 - 'Dodatkowy opis przyczyny niedostępności'
+    ControlMalfunctionView:
+      description: >
+        Represents the current state of a control malfunction within the active
+        planning dataset. Extends the malfunction definition with a status indicating
+        whether the malfunction is active or has been withdrawn from the plan.
+      allOf:
+        - $ref: "#/components/schemas/ControlMalfunction"
+        - type: object
+          properties:
+            state:
+              type: string
+              enum:
+                - ACTIVE
+                - WITHDRAWN
+              description: |
+                Current status of the control malfunction within the plan:
+                - ACTIVE – the malfunction is active in the plan
+                - WITHDRAWN – the malfunction has been withdrawn.
+          required:
+            - state
     ReasonDescription:
       type: object
-      description: Przyczyna niedostępności 
+      description: >
+        Represents the reason for the unavailability.
       properties:
         reasonCode:
           type: string
-          description: Kod przyczyny
+          description: >
+            Primary reason code identifying the general cause of the unavailability.
+            Used for high-level classification of the event.
           maxLength: 2
           examples: 
             - WE
         categoryCode:
           type: string
-          description: Kod szczegółowej kategorii przyczyny
+          description: >
+            Detailed category code specifying the exact type of the unavailability
+            reason. Provides a more granular classification than the primary reason
+            code.
           maxLength: 4
           examples: 
             - D001
         description:
           type: string
-          description: Dodatkowy opis przyczyny niedostępności
+          description: >
+            Additional description providing further context or clarification
+            regarding the reason for the unavailability.
           maxLength: 512
           examples: 
             - 'Dodatkowy opis przyczyny niedostępności'
@@ -1163,14 +1698,14 @@ components:
     Resolution:
       type: string
       description: |
-        Rozdzielczość serii danych: 
-          - PT1M - 1 minuta
-          - PT5M - 5 minut
-          - PT15M - 15 minut
-          - PT1H - godzina
-          - PT60M - godzina
-          - P1D - doba
-          - P1M – miesiąc
+        Time resolution of the data series, expressed using ISO 8601 duration format:
+          - PT1M — 1 minute
+          - PT5M — 5 minutes
+          - PT15M — 15 minutes
+          - PT1H — 1 hour
+          - PT60M — 1 hour (equivalent to PT1H)
+          - P1D — 1 day
+          - P1M — 1 month
       enum:
         - PT1M
         - PT5M
@@ -1179,57 +1714,62 @@ components:
         - PT60M
         - P1D
         - P1M
-      examples: 
+      examples:
         - PT15M
     Direction:
-      type: string 
-      enum: 
-        - G
-        - P
-        - C
+      type: string
+      enum:
+        - GENERATION
+        - CONSUMPTION
+        - TOTAL
       description: |
-        Kierunek, którego dotyczą dane:
-          - G - generacja
-          - P - pobór
-          - C - całkowity
+        Direction of energy flow represented by the data.
+        Allowed values:
+          - GENERATION — energy produced by the source
+          - CONSUMPTION — energy consumed by the load
+          - TOTAL — including both directions generation and consumption
       examples:
-        - G
+        - GENERATION
     CurveType:
       type: string
       enum:
         - A01
         - A03
       description: |
-        Typ sposobu przekazywania wartości
-          - A01 - wszystkie punkty
-          - A03 - tylko punkty zmian
+        Method used to provide data points:
+          - A01 — full set of data points (all intervals)
+          - A03 — change-only data points (values reported only when changes occur)
       examples:
         - A01
     OperationType:
       type: string
       enum:
-        - U
-        - M
-        - W
+        - CREATE
+        - MODIFY
+        - WITHDRAW
       description: |
-        Rodzaj operacji związany ze zgłoszeniem
-          - U - utworzenie
-          - M - modyfikacja
-          - W - wycofanie
+        Type of operation associated with the request:
+          - CREATE — creation of a new entity
+          - MODIFY — modification of an existing entity
+          - WITHDRAW — withdrawal or cancellation of the entity
+      examples:
+        - CREATE
     TimeInterval:
       type: object
-      description: Przedział czasu
+      description: >
+        Represents a time interval defined by a start and end timestamp. Both values
+        are expressed in UTC and specify the exact boundaries of the interval.
       properties:
         start:
           type: string
           format: date-time
-          description: Data i godzina początku okresu w UTC
+          description: Start date and time of the interval, expressed in UTC.
           examples: 
             - '2024-03-12T02:00:00Z'
         end:
           type: string
           format: date-time
-          description: Data i godzina końca okresu w UTC
+          description: End date and time of the interval, expressed in UTC.
           examples: 
             - '2024-03-13T02:00:00Z'
       required:
@@ -1237,26 +1777,30 @@ components:
       - start
     TimeIntervalMarks:
       type: object
-      description: Przedział czasu z określeniem wykonania początku i końca
+      description: >
+        Represents a time interval with additional indicators specifying whether the
+        start and end moments of the interval have already occurred.
       properties:
         start:
           type: string
           format: date-time
-          description: Data i godzina początku okresu w UTC
+          description: Start date and time of the interval, expressed in UTC.
           examples: 
             - '2024-03-12T02:00:00Z'
         startOccurred:
           type: boolean
-          description: Określa czy początek niedostepności miał już miejsce
+          description: >
+            Indicates whether the start of the unavailability has already occurred.
         end:
           type: string
           format: date-time
-          description: Data i godzina końca okresu w UTC
+          description: End date and time of the interval, expressed in UTC.
           examples: 
             - '2024-03-13T02:00:00Z'
         endOccurred:
           type: boolean
-          description: Określa czy koniec niedostepności miał już miejsce
+          description: >
+            Indicates whether the end of the unavailability has already occurred.
       required:
       - start
       - startOccurred
@@ -1264,11 +1808,15 @@ components:
       - endOccurred
     ResponseDetail:
       type: object
-      description: Opis naruszeń walidacji w czasie przetwarzenia przesłanych dokumentów
+      description: >
+        Describes validation issues detected during the processing of submitted
+        documents.
       properties:
         severity:
           type: string
-          description: Stopień naruszenia walidacji powstałego w czasie przetwarzania
+          description: >
+            Severity level of the validation issue detected during processing.
+            Indicates whether the issue is informational, a warning, or an error.
           enum:
           - INFO
           - WARN
@@ -1277,180 +1825,255 @@ components:
             - WARN
         code:
           type: string
-          description: Kod naruszenia walidacji powstałego w czasie przetwarzania
+          description: >
+            Validation violation code identifying the specific type of issue detected
+            during processing.
           maxLength: 10
           examples: 
             - XXX
         field:
           type: string
-          description: wskazanie na element w zgłoszeniu
+          description: >
+            Path indicating the specific element within the submission where the
+            validation issue occurred.
           examples: 
             - 'data.timePeriod.point[1289].value'
         message:
           type: string
-          description: Opis naruszenia walidacji powstałego w czasie przetwarzania
+          description: >
+            Human-readable description of the validation issue detected during
+            processing.
           examples: 
             - 'Wartość z grafiku przekracza 100% wartości maksymalnej mocy netto'
       required:
       - message
       - severity
       - code
-    SubmitResponse:
+    SubmissionStatusResponse:
       type: object
-      description: Odpowiedź potwierdzająca przyjęcie przesłanych danych do przetwarzania
+      description: >
+        Represents the response returned by the system when a submission is received
+        or when the processing status of a previously submitted dataset is queried.
       properties:
         serverMsgId:
           type: string
           format: uuid
           description: >
-            Unikalne ID nadane przez system PSE, które służy do identyfikacji
-            procesu przesłania danych"
+            Unique identifier assigned by the PSE system to the submission process.
+            Used to track and reference the processing of the submitted data.
           examples: 
             - '550e8400-e29b-41d4-a716-446655440000'
         clientMsgId:
           type: string
-          description: Opcjonalne ID żądania nadane przez klienta API
+          description: Submission ID assigned by the API client
           examples: 
             - '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           maxLength: 36
         receivedTime:
           type: string
           format: date-time
-          description: Data odebrania żądania w UTC
+          description: >
+            Timestamp indicating when the submission request was received by the
+            system, expressed in UTC.
           examples: 
             - '2024-03-12T02:00:00.000Z'
         status:
           type: string
           description: |
-            Status operacji odebrania i wstępnej walidacji żądania
-            - SUBMITTED - Zgłoszenie zostało poprawnie odebrane i będzie przetwarzane
-            - APPROVED - Dane zawarte w zgłoszeniu zostały zatwierdzone
-            - REJECTED - Zgłoszenie zostało odrzucone
+            Current processing status of the submission:
+            - SUBMITTED – the submission was successfully received and processing has started
+            - APPROVED – the submitted data has been validated and approved
+            - REJECTED – the submission was rejected
           enum:
             - SUBMITTED
             - APPROVED
             - REJECTED
-        stdVersion:
-          type: string
-          maxLength: 10
-          description: Wersja standardów B2B
-          examples: 
-            - '1.0'
         responseDetails:
           type: array
-          description: Błędy, naruszenia i informacje zgłoszone w czasie wstępnej walidacji
-            przesłanych danych
+          description: >
+            List of validation messages, warnings, or errors generated during the
+            initial or ongoing processing of the submitted data.
           items:
             $ref: "#/components/schemas/ResponseDetail"
       required:
       - receivedTime
       - serverMsgId
+      - clientMsgId
       - status
     ErrorResponse:
       type: object
-      description: Odpowiedź z serwera w przypadku błędu
+      description: Server response returned when an error occurs.
       properties:
         message:
           type: string
-          description: Opis błędu
+          description: Human-readable description of the error.
           examples: 
-            - 'Błąd przetwarzania'
+            - 'Resource not found'
         errorDetails:
           type: string
-          description: Szczegóły przyczyny błędu
+          description: Detailed information about the cause of the error.
           examples: 
-            - 'Brak elementu o podanym mRID'
+            - 'No data found for the specified parameters.'
       required:
       - errorDetails
       - message
-    ProcessingStatusResponse:
+
+    # --- Events ----
+    ConnectedEvent:
       type: object
-      description: Odpowiedź na zapytanie o status przetwarzania przesłanego dokumentu
+      description: Initial event sent immediately after a successful connection.
+      required:
+        - eventType
+        - connectionId
+        - timestamp
       properties:
+        eventType:
+          type: string
+          description: Type of the event. For this event, the value is always `connected`.
+          enum: 
+            - connected
+        connectionId:
+          type: string
+          description: Unique identifier for the current SSE session.
+          format: uuid
+        timestamp:
+          type: string
+          description: Timestamp indicating when the event was generated, expressed in UTC.
+          format: date-time
+    HeartbeatEvent:
+      type: object
+      description: Periodic event sent to keep the connection alive.
+      required:
+        - eventType
+        - timestamp
+      properties:
+        eventType:
+          type: string
+          description: Type of the event. For this event, the value is always `heartbeat`.
+          enum: 
+            - heartbeat
+        timestamp:
+          type: string
+          description: Timestamp indicating when the event was generated, expressed in UTC.
+          format: date-time
+    UnavailabilityChangedEvent:
+      type: object
+      description: >
+        Event generated whenever an unavailability record is created, modified, or
+        withdrawn. Includes the identifiers of the affected unavailability and the
+        associated resource, along with the timestamp of the change.
+      required:
+        - eventType
+        - timestamp
+        - unavailabilityMrid
+        - mainResourceMrid
+      properties:
+        eventType:
+          type: string
+          description: >
+            Type of unavailability change event. Indicates whether the event relates
+            to an outage, derate, or control malfunction, and whether the record was
+            created, modified, or withdrawn.
+          enum: 
+            - OUTAGE_CREATED
+            - OUTAGE_MODIFIED
+            - OUTAGE_WITHDRAWN
+            - DERATE_CREATED
+            - DERATE_MODIFIED
+            - DERATE_WITHDRAWN
+            - CONTROL_MALFUNCTION_CREATED
+            - CONTROL_MALFUNCTION_MODIFIED
+            - CONTROL_MALFUNCTION_WITHDRAWN
+        timestamp:
+          type: string
+          description: Timestamp indicating when the event was generated, expressed in UTC.
+          format: date-time
+        unavailabilityMrid:
+          type: string
+          format: uuid
+          description: >
+            Unique identifier of the unavailability record affected by the change.
+          examples: 
+            - 'd8736017-d25d-4952-a3cf-0fa83560e16f'
+        mainResourceMrid:
+          $ref:  "#/components/schemas/ResourceMrid"
+          description: >
+            Identifier of the resource to which the unavailability applies.
+    SubmissionProcessedEvent:
+      type: object
+      description: >
+        Event generated when the processing of a submission is completed. Indicates
+        whether the submission was approved or rejected and provides the identifier of
+        the processed submission.
+      required:
+        - eventType
+        - timestamp
+      properties:
+        eventType:
+          type: string
+          enum: 
+            - SUBMISSION_APPROVED
+            - SUBMISSION_REJECTED
+          description: >
+            Type of the event indicating the final processing result of the
+            submission.
+        timestamp:
+          type: string
+          description: Timestamp indicating when the event was generated, expressed in UTC.
+          format: date-time
         serverMsgId:
           type: string
           format: uuid
           description: >
-            Unikalne ID nadane przez system PSE, które służy do identyfikacji
-            procesu przesłania danych
+            Unique identifier of the processed submission.
           examples: 
             - '550e8400-e29b-41d4-a716-446655440000'
-        clientMsgId:
-          type: string
-          description: Opcjonalne ID żądania nadane przez klienta API
-          examples: 
-            - '4bfa71da-146b-4df9-b972-6a5ce18f2342'
-          maxLength: 36
-        receivedTime:
-          type: string
-          format: date-time
-          description: Data odebrania żądania w UTC
-          examples: 
-            - '2024-03-12T02:00:00.000Z'
-        status:
-          type: string
-          description: |
-            Status operacji odebrania i wstępnej walidacji żądania
-            - SUBMITTED - Zgłoszenie zostało poprawnie odebrane i będzie przetwarzane
-            - APPROVED - Dane zawarte w zgłoszeniu zostały zatwierdzone
-            - REJECTED - Zgłoszenie zostało odrzucone
-          enum:
-            - SUBMITTED
-            - APPROVED
-            - REJECTED
-        stdVersion:
-          type: string
-          maxLength: 10
-          description: Wersja standardów B2B
-          examples: 
-            - '1.0'
-        responseDetails:
-          type: array
-          description: Błędy, naruszenia i informacje zgłoszone w czasie przetwarzania danych
-            przesłanych danych
-          items:
-            $ref: "#/components/schemas/ResponseDetail"
-      required:
-      - serverMsgId
-      - status
-  securitySchemes: 
-    BearerAuth:
-      scheme: bearer
-      bearerFormat: JWT
-      type: http
-      description: Token JWT uzyskany po zalogowaniu do konta B2B
+  securitySchemes:
+    mTLS:
+      type: mutualTLS
+      description: |
+        Mutual TLS (mTLS) authentication using X.509 client certificates.
+        Clients must present a valid certificate signed by the TSO-trusted Certificate Authority
+        when establishing the TLS connection.
   examples:
     responseSubmitted:
-      summary: Odpowiedź na zgłoszenie - poprawne odebranie
+      summary: Successful submission response
       value:
         serverMsgId: '550e8400-e29b-41d4-a716-446655440000'
         clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
         receivedTime: '2024-03-12T02:00:00.000Z'
         status: SUBMITTED
-        stdVersion: '1.0'
     responseRejected:
-      summary: Odpowiedź na zgłoszenie - wykryto błąd
+      summary: Submission response with validation errors
       value:
         serverMsgId: '550e8400-e29b-41d4-a716-446655440000'
         clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
         receivedTime: '2024-03-12T02:00:00.000Z'
         status: REJECTED
-        stdVersion: '1.0'
         responseDetails:
           - severity: ERROR
             code: XXX
             field: data.dataPeriod
             message: 'Niepoprawny okres zgłoszenia'
+    invalidParameters:
+      summary: Invalid parameters
+      value:
+        message: "Invalid date range"
+        errorDetails: "The 'start' parameter must be earlier than 'end'."
+    notFound:
+      summary: No data available
+      value:
+        message: "No data available"
+        errorDetails: "No schedule exists for the specified resource and date range."
     scheduleSubmission_MWE_1day_2series:
-      summary: 'Plan pracy MWE - 1 doba, 2 serie danych (skrócona tablica wartości)'
+      summary: PGM work schedule – 1 day, 2 time series (shortened value array)
       value:
         meta: 
           senderId: 10999
           responsiblePartyId: 10111
           clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           type: PLP
-          createdAt: '2024-09-12T11:23:34.567Z'
-          stdVersion: '1.0'
+          DSOcReceivedAt: '2024-09-12T11:23:30.567Z'
         data:
           mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
           dataPeriod:
@@ -1459,7 +2082,7 @@ components:
           timeSeries: 
             - tsId: 1
               businessType: MCSR
-              direction: G
+              direction: GENERATION
               measurementUnit: MAW
               resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
               curveType: A01
@@ -1474,7 +2097,7 @@ components:
                   ]
             - tsId: 2
               businessType: MCKN
-              direction: G
+              direction: GENERATION
               measurementUnit: MAW
               resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
               curveType: A01
@@ -1488,15 +2111,14 @@ components:
                     # ... 93 kolejne wiersze
                   ]
     availabilitySubmission_MWE_1year_2series:
-      summary: 'Harmonogram dyspozycyjności MWE - 1 rok, 2 serie danych'
+      summary: PGM availability schedule – 1 year, 2 time series
       value:
         meta: 
           senderId: 10999
           responsiblePartyId: 10111
           clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           type: HRM
-          createdAt: '2024-09-12T11:23:34.567Z'
-          stdVersion: '1.0'
+          DSOcReceivedAt: '2024-09-12T11:23:30.567Z'
         data:
           mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
           dataPeriod:
@@ -1505,7 +2127,7 @@ components:
           timeSeries: 
             - tsId: 1
               businessType: MINE
-              direction: G
+              direction: GENERATION
               measurementUnit: MAW
               resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
               curveType: A03
@@ -1523,10 +2145,10 @@ components:
                       quantity: 5.123
             - tsId: 2
               businessType: MAXE
-              direction: G
+              direction: GENERATION
               measurementUnit: MAW
               resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
-              curveType: A01
+              curveType: A03
               seriesPeriods:
                 - timeInterval: 
                     start: '2025-09-12T22:00:00Z'
@@ -1540,17 +2162,16 @@ components:
                     - position: 183
                       quantity: 16.789
     outageSubmission_MWE_new:
-      summary: Zgłoszenie postoju MWE
+      summary: MWE outage submission
       value:
         meta: 
           senderId: 10999
           responsiblePartyId: 10111
           clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           type: POS
-          createdAt: '2024-09-12T11:23:34.567Z'
-          stdVersion: '1.0'
+          DSOcReceivedAt: '2024-09-12T11:23:30.567Z'
         data:
-          operationType: U
+          operationType: CREATE
           changeDescription: 'Opis przyczyny zgłoszenia'
           outage: 
             unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
@@ -1562,24 +2183,23 @@ components:
             mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
             orderNo: 1
             businessType: POS
-            direction: G
+            direction: GENERATION
             recoverable: false
             reasonDescription:
               reasonCode: WE
               categoryCode: D001
               description: 'Dodatkowy opis przyczyny niedostępności'
     outageSubmission_MWE_modification:
-      summary: Zgłoszenie zmiany postoju MWE
+      summary: Submission of an outage modification
       value:
         meta: 
           senderId: 10999
           responsiblePartyId: 10111
           clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           type: POS
-          createdAt: '2024-09-12T11:23:34.567Z'
-          stdVersion: '1.0'
+          DSOcReceivedAt: '2024-09-12T11:23:30.567Z'
         data:
-          operationType: M
+          operationType: MODIFY
           changeDescription: 'Opis przyczyny zgłoszenia'
           outage: 
             unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
@@ -1591,41 +2211,39 @@ components:
             mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
             orderNo: 2
             businessType: POS
-            direction: G
+            direction: GENERATION
             recoverable: false
             reasonDescription:
               reasonCode: WE
               categoryCode: D001
               description: 'Dodatkowy opis przyczyny niedostępności'
     outageSubmission_MWE_withdraw:
-      summary: Zgłoszenie wycofania postoju
+      summary: Submission of an outage withdrawal
       value:
         meta: 
           senderId: 10999
           responsiblePartyId: 10111
           clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           type: POS
-          createdAt: '2024-09-12T11:23:34.567Z'
-          stdVersion: '1.0'
+          DSOcReceivedAt: '2024-09-12T11:23:30.567Z'
         data:
-          operationType: W
+          operationType: WITHDRAW
           changeDescription: 'Opis przyczyny zgłoszenia wycofania postoju'
           outage: 
             unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
             mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
             orderNo: 3
     derateSubmission_MWE_new:
-      summary: Zgłoszenie ubytku MWE
+      summary: Submission of a new derate
       value:
         meta: 
           senderId: 10999
           responsiblePartyId: 10111
           clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           type: UBT
-          createdAt: '2024-09-12T11:23:34.567Z'
-          stdVersion: '1.0'
+          DSOcReceivedAt: '2024-09-12T11:23:30.567Z'
         data:
-          operationType: U
+          operationType: CREATE
           changeDescription: 'Opis przyczyny zgłoszenia'
           derate: 
             unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
@@ -1637,7 +2255,7 @@ components:
             mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
             orderNo: 1
             businessType: UBTD
-            direction: G
+            direction: GENERATION
             recoverable: false
             reasonDescription:
               reasonCode: WE
@@ -1659,17 +2277,16 @@ components:
                       - position: 3
                         quantity: 4.567
     derateSubmission_MWE_modification:
-      summary: Zgłoszenie zmiany ubytku MWE
+      summary: Submission of a derate modification
       value:
         meta: 
           senderId: 10999
           responsiblePartyId: 10111
           clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           type: UBT
-          createdAt: '2024-09-12T11:23:34.567Z'
-          stdVersion: '1.0'
+          DSOcReceivedAt: '2024-09-12T11:23:30.567Z'
         data:
-          operationType: M
+          operationType: MODIFY
           changeDescription: 'Opis przyczyny zgłoszenia'
           derate: 
             unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
@@ -1681,7 +2298,7 @@ components:
             mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
             orderNo: 2
             businessType: UBTD
-            direction: G
+            direction: GENERATION
             recoverable: false
             reasonDescription:
               reasonCode: WE
@@ -1703,34 +2320,32 @@ components:
                       - position: 3
                         quantity: 2.567
     derateSubmission_MWE_withdraw:
-      summary: Zgłoszenie wycofania ubytku
+      summary: Submission of a derate withdrawal
       value:
         meta: 
           senderId: 10999
           responsiblePartyId: 10111
           clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           type: UBT
-          createdAt: '2024-09-12T11:23:34.567Z'
-          stdVersion: '1.0'
+          DSOcReceivedAt: '2024-09-12T11:23:30.567Z'
         data:
-          operationType: W
+          operationType: WITHDRAW
           changeDescription: 'Opis przyczyny zgłoszenia wycofania ubytku'
           derate: 
             unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
             mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
             orderNo: 3
     controlMalfunctionSubmission_MWE_new:
-      summary: Zgłoszenie niesprawności układu regulacji MWE
+      summary: Submission of a new control system malfunction
       value:
         meta: 
           senderId: 10999
           responsiblePartyId: 10111
           clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           type: NUR
-          createdAt: '2024-09-12T11:23:34.567Z'
-          stdVersion: '1.0'
+          DSOcReceivedAt: '2024-09-12T11:23:30.567Z'
         data:
-          operationType: U
+          operationType: CREATE
           changeDescription: 'Opis przyczyny zgłoszenia'
           controlMalfunction: 
             unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
@@ -1742,22 +2357,21 @@ components:
             mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
             orderNo: 1
             businessType: FCRG
-            direction: G
+            direction: GENERATION
             reasonDescription: 'Dodatkowy opis przyczyny niedostępności'
     controlMalfunctionSubmission_MWE_modification:
-      summary: Zgłoszenie zmiany niesprawności układu regulacji MWE
+      summary: Submission of a control system malfunction modification
       value:
-        meta: 
+        meta:
           senderId: 10999
           responsiblePartyId: 10111
           clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           type: NUR
-          createdAt: '2024-09-12T11:23:34.567Z'
-          stdVersion: '1.0'
+          DSOcReceivedAt: '2024-09-12T11:23:30.567Z'
         data:
-          operationType: M
+          operationType: MODIFY
           changeDescription: 'Opis przyczyny zgłoszenia'
-          controlMalfunction: 
+          controlMalfunction:
             unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
             unavailabilityPeriod:
               start: '2025-04-12T23:00:00Z'
@@ -1767,35 +2381,33 @@ components:
             mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
             orderNo: 2
             businessType: FCRG
-            direction: G
+            direction: GENERATION
             reasonDescription: 'Dodatkowy opis przyczyny niedostępności'
     controlMalfunctionSubmission_MWE_withdraw:
-      summary: Zgłoszenie wycofania niesprawności układu regulacji
+      summary: Submission of a control system malfunction withdrawal
       value:
         meta: 
           senderId: 10999
           responsiblePartyId: 10111
           clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           type: NUR
-          createdAt: '2024-09-12T11:23:34.567Z'
-          stdVersion: '1.0'
+          DSOcReceivedAt: '2024-09-12T11:23:30.567Z'
         data:
-          operationType: W
+          operationType: WITHDRAW
           changeDescription: 'Opis przyczyny zgłoszenia wycofania postoju'
           controlMalfunction: 
             unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
             mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
             orderNo: 3
     dispatchInstructionSubmission:
-      summary: 'Polecenia ruchowe OSD - MIN, MAX - 2 godziny (skrócona lista wartości)'
+      summary: DSO's dispatch instructions – MIN and MAX for a 2-hour period (shortened value list)
       value:
         meta: 
           senderId: 10999
           responsiblePartyId: 10111
           clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           type: PRU
-          createdAt: '2024-09-12T11:23:34.567Z'
-          stdVersion: '1.0'
+          DSOcReceivedAt: '2024-09-12T11:23:30.567Z'
         data:
           mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
           dataPeriod:
@@ -1804,7 +2416,7 @@ components:
           timeSeries: 
             - tsId: 1
               businessType: OMAX
-              direction: G
+              direction: GENERATION
               measurementUnit: MAW
               resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
               curveType: A01
@@ -1818,7 +2430,7 @@ components:
                   ]
             - tsId: 2
               businessType: OMIN
-              direction: G
+              direction: GENERATION
               measurementUnit: MAW
               resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
               curveType: A01
@@ -1831,15 +2443,14 @@ components:
                     0.123, 0.123, 0.123
                   ]
     dispatchInstructionSubmission_withdraw:
-      summary: 'Usunięcie wartości polecenia ruchowego OSD (skrócona lista wartości)'
+      summary: Removal of OSD dispatch instruction values (shortened value list)
       value:
         meta: 
           senderId: 10999
           responsiblePartyId: 10111
           clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           type: PRU
-          createdAt: '2024-09-12T11:23:34.567Z'
-          stdVersion: '1.0'
+          DSOcReceivedAt: '2024-09-12T11:23:30.567Z'
         data:
           mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
           dataPeriod:
@@ -1848,7 +2459,7 @@ components:
           timeSeries: 
             - tsId: 1
               businessType: OMAX
-              direction: G
+              direction: GENERATION
               measurementUnit: MAW
               resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
               curveType: A01
@@ -1862,7 +2473,7 @@ components:
                   ]
             - tsId: 2
               businessType: OMIN
-              direction: G
+              direction: GENERATION
               measurementUnit: MAW
               resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
               curveType: A01
@@ -1875,15 +2486,14 @@ components:
                     null, null, null
                   ]
     exchangeScheduleSubmission_1Y:
-      summary: 'Zgłoszenie salda wymiany - horyzont 1 roku (skrócona lista wartości)'
+      summary: Exchange schedule submission – 1-year horizon (shortened value list)
       value:
         meta: 
           senderId: 10999
           responsiblePartyId: 10111
           clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           type: WYM
-          createdAt: '2024-09-12T11:23:34.567Z'
-          stdVersion: '1.0'
+          DSOcReceivedAt: '2024-09-12T11:23:30.567Z'
         data:
           mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
           dataPeriod:
@@ -1904,15 +2514,14 @@ components:
                     2.345, 2.345, 2.345
                   ]
     exchangeScheduleSubmission_1M:
-      summary: 'Zgłoszenie salda wymiany - horyzont 1 miesiąc (skrócona lista wartości)'
+      summary: Exchange schedule submission – 1-month horizon (shortened value list)
       value:
         meta: 
           senderId: 10999
           responsiblePartyId: 10111
           clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           type: WYM
-          createdAt: '2024-09-12T11:23:34.567Z'
-          stdVersion: '1.0'
+          DSOcReceivedAt: '2024-09-12T11:23:30.567Z'
         data:
           mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
           dataPeriod:
@@ -1933,15 +2542,14 @@ components:
                     2.345, 2.345, 2.345
                   ]
     exchangeScheduleSubmission_1D:
-      summary: 'Zgłoszenie salda wymiany - horyzont 1 dzień (skrócona lista wartości)'
+      summary:  Exchange schedule submission – 1-day horizon (shortened value list)
       value:
         meta: 
           senderId: 10999
           responsiblePartyId: 10111
           clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           type: WYM
-          createdAt: '2024-09-12T11:23:34.567Z'
-          stdVersion: '1.0'
+          DSOcReceivedAt: '2024-09-12T11:23:30.567Z'
         data:
           mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
           dataPeriod:
@@ -1962,15 +2570,13 @@ components:
                     2.345, 2.345, 2.345
                   ]
     storageCapacitySubmission_1year:
-      summary: 'Pojemność użytkowa magazynu - 1 rok (skrócona lista wartości)'
+      summary: Storage usable capacity – 1-year horizon
       value:
         meta: 
           senderId: 10999
           responsiblePartyId: 10111
           clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
           type: PUZ
-          createdAt: '2024-09-12T11:23:34.567Z'
-          stdVersion: '1.0'
         data:
           mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
           dataPeriod:
@@ -1995,7 +2601,7 @@ components:
                     - position: 481
                       quantity: 9.800
     schedule_MWE_1day_2series:
-      summary: 'Plan pracy MWE - 1 doba, 2 serie danych (skrócona tablica wartości)'
+      summary: Work schedule – 1 day, 2 time series (shortened value array)
       value:        
         mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
         dataPeriod:
@@ -2004,7 +2610,7 @@ components:
         timeSeries: 
           - tsId: 1
             businessType: MCSR
-            direction: G
+            direction: GENERATION
             measurementUnit: MAW
             resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
             curveType: A01
@@ -2019,7 +2625,7 @@ components:
                 ]
           - tsId: 2
             businessType: MCKN
-            direction: G
+            direction: GENERATION
             measurementUnit: MAW
             resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
             curveType: A01
@@ -2033,7 +2639,7 @@ components:
                   # ... 93 kolejne wiersze
                 ]
     availability_MWE_1year_2series:
-      summary: 'Harmonogram dyspozycyjności MWE - 1 rok, 2 serie danych'
+      summary: Availability schedule – 1 year, 2 time series
       value:
         mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
         dataPeriod:
@@ -2042,7 +2648,7 @@ components:
         timeSeries: 
           - tsId: 1
             businessType: MINE
-            direction: G
+            direction: GENERATION
             measurementUnit: MAW
             resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
             curveType: A03
@@ -2060,10 +2666,10 @@ components:
                     quantity: 5.123
           - tsId: 2
             businessType: MAXE
-            direction: G
+            direction: GENERATION
             measurementUnit: MAW
             resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
-            curveType: A01
+            curveType: A03
             seriesPeriods:
               - timeInterval: 
                   start: '2025-09-12T22:00:00Z'
@@ -2077,7 +2683,7 @@ components:
                   - position: 183
                     quantity: 16.789
     outages_list:
-      summary: Lista postojów
+      summary: List of outages
       value:
         - unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
           unavailabilityPeriod:
@@ -2088,12 +2694,13 @@ components:
           mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
           orderNo: 1
           businessType: POS
-          direction: G
+          direction: GENERATION
           recoverable: false
           reasonDescription:
             reasonCode: WE
             categoryCode: D001
             description: 'Dodatkowy opis przyczyny niedostępności'
+          state: ACTIVE
         - unavailabilityMrid: '43216017-d25d-4952-a3cf-0fa83560e160'
           unavailabilityPeriod:
             start: '2025-02-10T23:00:00Z'
@@ -2103,14 +2710,34 @@ components:
           mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
           orderNo: 1
           businessType: POS
-          direction: G
+          direction: GENERATION
           recoverable: false
           reasonDescription:
             reasonCode: WE
             categoryCode: D001
             description: 'Dodatkowy opis przyczyny niedostępności'
+          state: WITHDRAWN
+    outage_view:
+      summary: Details of an active outage in the plan
+      value:
+        unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+        unavailabilityPeriod:
+          start: '2025-03-12T23:00:00Z'
+          startOccurred: false
+          end: '2025-03-13T23:00:00Z'
+          endOccurred: false
+        mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+        orderNo: 1
+        businessType: POS
+        direction: GENERATION
+        recoverable: false
+        reasonDescription:
+          reasonCode: WE
+          categoryCode: D001
+          description: 'Dodatkowy opis przyczyny niedostępności'
+        state: ACTIVE
     derates_list:
-      summary: Lista ubytków
+      summary: List of derates
       value:
         - unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
           unavailabilityPeriod:
@@ -2121,7 +2748,7 @@ components:
           mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
           orderNo: 2
           businessType: UBTD
-          direction: G
+          direction: GENERATION
           recoverable: false
           reasonDescription:
             reasonCode: WE
@@ -2142,6 +2769,7 @@ components:
                       quantity: 5.234
                     - position: 3
                       quantity: 2.567
+          state: ACTIVE
         - unavailabilityMrid: '00006017-d25d-4952-a3cf-0fa83560ae21'
           unavailabilityPeriod:
             start: '2025-03-14T23:00:00Z'
@@ -2151,7 +2779,7 @@ components:
           mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
           orderNo: 1
           businessType: UBTD
-          direction: G
+          direction: GENERATION
           recoverable: false
           reasonDescription:
             reasonCode: WE
@@ -2172,8 +2800,43 @@ components:
                       quantity: 2.234
                     - position: 3
                       quantity: 0.567
+          state: WITHDRAWN
+    derate_view:
+      summary: Details of an active derate in the plan
+      value:
+        unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+        unavailabilityPeriod:
+          start: '2025-03-13T23:00:00Z'
+          startOccurred: false
+          end: '2025-03-14T23:00:00Z'
+          endOccurred: false
+        mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+        orderNo: 2
+        businessType: UBTD
+        direction: GENERATION
+        recoverable: false
+        reasonDescription:
+          reasonCode: WE
+          categoryCode: D001
+          description: 'Dodatkowy opis przyczyny niedostępności'
+        timeSeries:
+          - tsId: 1
+            recoverableFlag: UOBW
+            measurementUnit: MAW
+            curveType: A03
+            seriesPeriods:
+              - timeInterval:
+                  start: '2025-03-13T23:00:00Z'
+                  end: '2025-03-14T23:00:00Z'
+                resolution: PT1H
+                seriesPoints:
+                  - position: 1
+                    quantity: 5.234
+                  - position: 3
+                    quantity: 2.567
+        state: ACTIVE
     controlMalfunctions_list:
-      summary: Lista niesprawności układów regulacji
+      summary: List of control system malfunctions
       value:
         - unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
           unavailabilityPeriod:
@@ -2184,10 +2847,26 @@ components:
           mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
           orderNo: 2
           businessType: FCRG
-          direction: G
+          direction: GENERATION
           reasonDescription: 'Dodatkowy opis przyczyny niedostępności'
+          state: ACTIVE
+    controlMalfunction_view:
+      summary: Details of an active control system malfunction in the plan
+      value:
+        unavailabilityMrid: '12346017-d25d-4952-a3cf-0fa83560e16f'
+        unavailabilityPeriod:
+          start: '2025-04-12T23:00:00Z'
+          startOccurred: false
+          end: '2025-04-13T23:00:00Z'
+          endOccurred: false
+        mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+        orderNo: 2
+        businessType: FCRG
+        direction: GENERATION
+        reasonDescription: 'Dodatkowy opis przyczyny niedostępności'
+        state: ACTIVE
     dispatchInstruction_min_max:
-      summary: 'Polecenia ruchowe OSD - MIN, MAX - 2 godziny (skrócona lista wartości)'
+      summary: DSO's dispatch instructions – MIN and MAX for a 2-hour period (shortened value list)
       value:
         mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
         dataPeriod:
@@ -2196,7 +2875,7 @@ components:
         timeSeries: 
           - tsId: 1
             businessType: OMAX
-            direction: G
+            direction: GENERATION
             measurementUnit: MAW
             resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
             curveType: A01
@@ -2210,7 +2889,7 @@ components:
                 ]
           - tsId: 2
             businessType: OMIN
-            direction: G
+            direction: GENERATION
             measurementUnit: MAW
             resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
             curveType: A01
@@ -2223,7 +2902,7 @@ components:
                   0.123, 0.123, 0.123
                 ]
     exchangeSchedule_1D:
-      summary: 'Salda wymiany - horyzont 1 dzień (skrócona lista wartości)'
+      summary: Exchange schedule – 1-day horizon (shortened value list)
       value:
         mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
         dataPeriod:
@@ -2244,20 +2923,20 @@ components:
                   2.345, 2.345, 2.345
                 ]
     storageCapacity_1year:
-      summary: 'Pojemność użytkowa magazynu - 1 rok (skrócona lista wartości)'
+      summary: Storage usable capacity – 1-year horizon (shortened value list)
       value:
         mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
         dataPeriod:
           start: '2025-09-12T22:00:00Z'
           end: '2026-09-12T22:00:00Z'
-        timeSeries: 
+        timeSeries:
           - tsId: 1
             businessType: PUZ
             measurementUnit: MWH
             resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
             curveType: A03
             seriesPeriods:
-              - timeInterval: 
+              - timeInterval:
                   start: '2025-09-12T22:00:00Z'
                   end: '2026-09-12T22:00:00Z'
                 resolution: PT1H

@@ -1,9 +1,13 @@
 # **Harmonogramy dyspozycyjności**
 
 ## Zgłoszenie harmonogramu dyspozycyjności
-Nadawca: OSDp
+---
+### Uczestnicy
 
-Odbiorca: OSP
+| Rola | Podmiot |
+|------|---------|
+| Nadawca zgłoszenia | OSDp (Operator Systemu Dystrybucyjnego) |
+| Odbiorca zgłoszenia | OSP (Operator Systemu Przesyłowego) |
 
 ### Charakterystyka komunikatu
 Zgłoszenie harmonogramu dyspozycyjności zawiera dane planistyczne dotyczące poziomów dyspozycyjności minimalnej i maksymalnej zasobu w horyzoncie 5 lat (60 miesięcy). 
@@ -24,7 +28,28 @@ Dane dotyczące dyspozycyjności zasobu powinny być przekazywane w sposób komp
 
 Informacje otrzymywane w tym komunikacie stanowią podstawę tworzenia lub korygowania planów koordynacyjnych oraz ewidencjonowania stanów zasobów.
 
-### Status obsługi komunikatu
-**Zgłoszenie przyjęte** -  dyspozycyjność zasobu jest zaktualizowana o dane ze zgłoszenia.
+## Endpointy API
 
-**Zgłoszenie odrzucone** - dyspozycyjność zasobu pozostaje bez aktualizacji o dane ze zgłoszenia.
+---
+
+### POST `.../availability-submissions`
+Przesłanie harmonogramu dyspozycyjności.
+
+| Parametr | Typ | Lokalizacja | Wymagany | Opis |
+|----------|-----|-------------|:--------:|------|
+| — | — | body | tak | Obiekt `AvailabilitySubmission` |
+
+**operationId:** `submitAvailability`  
+**Tag:** Planning Data Submissions  
+
+| Kod | Opis |
+|-----|------|
+| 202 | Zgłoszenie przyjęte |
+| 400 | Błędne dane wejściowe |
+
+### Status obsługi komunikatu
+
+| Status | Opis |
+|--------|------|
+| Komunikat przyjęty | Dyspozycyjność zasobu jest zaktualizowana o dane ze zgłoszenia. |
+| Komunikat odrzucony | Dyspozycyjność zasobu pozostaje bez aktualizacji o dane ze zgłoszenia. |
