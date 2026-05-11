@@ -6,12 +6,13 @@ Format logu zmian zgodnie z [Keep a Changelog](https://keepachangelog.com/en/1.1
 
 ## [Unreleased]
 
-## [1.0.0-beta] - 2026-04-14
+## [1.0.0-beta] - 2026-05-11
 
 ### Dodano
 - Nowe endpointy SSE dla notyfikacji o zmianach statusów zgłoszeń i zmianach niedostępności w aktualnym planie 
 - Nowe endpointy REST do pobierania informacji o pojedynczych niedostępnościach
 - Indywidualne typy dla zgłoszeń niedostępności (postoje, ubytki, niesprawności układów regulacji)
+- Obsługa ograniczeń zdolności regulacji mocy biernej
 
 ### Zmieniono
 - Usunięto asynchroniczne API

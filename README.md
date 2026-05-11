@@ -1,3 +1,4 @@
+
 # WYMIANA DANYCH PLANISTYCZNYCH 
 
 Poniżej przedstawiono specyfikację zakresu i formatu danych planistycznych wymienianych przez dedykowany system informatyczny OSP (kanał B2B). Specyfikacja opiera się na dokumencie „Zakres wymienianych danych dla potrzeb planowania pracy i prowadzenia ruchu KSE” (TCM - zakres wymienianych danych, opracowany na podstawie art. 40 ust. 5 SO GL) oraz na IRiESP. Dane wymieniane są pomiędzy OSP, OSD i SGU (znaczących użytkowników sieci) w procesach związanych z zarządzaniem pracą KSE w zakresie niezbędnym do bilansowania mocy KSE. Dane te są przesyłane w postaci komunikatów elektronicznych o ściśle określonym formacie. 
@@ -78,12 +79,12 @@ Dane planistyczne przekazywane są przez OSDp oraz poszczególnych właścicieli
 |-----------| :---------: | :---------: |-----------|
 |OSDp |	MWE typu B lub C w sieci OSDp	| Brak lub dowolny rodzaj JG poza JG<sub>W1</sub> | Harmonogram dyspozycyjności przekazywany przez OSDp dla horyzontu od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Plan pracy przekazywany dla horyzontu dobowego (od doby bieżącej do doby d+9) <br /><br /> Polecenia ruchowe OSD dla horyzontu dobowego (od doby bieżącej do doby d+9) |
 |OSDp | MWE typu B lub C w sieci OSDp | JG<sub>W1</sub> | Harmonogram dyspozycyjności przekazywany przez OSDp dla horyzontu od doby bieżącej do 5 lat (60 miesięcy) naprzód |
-| OSDp | MWE typu D w sieci OSDp | Brak lub dowolny rodzaj JG poza JG<sub>W1</sub> | Niedostępność (postój, ubytek dodatni, ubytek ujemny) dla horyzontu od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Niesprawność regulacji pierwotnej, wtórnej lub ARNE (w przypadku świadczenia usług) od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Plan pracy MWE przekazywany dla horyzontu dobowego (od doby bieżącej do doby d+9) |
-OSDp | MWE typu D w sieci OSDp | JG<sub>W1</sub> | Niedostępność (postój, ubytek dodatni, ubytek ujemny) dla horyzontu od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Niesprawność regulacji pierwotnej, wtórnej lub ARNE (w przypadku świadczenia usług) od doby bieżącej do 5 lat (60 miesięcy) naprzód |
-Właściciel	| MWE typu D w sieci OSP | Brak lub dowolny rodzaj JG poza JG<sub>W1</sub> | Niedostępność (postój, ubytek dodatni, ubytek ujemny) dla horyzontu od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Niesprawność regulacji pierwotnej, wtórnej lub ARNE (w przypadku świadczenia usług) od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Plan pracy MWE przekazywany dla horyzontu dobowego (od doby bieżącej do doby d+9) |
-Właściciel | MWE typu D w sieci OSP | JG<sub>W1</sub> | Niedostępność (postój, ubytek dodatni, ubytek ujemny) dla horyzontu od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Niesprawność regulacji pierwotnej, wtórnej lub ARNE (w przypadku świadczenia usług) od doby bieżącej do 5 lat (60 miesięcy) naprzód | |
+| OSDp | MWE typu D w sieci OSDp | Brak lub dowolny rodzaj JG poza JG<sub>W1</sub> | Niedostępność (postój, ubytek dodatni, ubytek ujemny) dla horyzontu od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Niesprawność regulacji pierwotnej, wtórnej lub ARNE (w przypadku świadczenia usług) od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Plan pracy MWE przekazywany dla horyzontu dobowego (od doby bieżącej do doby d+9) <br /><br /> Ograniczenia zdolności regulacji mocy biernej od doby bieżącej do 5 lat (60 miesięcy) naprzód |
+OSDp | MWE typu D w sieci OSDp | JG<sub>W1</sub> | Niedostępność (postój, ubytek dodatni, ubytek ujemny) dla horyzontu od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Niesprawność regulacji pierwotnej, wtórnej lub ARNE (w przypadku świadczenia usług) od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Ograniczenia zdolności regulacji mocy biernej od doby bieżącej do 5 lat (60 miesięcy) naprzód |
+Właściciel	| MWE typu D w sieci OSP | Brak lub dowolny rodzaj JG poza JG<sub>W1</sub> | Niedostępność (postój, ubytek dodatni, ubytek ujemny) dla horyzontu od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Niesprawność regulacji pierwotnej, wtórnej lub ARNE (w przypadku świadczenia usług) od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Plan pracy MWE przekazywany dla horyzontu dobowego (od doby bieżącej do doby d+9) <br /><br /> Ograniczenia zdolności regulacji mocy biernej od doby bieżącej do 5 lat (60 miesięcy) naprzód |
+Właściciel | MWE typu D w sieci OSP | JG<sub>W1</sub> | Niedostępność (postój, ubytek dodatni, ubytek ujemny) dla horyzontu od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Niesprawność regulacji pierwotnej, wtórnej lub ARNE (w przypadku świadczenia usług) od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Ograniczenia zdolności regulacji mocy biernej od doby bieżącej do 5 lat (60 miesięcy) naprzód | |
 | OSDp | MEE w sieci OSDp | Dowolnie | Harmonogram dyspozycyjności przekazywany dla horyzontu od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Plan pracy MEE przekazywany dla horyzontu dobowego (od doby d do doby d+9) <br /><br /> Pojemność użytkowa MEE przekazywana dla horyzontu od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Polecenia ruchowe OSD dla horyzontu dobowego (od doby bieżącej do doby d+9) |
-| Właściciel | MEE w sieci OSP | Dowolnie | Niedostępność (postój, ubytek dodatni, ubytek ujemny) dla horyzontu od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Niesprawność regulacji pierwotnej, wtórnej lub ARNE (w przypadku świadczenia usług) od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Plan pracy MEE przekazywany dla horyzontu dobowego (od doby d do doby d+9) <br /><br /> Pojemność użytkowa MEE przekazywana dla horyzontu od doby bieżącej do 5 lat (60 miesięcy) naprzód |
+| Właściciel | MEE w sieci OSP | Dowolnie | Niedostępność (postój, ubytek dodatni, ubytek ujemny) dla horyzontu od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Niesprawność regulacji pierwotnej, wtórnej lub ARNE (w przypadku świadczenia usług) od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Plan pracy MEE przekazywany dla horyzontu dobowego (od doby d do doby d+9) <br /><br /> Pojemność użytkowa MEE przekazywana dla horyzontu od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Ograniczenia zdolności regulacji mocy biernej od doby bieżącej do 5 lat (60 miesięcy) naprzód |
 | Właściciel | pompa | Dowolnie | Niedostępność (postój, ubytek dodatni, ubytek ujemny) dla horyzontu od doby bieżącej do 5 lat (60 miesięcy) naprzód <br /><br /> Plan pracy pompy przekazywany dla horyzontu dobowego (od doby bieżącej do doby d+9) |
 OSDp | Linia wymiany <br /> Obiekt wymiany (grupa linii wymiany) | Nie dotyczy | Grafik planowanego salda wymiany nierównoległej realizowanej poprzez sieć 110 kV przekazywane przez OSDp dla horyzontu 5-letniego, rocznego i dobowego |
 
@@ -103,6 +104,8 @@ Format komunikatów obowiązujących w kanale B2B jest zgodny ze standardem opis
 [Komunikat ubytku](docs/komunikat%20zg%C5%82oszenia%20ubytku.md)
 
 [Komunikat niesprawności układu regulacji](docs/komunikat%20zgłoszenia%20niesprawności.md)
+
+[Komunikat ograniczenia zdolności regulacji mocy biernej](docs/komunikat%20zg%C5%82oszenia%20ograniczenia%20zdolno%C5%9Bci%20regulacji%20mocy%20biernej.md)
 
 [Komunikat harmonogramu dyspozycyjności](docs/komunikat%20zgłoszenia%20harmonogramu%20dyspozycyjności.md)
 
@@ -124,6 +127,8 @@ Format komunikatów obowiązujących w kanale B2B jest zgodny ze standardem opis
 
 [Plan niesprawności układów regulacji w zadanym okresie](docs/komunikat%20niesprawności.md)
 
+[Ograniczenia zdolności regulacji mocy biernej](docs/komunikat%20ograniczenia%20zdolno%C5%9Bci%20regulacji%20mocy%20biernej.md)
+
 [Harmonogram dyspozycyjności dla zasobu w zadanym okresie](docs/komunikat%20harmonogram%20dyspozycyjności.md)
 
 [Pojemność użytkowa dla zasobu w zadanym okresie](docs/komunikat%20pojemność%20użytkowa.md)
@@ -143,6 +148,7 @@ Serwisy umożliwiające zgłoszenie danych planistycznych:
 * postój - /pwdp/api/v1/outage-submissions
 * ubytek - /pwdp/api/v1/derate-submissions
 * niesprawność układu regulacji - /pwdp/api/v1/control-malfunction-submissions
+* ograniczenia zdolności regulacji mocy biernej - /pwdp/api/v1/reactive-limit-submissions
 * harmonogram dyspozycyjności - /pwdp/api/v1/availability-submissions
 * pojemność użytkowa - /pwdp/api/v1/storage-capacity-submissions
 * plan pracy - /pwdp/api/v1/schedule-submissions
@@ -152,9 +158,14 @@ Serwisy umożliwiające zgłoszenie danych planistycznych:
 Serwisy udostępniające dane planistyczne:
 * status przetwarzania zgłoszenia - /pwdp/api/v1/submissions/{serverMsgId}/status
 * postoje dla zasobu w zadanym okresie - /pwdp/api/v1/resources/{mainResourceMrid}/outages
+* dane wskazanego postoju dla zasobu - /pwdp/api/v1/resources/{mainResourceMrid}/outages/{unavailabilityMrid}
 * ubytki dla zasobu w zadanym okresie - /pwdp/api/v1/resources/{mainResourceMrid}/derates
+* dane wskazanego ubytku dla zasobu - /pwdp/api/v1/resources/{mainResourceMrid}/derates/{unavailabilityMrid}
 * niesprawności układu regulacji dla zasobu w zadanym okresie - /pwdp/api/v1/resources/{mainResourceMrid}/control-malfunctions
+* dane wskazanej niesprawności dla zasobu - /pwdp/api/v1/resources/{mainResourceMrid}/control-malfunctions/{unavailabilityMrid}
+* ograniczenia zdolności regulacji mocy biernej dla zasobu w zadanym okresie - /pwdp/api/v1/resources/{mainResourceMrid}/reactive-limits
 * harmonogram dyspozycyjności dla zasobu w zadanym okresie - /pwdp/api/v1/resources/{mainResourceMrid}/availabilities
+* poziomy pojemności użytkowej dla magazynu w zadanym okresie - /pwdp/api/v1/resources/{mainResourceMrid}/storage-capacities
 * plan pracy dla zasobu w zadanym okresie - /pwdp/api/v1/resources/{mainResourceMrid}/schedules
 * polecenia ruchowe OSD dla zasobu w zadanym okresie - /pwdp/api/v1/resources/{mainResourceMrid}/dispatch-instructions
 * saldo wymiany nierównoległej dla zasobu w zadanym okresie - /pwdp/api/v1/resources/{mainResourceMrid}/exchange-schedules
@@ -182,37 +193,45 @@ W tabeli poniżej podano parametry zgłoszeń, w szczególności wskazanie na se
 
 | Kod typu dokumentu (pole type) | Rodzaj komunikatu | Kod szczegółowy (pole businessType) | Rodzaj danych | Seria danych z wymaganymi wartościami | Kompletność serii danych <br /><br /> Dopuszczalne puste wartości (null) | Kierunek | Typ krzywej |
 |-----------|-----------|-----------|-----------|-----------|-----------|-----------|-----------|
-| POS | Postój | POS | Postój | Nie dotyczy | Nie dotyczy | Wymagany (wartości G, P, C)| A01 dla UD |
-| UBT | Ubytek | UBTD | Ubytek dodatni | Nie dotyczy | Nie dotyczy | Wymagany (wartości G, P) | A03 |
-| |  | UBTU | Ubytek ujemny | Nie dotyczy | Nie dotyczy | Wymagany (wartości G, P) | A03 |
-| NUR | Niesprawność układu regulacji | FCRG | Niesprawność układu regulacji FCR_G - rezerwa utrzymania częstotliwości w górę (FCR<sup>G</sup>, regulacja pierwotna) | Nie dotyczy | Nie dotyczy | Wymagany tylko dla zasobów dwukierunkowych (wartości G, P) | Nie dotyczy |
- | |  | FCRD | Niesprawność układu regulacji FCR_D - rezerwa utrzymania częstotliwości w dół (FCR<sup>D</sup>, regulacja pierwotna) | Nie dotyczy | Nie dotyczy | Wymagany tylko dla zasobów dwukierunkowych (wartości G, P) | Nie dotyczy |
- | |  | AFRG | Niesprawność układu regulacji aFRR_G - rezerwa odbudowy częstotliwości z aktywacją automatyczną w górę (aFRR<sup>G</sup>, regulacja wtórna) | Nie dotyczy | Nie dotyczy | Wymagany tylko dla zasobów dwukierunkowych (wartości G, P) | Nie dotyczy |
- | |  | AFRD | Niesprawność układu regulacji aFRR_D - rezerwa odbudowy częstotliwości z aktywacją automatyczną w dół (aFRR<sup>D</sup>, regulacja wtórna) | Nie dotyczy | Nie dotyczy | Wymagany tylko dla zasobów dwukierunkowych (wartości G, P) | Nie dotyczy |
- | |  | MFRG | Niesprawność układu regulacji mFRRd_G - rezerwa odbudowy częstotliwości z aktywacją nieautomatyczną typu bezpośredniego w górę (mFRRd<sup>G</sup>, regulacja wtórna) | Nie dotyczy | Nie dotyczy | Wymagany tylko dla zasobów dwukierunkowych (wartości G, P) | Nie dotyczy |
- | |  | MFRD | Niesprawność układu regulacji mFRRd_D - rezerwa odbudowy częstotliwości z aktywacją nieautomatyczną typu bezpośredniego w dół (mFRRd<sup>D</sup>, regulacja wtórna) | Nie dotyczy | Nie dotyczy | Wymagany tylko dla zasobów dwukierunkowych (wartości G, P) | Nie dotyczy |
+| POS | Postój | POS | Postój | Nie dotyczy | Nie dotyczy | Wymagany (wartości GENERATION, CONSUMPTION, TOTAL)| A01 dla UD |
+| UBT | Ubytek | UBTD | Ubytek dodatni | Nie dotyczy | Nie dotyczy | Wymagany (wartości GENERATION, CONSUMPTION) | A03 |
+| |  | UBTU | Ubytek ujemny | Nie dotyczy | Nie dotyczy | Wymagany (wartości GENERATION, CONSUMPTION) | A03 |
+| NUR | Niesprawność układu regulacji | FCRG | Niesprawność układu regulacji FCR_G - rezerwa utrzymania częstotliwości w górę (FCR<sup>G</sup>, regulacja pierwotna) | Nie dotyczy | Nie dotyczy | Wymagany tylko dla zasobów dwukierunkowych (wartości GENERATION, CONSUMPTION) | Nie dotyczy |
+ | |  | FCRD | Niesprawność układu regulacji FCR_D - rezerwa utrzymania częstotliwości w dół (FCR<sup>D</sup>, regulacja pierwotna) | Nie dotyczy | Nie dotyczy | Wymagany tylko dla zasobów dwukierunkowych (wartości GENERATION, CONSUMPTION) | Nie dotyczy |
+ | |  | AFRG | Niesprawność układu regulacji aFRR_G - rezerwa odbudowy częstotliwości z aktywacją automatyczną w górę (aFRR<sup>G</sup>, regulacja wtórna) | Nie dotyczy | Nie dotyczy | Wymagany tylko dla zasobów dwukierunkowych (wartości GENERATION, CONSUMPTION) | Nie dotyczy |
+ | |  | AFRD | Niesprawność układu regulacji aFRR_D - rezerwa odbudowy częstotliwości z aktywacją automatyczną w dół (aFRR<sup>D</sup>, regulacja wtórna) | Nie dotyczy | Nie dotyczy | Wymagany tylko dla zasobów dwukierunkowych (wartości GENERATION, CONSUMPTION) | Nie dotyczy |
+ | |  | MFRG | Niesprawność układu regulacji mFRRd_G - rezerwa odbudowy częstotliwości z aktywacją nieautomatyczną typu bezpośredniego w górę (mFRRd<sup>G</sup>, regulacja wtórna) | Nie dotyczy | Nie dotyczy | Wymagany tylko dla zasobów dwukierunkowych (wartości GENERATION, CONSUMPTION) | Nie dotyczy |
+ | |  | MFRD | Niesprawność układu regulacji mFRRd_D - rezerwa odbudowy częstotliwości z aktywacją nieautomatyczną typu bezpośredniego w dół (mFRRd<sup>D</sup>, regulacja wtórna) | Nie dotyczy | Nie dotyczy | Wymagany tylko dla zasobów dwukierunkowych (wartości GENERATION, CONSUMPTION) | Nie dotyczy |
  | |  | ARNE | Niesprawność układu regulacji ARNE - zdolność regulacji mocy biernej  | Nie dotyczy | Nie dotyczy | Brak | Nie dotyczy |
-| HRM | Harmonogram dyspozycyjności | MINE | Harmonogram dyspozycyjności - Możliwe minimum dyspozycyjności elektrownianej (określone na koniec poszczególnych OREB) | Tak <br /><br />(w każdym istniejącym kierunku) | Kompletne | Wymagany (wartości G, P) | A03 |
-| |  | MAXE | Harmonogram dyspozycyjności - Dostępne maksimum dyspozycyjności elektrownianej (określone na koniec poszczególnych OREB) | Tak <br /><br /> (w każdym istniejącym kierunku) | Kompletne | Wymagany (wartości G, P) | A03 |
-| |  | MINS | Harmonogram dyspozycyjności - Możliwe minimum dyspozycyjności sieciowej (określone na koniec poszczególnych OREB) | Tak <br /><br /> (w każdym istniejącym kierunku) | Kompletne | Wymagany (wartości G, P) | A03 |
-| |  | MAXS | Harmonogram dyspozycyjności - Dostępne maksimum dyspozycyjności sieciowej (określone na koniec poszczególnych OREB) | Tak <br /><br /> (w każdym istniejącym kierunku) | Kompletne | Wymagany (wartości G, P) | A03 |
+| ORMB | Ograniczenia zdolności regulacji mocy biernej | PINMN | Minimum mocy indukcyjnej przy pracy jednostki (generacji mocy czynnej) | Nie | Mogą być puste | Wymagany (wartości GENERATION, CONSUMPTION, TOTAL — w zależności od technologii zasobu) | A03 |
+|  |  | PINMX | Maksimum mocy indukcyjnej przy pracy jednostki (generacji mocy czynnej) | Nie | Mogą być puste | Wymagany (wartości GENERATION, CONSUMPTION, TOTAL — w zależności od technologii zasobu) | A03 |
+|  |  | PCPMN | Minimum mocy pojemnościowej przy pracy jednostki (generacji mocy czynnej) | Nie | Mogą być puste | Wymagany (wartości GENERATION, CONSUMPTION, TOTAL — w zależności od technologii zasobu) | A03 |
+|  |  | PCPMX | Maksimum mocy pojemnościowej przy pracy jednostki (generacji mocy czynnej) | Nie | Mogą być puste | Wymagany (wartości GENERATION, CONSUMPTION, TOTAL — w zależności od technologii zasobu) | A03 |
+|  |  | KINMN | Minimum mocy indukcyjnej w stanie kompensacji (bez generacji mocy czynnej) | Nie | Mogą być puste | Wymagany (wartości GENERATION, CONSUMPTION, TOTAL — w zależności od technologii zasobu) | A03 |
+|  |  | KINMX | Maksimum mocy indukcyjnej w stanie kompensacji (bez generacji mocy czynnej) | Nie | Mogą być puste | Wymagany (wartości GENERATION, CONSUMPTION, TOTAL — w zależności od technologii zasobu) | A03 |
+|  |  | KCPMN | Minimum mocy pojemnościowej w stanie kompensacji (bez generacji mocy czynnej) | Nie | Mogą być puste | Wymagany (wartości GENERATION, CONSUMPTION, TOTAL — w zależności od technologii zasobu) | A03 |
+|  |  | KCPMX | Maksimum mocy pojemnościowej w stanie kompensacji (bez generacji mocy czynnej) | Nie | Mogą być puste | Wymagany (wartości GENERATION, CONSUMPTION, TOTAL — w zależności od technologii zasobu) | A03 |
+| HRM | Harmonogram dyspozycyjności | MINE | Harmonogram dyspozycyjności - Możliwe minimum dyspozycyjności elektrownianej (określone na koniec poszczególnych OREB) | Tak <br /><br />(w każdym istniejącym kierunku) | Kompletne | Wymagany (wartości GENERATION, CONSUMPTION) | A03 |
+| |  | MAXE | Harmonogram dyspozycyjności - Dostępne maksimum dyspozycyjności elektrownianej (określone na koniec poszczególnych OREB) | Tak <br /><br /> (w każdym istniejącym kierunku) | Kompletne | Wymagany (wartości GENERATION, CONSUMPTION) | A03 |
+| |  | MINS | Harmonogram dyspozycyjności - Możliwe minimum dyspozycyjności sieciowej (określone na koniec poszczególnych OREB) | Tak <br /><br /> (w każdym istniejącym kierunku) | Kompletne | Wymagany (wartości GENERATION, CONSUMPTION) | A03 |
+| |  | MAXS | Harmonogram dyspozycyjności - Dostępne maksimum dyspozycyjności sieciowej (określone na koniec poszczególnych OREB) | Tak <br /><br /> (w każdym istniejącym kierunku) | Kompletne | Wymagany (wartości GENERATION, CONSUMPTION) | A03 |
 | PUZ | Pojemność użytkowa (magazynu) | PUZ | Pojemność użytkowa (magazynu) | Tak | Kompletne | Brak | A03 |
-| PLP | Plan pracy | MCSR | Plan pracy - średnie wielkości mocy czynnej netto wprowadzanej do sieci/pobieranej z sieci w poszczególnych OREB | Tak <br /><br /> (w każdym istniejącym kierunku) | Kompletne | Wymagany (wartości G, P) | A01 |
-| |  | MCKN | Plan pracy - wielkości mocy czynnej netto wprowadzanej do sieci/pobieranej z sieci na koniec poszczególnych OREB | Tak <br /><br /> (w każdym istniejącym kierunku) | Kompletne | Wymagany (wartości G, P) | A01 |
-| |  | MCSO | Plan pracy - średnie wielkości mocy czynnej netto wprowadzanej do sieci/pobieranej z sieci w poszczególnych OREB z uwzględnieniem polecenia ruchowego OSD | Nie | Mogą być puste | Wymagany (wartości G, P) | A01 |
-| |  | MCKO | Plan pracy - wielkości mocy czynnej netto wprowadzanej do sieci/pobieranej z sieci na koniec poszczególnych OREB z uwzględnieniem polecenia ruchowego OSD | Nie | Mogą być puste | Wymagany (wartości G, P) | A01 |
+| PLP | Plan pracy | MCSR | Plan pracy - średnie wielkości mocy czynnej netto wprowadzanej do sieci/pobieranej z sieci w poszczególnych OREB | Tak <br /><br /> (w każdym istniejącym kierunku) | Kompletne | Wymagany (wartości GENERATION, CONSUMPTION) | A01 |
+| |  | MCKN | Plan pracy - wielkości mocy czynnej netto wprowadzanej do sieci/pobieranej z sieci na koniec poszczególnych OREB | Tak <br /><br /> (w każdym istniejącym kierunku) | Kompletne | Wymagany (wartości GENERATION, CONSUMPTION) | A01 |
+| |  | MCSO | Plan pracy - średnie wielkości mocy czynnej netto wprowadzanej do sieci/pobieranej z sieci w poszczególnych OREB z uwzględnieniem polecenia ruchowego OSD | Nie | Mogą być puste | Wymagany (wartości GENERATION, CONSUMPTION) | A01 |
+| |  | MCKO | Plan pracy - wielkości mocy czynnej netto wprowadzanej do sieci/pobieranej z sieci na koniec poszczególnych OREB z uwzględnieniem polecenia ruchowego OSD | Nie | Mogą być puste | Wymagany (wartości GENERATION, CONSUMPTION) | A01 |
 | |  | ZNSR | Plan pracy - znacznik true/false określający, czy wielkości generacji mocy czynnej wprowadzone do sieci w poszczególnych OREB przez MWE odzwierciedlają generację mocy czynnej netto odpowiadającą potencjałowi generacji MWE wynikającemu z warunków meteorologicznych <br /><br /> (dotyczy tylko MWE typu B, C, D, dane w kierunku generacji) | Tak | Kompletne | Brak | A01 |
 | |  | ZNKN | Plan pracy - znacznik true/false określający, czy wielkości generacji mocy czynnej wprowadzone do sieci na koniec OREB przez MWE odzwierciedlają generację mocy czynnej netto odpowiadającą potencjałowi generacji MWE wynikającemu z warunków meteorologicznych <br /><br /> (dotyczy tylko MWE typu B, C, D, dane w kierunku generacji) | Tak | Kompletne | Brak | A01 |
-| |  | AGSR | Plan pracy - średnie wielkości generacji mocy czynnej netto wytwarzanej w danym OREB przez MWE na własne potrzeby  <br /><br /> (dotyczy tylko MWE typu B, C, D ze znacznikiem „autogeneracja”, dane w kierunku generacji) | Dla MWE z autogeneracją → Tak | Kompletne | Wymagany (wartość G) | A01 |
-| |  | AGKN | Plan pracy - wielkości generacji mocy czynnej netto wytwarzane na koniec poszczególnych OREB przez MWE na własne potrzeby <br /><br /> (dotyczy tylko MWE typu B, C, D ze znacznikiem „autogeneracja”, dane w kierunku generacji) | Dla MWE z autogeneracją → Tak | Kompletne | Wymagany (wartość G) | A01 |
-| |  | MCSD | Plan pracy - średnie wielkości generacji mocy czynnej netto MWE w poszczególnych OREB, określające potencjał generacji MWE wynikający z warunków meteorologicznych i z mocy dyspozycyjnej elektrownianej MWE <br /><br /> (dotyczy tylko MWE PPM - w kategorii FW, PV lub układ hybrydowy, w tym dla poszczególnych elementów tego układu, dane w kierunku generacji) | Dla MWE, które jest PPM → Tak | Kompletne | Wymagany (wartość G) | A01 |
-| |  | MCKD | Plan pracy - wielkości generacji mocy czynnej netto MWE na koniec poszczególnych OREB, określające potencjał generacji MWE wynikający z warunków meteorologicznych i z mocy dyspozycyjnej elektrownianej MWE (dotyczy tylko PPM typu FW, PPM typu PV i PPM typu układ hybrydowy, w tym dla poszczególnych elementów tego układu) <br /><br /> (dotyczy tylko MWE PPM - w kategorii FW, PV lub układ hybrydowy, w tym dla poszczególnych elementów tego układu, dane w kierunku generacji) | Dla MWE, które jest PPM → Tak | Kompletne | Wymagany (wartość G) | A01 |
-| |  | MCSZ | Plan pracy - średnie wielkości generacji mocy czynnej netto MWE w poszczególnych OREB, określające potencjał generacji MWE wynikający z warunków meteorologicznych i z mocy zainstalowanej MWE (dotyczy tylko PPM typu FW, PPM typu PV i PPM typu układ hybrydowy, w tym dla poszczególnych elementów tego układu) <br /><br /> (dotyczy tylko MWE PPM - w kategorii FW, PV lub układ hybrydowy, w tym dla poszczególnych elementów tego układu, dane w kierunku generacji) | Dla MWE, które jest PPM → Tak | Kompletne | Wymagany (wartość G) | A01 |
- | |  | MCKZ | Plan pracy - wielkości generacji mocy czynnej netto MWE na koniec poszczególnych OREB, określające potencjał generacji MWE wynikający z warunków meteorologicznych i z mocy zainstalowanej MWE <br /><br /> (dotyczy tylko MWE PPM - w kategorii FW, PV lub układ hybrydowy, w tym dla poszczególnych elementów tego układu, dane w kierunku generacji) | Dla MWE, które jest PPM → Tak | Kompletne | Wymagany (wartość G) | A01 |
-| |  | PWP | Plan pracy - znacznik (0, 1, 2) planowanej pracy wymuszonej, dla MEE w trybie rozładowania <br /><br /> (dotyczy tylko MWE typu D oraz MEE w sieci OSP, dane w kierunku generacji) | Nie | Kompletne | Wymagany (wartość G) | A01 |
+| |  | AGSR | Plan pracy - średnie wielkości generacji mocy czynnej netto wytwarzanej w danym OREB przez MWE na własne potrzeby  <br /><br /> (dotyczy tylko MWE typu B, C, D ze znacznikiem „autogeneracja”, dane w kierunku generacji) | Dla MWE z autogeneracją → Tak | Kompletne | Wymagany (wartość GENERATION) | A01 |
+| |  | AGKN | Plan pracy - wielkości generacji mocy czynnej netto wytwarzane na koniec poszczególnych OREB przez MWE na własne potrzeby <br /><br /> (dotyczy tylko MWE typu B, C, D ze znacznikiem „autogeneracja”, dane w kierunku generacji) | Dla MWE z autogeneracją → Tak | Kompletne | Wymagany (wartość GENERATION) | A01 |
+| |  | MCSD | Plan pracy - średnie wielkości generacji mocy czynnej netto MWE w poszczególnych OREB, określające potencjał generacji MWE wynikający z warunków meteorologicznych i z mocy dyspozycyjnej elektrownianej MWE <br /><br /> (dotyczy tylko MWE PPM - w kategorii FW, PV lub układ hybrydowy, w tym dla poszczególnych elementów tego układu, dane w kierunku generacji) | Dla MWE, które jest PPM → Tak | Kompletne | Wymagany (wartość GENERATION) | A01 |
+| |  | MCKD | Plan pracy - wielkości generacji mocy czynnej netto MWE na koniec poszczególnych OREB, określające potencjał generacji MWE wynikający z warunków meteorologicznych i z mocy dyspozycyjnej elektrownianej MWE (dotyczy tylko PPM typu FW, PPM typu PV i PPM typu układ hybrydowy, w tym dla poszczególnych elementów tego układu) <br /><br /> (dotyczy tylko MWE PPM - w kategorii FW, PV lub układ hybrydowy, w tym dla poszczególnych elementów tego układu, dane w kierunku generacji) | Dla MWE, które jest PPM → Tak | Kompletne | Wymagany (wartość GENERATION) | A01 |
+| |  | MCSZ | Plan pracy - średnie wielkości generacji mocy czynnej netto MWE w poszczególnych OREB, określające potencjał generacji MWE wynikający z warunków meteorologicznych i z mocy zainstalowanej MWE (dotyczy tylko PPM typu FW, PPM typu PV i PPM typu układ hybrydowy, w tym dla poszczególnych elementów tego układu) <br /><br /> (dotyczy tylko MWE PPM - w kategorii FW, PV lub układ hybrydowy, w tym dla poszczególnych elementów tego układu, dane w kierunku generacji) | Dla MWE, które jest PPM → Tak | Kompletne | Wymagany (wartość GENERATION) | A01 |
+ | |  | MCKZ | Plan pracy - wielkości generacji mocy czynnej netto MWE na koniec poszczególnych OREB, określające potencjał generacji MWE wynikający z warunków meteorologicznych i z mocy zainstalowanej MWE <br /><br /> (dotyczy tylko MWE PPM - w kategorii FW, PV lub układ hybrydowy, w tym dla poszczególnych elementów tego układu, dane w kierunku generacji) | Dla MWE, które jest PPM → Tak | Kompletne | Wymagany (wartość GENERATION) | A01 |
+| |  | PWP | Plan pracy - znacznik (0, 1, 2) planowanej pracy wymuszonej, dla MEE w trybie rozładowania <br /><br /> (dotyczy tylko MWE typu D oraz MEE w sieci OSP, dane w kierunku generacji) | Nie | Kompletne | Wymagany (wartość GENERATION) | A01 |
 | |  | SNAL | Stan naładowania MEE na koniec poszczególnych OREB <br /><br /> (dotyczy tylko MEE) | Dla MEE → Tak | Kompletne | Brak | A01 |
-| PRU | Polecenia ruchowe OSD | OMAX | Polecenia ruchowe OSD - Pmax wielkości mocy czynnej netto w poszczególnych OREB wynikający z poleceń ruchowych OSDp | Nie | Mogą być puste | Wymagany (wartość G) | A01 |
-| |  | OMIN | Polecenia ruchowe OSD - Pmin wielkości mocy czynnej netto w poszczególnych OREB wynikający z poleceń ruchowych OSDp | Nie | Mogą być puste | Wymagany (wartość G) | A01 |
+| PRU | Polecenia ruchowe OSD | OMAX | Polecenia ruchowe OSD - Pmax wielkości mocy czynnej netto w poszczególnych OREB wynikający z poleceń ruchowych OSDp | Nie | Mogą być puste | Wymagany (wartość GENERATION) | A01 |
+| |  | OMIN | Polecenia ruchowe OSD - Pmin wielkości mocy czynnej netto w poszczególnych OREB wynikający z poleceń ruchowych OSDp | Nie | Mogą być puste | Wymagany (wartość GENERATION) | A01 |
 | WYM | Saldo wymiany | WYM | Saldo wymiany <br /><br /> (dotyczy tylko linii wymiany) | Tak | Kompletne | Brak | A01 |
 
 
@@ -309,6 +328,7 @@ Poniższy opis przebiegu (workflow) dotyczy zgłaszania:
 - pojemności użytkowej magazynów,
 - poleceń ruchowych OSD,
 - salda wymiany dla linii wymiany 110kV
+- ograniczenia zdolności regulacji mocy biernej
 
 #### Opis na przykładzie zgłoszenia planu pracy
 

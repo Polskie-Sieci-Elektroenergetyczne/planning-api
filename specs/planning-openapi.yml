@@ -200,6 +200,28 @@ paths:
           $ref: '#/components/responses/Rejected'
       security: 
         - mTLS: []
+  /pwdp/api/v1/reactive-limit-submissions:
+    post:
+      tags:
+      - Planning Data Submissions
+      summary: Submit a reactive power regulation limits
+      operationId: submitReactiveLimit
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ReactiveLimitSubmission"
+            examples:
+              reactiveLimitSubmission_MWE_2series:
+                $ref: '#/components/examples/reactiveLimitSubmission_MWE_2series'
+        required: true
+      responses:
+        "202":
+          $ref: '#/components/responses/Submitted'
+        "400":
+          $ref: '#/components/responses/Rejected'
+      security: 
+        - mTLS: []
   /pwdp/api/v1/submissions/{serverMsgId}/status:
     get:
       tags:
@@ -557,6 +579,32 @@ paths:
                   - $ref: '#/components/schemas/HeartbeatEvent'
                   - $ref: '#/components/schemas/UnavailabilityChangedEvent'
                   - $ref: '#/components/schemas/SubmissionProcessedEvent'
+  /pwdp/api/v1/resources/{mainResourceMrid}/reactive-limits:
+    get:
+      summary: Retrieve reactive power regulation limits for a resource within the specified date range
+      tags:
+        - Current Planning Data
+      operationId: listReactiveLimits
+      parameters:
+        - $ref: '#/components/parameters/MainResourceMrid'
+        - $ref: '#/components/parameters/Start'
+        - $ref: '#/components/parameters/End'
+      responses:
+        '200':
+          description: Reactive power regulation limits as time series data
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TimeSeriesData"
+              examples:
+                reactiveLimits_MWE_2series:
+                  $ref: '#/components/examples/reactiveLimits_MWE_2series'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+      security: 
+        - mTLS: []
 components:
   responses:
     Submitted:
@@ -697,7 +745,7 @@ components:
         - $ref: "#/components/schemas/TimeSeries"
         - type: object
           description: >
-            A time series composed of one or more periods, each with its own defined temporal resolution. 
+            A time series composed of periods, each with its own defined temporal resolution. 
             Every period (SeriesPeriodContinuous) specifies a time interval and provides an ordered list of 
             values corresponding to all consecutive time steps within that interval, according to 
             the resolution defined for that specific period. This structure is used when complete data must be 
@@ -714,7 +762,7 @@ components:
       description: |
         A time series representing a sequence of values for a specific parameter of a resource.
         Each series is uniquely identified within a submission and contains metadata describing the business context, measurement unit, curve type, and the resource to which the data applies.
-        The actual values are provided through one or more time periods, whose structure depends on the curve type (continuous values for each interval or discrete points where values change).
+        The actual values are provided through time periods, whose structure depends on the curve type (continuous values for each interval or discrete points where values change).
         TimeSeries objects are used consistently across schedules, availabilities, dispatch instructions, exchange schedules, and other planning datasets.
       required:
         - tsId
@@ -744,10 +792,12 @@ components:
             Unit of measurement for the values
             - MAW - megawatt
             - MWH - megawatt-hour
+            - MAR - megavolt-ampere reactive (reactive power, Mvar)
             - FLAG - numeric value interpreted according to the businessType
           enum:
             - MAW
             - MWH
+            - MAR
             - FLAG
         resourceMrid:
           $ref: "#/components/schemas/ResourceMrid"
@@ -985,7 +1035,7 @@ components:
           $ref: "#/components/schemas/TimeSeriesData"
           description: >
             The time-series dataset representing the submitted schedule. Contains
-            the resource identifier, the applicable time interval, and one or more
+            the resource identifier, the applicable time interval, and 
             time series with the actual schedule values.
       required:
         - meta
@@ -1024,7 +1074,7 @@ components:
           description: >
             The time-series dataset representing the declared availability of the
             resource. Contains the resource identifier, the applicable time interval,
-            and one or more time series with the availability values.
+            and time series with the availability values.
       required:
         - meta
         - data
@@ -1060,7 +1110,7 @@ components:
           $ref: "#/components/schemas/TimeSeriesData"
           description: >
             The time-series dataset representing the dispatch instruction. Contains
-            the resource identifier, the applicable time interval, and one or more
+            the resource identifier, the applicable time interval, and 
             time series with the instructed operating values.
       required:
         - meta
@@ -1153,6 +1203,53 @@ components:
                 Business classification of the submission. For storage capacity
                 datasets, the value must be `PUZ`, indicating a storage capacity
                 submission.
+          required: 
+            - type
+    ReactiveLimitSubmission:
+      type: object
+      description: >
+        Represents a reactive power regulation limits submission for a specific
+        resource. The object combines metadata describing the submission context
+        with the time-series dataset containing the actual regulation range
+        boundaries. Used by participants to declare the allowed range of
+        reactive power regulation within a defined time interval, separately
+        for the operation state (active power generation) and the compensation
+        state (no active power generation).
+      properties: 
+        meta:
+          $ref: "#/components/schemas/ReactiveLimitSubmissionMeta"
+        data:
+          $ref: "#/components/schemas/TimeSeriesData"
+          description: >
+            The time-series dataset representing the submitted reactive power 
+            regulation limits. Contains the resource identifier, the applicable 
+            time interval, and the complete set of time series describing the 
+            regulation range boundaries.
+            For series where an actual limitation applies, `seriesPeriods` must 
+            be provided with the relevant time intervals and quantity values. 
+            For series where no limitation applies (the resource can regulate 
+            up to its nominal capability for the given combination), 
+            `seriesPeriods` must be omitted — this explicit absence is the 
+            canonical way to declare "no limitation beyond nominal capability".
+      required:
+        - meta
+        - data
+    ReactiveLimitSubmissionMeta:
+      description: >
+        Metadata describing a reactive power regulation limits submission.
+        Extends the generic submission metadata with a mandatory business type
+        identifying the submission as reactive power regulation limits (ORMB).
+      allOf:
+        - $ref: "#/components/schemas/SubmissionMeta"
+        - type: object
+          properties:
+            type:
+              type: string
+              enum: [ORMB]
+              description: >
+                Business classification of the submission. For reactive power
+                regulation limits submissions, the value must be `ORMB`,
+                indicating a reactive power regulation range dataset.
           required: 
             - type
     OutageSubmission:
@@ -2600,6 +2697,57 @@ components:
                       quantity: 10.100
                     - position: 481
                       quantity: 9.800
+    reactiveLimitSubmission_MWE_2series:
+      summary: PGM reactive power regulation limits, 2 series example
+      value:
+        meta: 
+          senderId: 10999
+          responsiblePartyId: 10111
+          clientMsgId: '4bfa71da-146b-4df9-b972-6a5ce18f2342'
+          type: ORMB
+          DSOcReceivedAt: '2025-05-11T08:23:30.567Z'
+        data:
+          mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+          dataPeriod:
+            start: '2025-05-12T22:00:00Z'
+            end:   '2025-05-13T22:00:00Z'
+          timeSeries: 
+            - tsId: 1
+              businessType: PINMX
+              direction: GENERATION
+              measurementUnit: MAR
+              resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              curveType: A03
+              seriesPeriods:
+                - timeInterval: 
+                    start: '2025-05-12T22:00:00Z'
+                    end:   '2025-05-13T22:00:00Z'
+                  resolution: PT1H
+                  seriesPoints:
+                    - position: 1
+                      quantity: 12.500
+                    - position: 13
+                      quantity: 10.000
+                    - position: 19
+                      quantity: 12.500
+            - tsId: 2
+              businessType: KINMX
+              direction: TOTAL
+              measurementUnit: MAR
+              resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+              curveType: A03
+              seriesPeriods:
+                - timeInterval: 
+                    start: '2026-05-12T22:00:00Z'
+                    end:   '2026-05-13T22:00:00Z'
+                  resolution: PT15M
+                  seriesPoints:
+                    - position: 1
+                      quantity: 5.000
+                    - position: 49
+                      quantity: 4.000
+                    - position: 73
+                      quantity: 5.000
     schedule_MWE_1day_2series:
       summary: Work schedule – 1 day, 2 time series (shortened value array)
       value:        
@@ -2947,3 +3095,47 @@ components:
                     quantity: 10.100
                   - position: 481
                     quantity: 9.800
+    reactiveLimits_MWE_2series:
+      summary: PGM reactive power regulation limits, 2 series example
+      value:
+        mainResourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+        dataPeriod:
+          start: '2025-05-12T22:00:00Z'
+          end:   '2025-05-13T22:00:00Z'
+        timeSeries: 
+          - tsId: 1
+            businessType: PINMX
+            direction: GENERATION
+            measurementUnit: MAR
+            resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            curveType: A03
+            seriesPeriods:
+              - timeInterval: 
+                  start: '2025-05-12T22:00:00Z'
+                  end:   '2025-05-13T22:00:00Z'
+                resolution: PT1H
+                seriesPoints:
+                  - position: 1
+                    quantity: 12.500
+                  - position: 13
+                    quantity: 10.000
+                  - position: 19
+                    quantity: 12.500
+          - tsId: 2
+            businessType: KINMX
+            direction: TOTAL
+            measurementUnit: MAR
+            resourceMrid: '_d8736017-d25d-4952-a3cf-0fa83560e16f'
+            curveType: A03
+            seriesPeriods:
+              - timeInterval: 
+                  start: '2026-05-12T22:00:00Z'
+                  end:   '2026-05-13T22:00:00Z'
+                resolution: PT15M
+                seriesPoints:
+                  - position: 1
+                    quantity: 5.000
+                  - position: 49
+                    quantity: 4.000
+                  - position: 73
+                    quantity: 5.000
