@@ -12,11 +12,9 @@
 ### Charakterystyka komunikatu
 Zgłoszenie harmonogramu dyspozycyjności zawiera dane planistyczne dotyczące poziomów dyspozycyjności minimalnej i maksymalnej zasobu w horyzoncie 5 lat (60 miesięcy). 
 
-Harmonogram dyspozycyjności jest dopuszczalny dla MWE typu B i C przyłączonych do sieci OSD oraz MEE przyłączonych do sieci OSD.  
+Harmonogram dyspozycyjności jest przewidziany dla MWE typu B i C przyłączonych do sieci OSD oraz MEE przyłączonych do sieci OSD.  
 
-W odniesieniu do MWE hybrydowych, w skład których wchodzą moduły parku energii (PPM), harmonogramy mają być zgłaszane na poszczególne składowe z danej kategorii źródła energii pierwotnej zamiast na całe MWE. 
-
-W odniesieniu do MWE, w skład których wchodzi oprócz składowej wytwórczej również składowa magazynowa, harmonogramy mają być zgłaszane na składową wytwórczą jak również na składową magazynową zamiast na całe MWE.
+W odniesieniu do MWE posiadających wiele składowych (w szczególności MWE hybrydowych, w skład których wchodzą moduły parku energii, tj.PPM), harmonogramy mają być zgłaszane na całość MWE oraz na poszczególne składowe: wytwórcze z danej kategorii źródła energii pierwotnej i  magazynową, jeśli występuje. 
 
 Komunikat umożliwia zgłaszającym przekazanie minimalnej i maksymalnej dyspozycyjności elektrownianej oraz minimalnej i maksymalnej dyspozycyjności sieciowej w danym kierunku, w ramach jednego zgłoszenia. W przypadku MWE wytwórczych jako kierunek dopuszczalna jest jedynie generacja.
 

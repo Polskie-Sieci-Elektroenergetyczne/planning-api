@@ -733,9 +733,12 @@ components:
            each representing the value that becomes effective from the given position onward until the next change occurs. 
            This structure is used when the dataset can be represented efficiently by specifying only value transitions
            rather than full sequences of consecutive time-step values.
+          required: 
+            - seriesPeriods
           properties:
             seriesPeriods:
               type: array
+              minItems: 1
               items:
                 $ref: "#/components/schemas/SeriesPeriodContinuous"
               description: >
@@ -750,9 +753,12 @@ components:
             values corresponding to all consecutive time steps within that interval, according to 
             the resolution defined for that specific period. This structure is used when complete data must be 
             supplied for every time point within each period.
+          required: 
+            - seriesPeriods
           properties:
             seriesPeriods:
               type: array
+              minItems: 1
               items:
                 $ref: "#/components/schemas/SeriesPeriodPoints"
               description: >
@@ -908,12 +914,10 @@ components:
         timeSeries:
           type: array
           description: Time series.
-          minItems: 1
           items:
             $ref: "#/components/schemas/TimeSeries"
       required:
         - dataPeriod
-        - timeSeries
         - mainResourceMrid
     Unavailability:
       type: object

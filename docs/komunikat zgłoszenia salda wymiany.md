@@ -12,7 +12,7 @@
 ### Charakterystyka komunikatu
 Zgłoszenie grafiku z saldem wymiany zawiera dane planistyczne dotyczące salda wymiany nierównoległej realizowanej poprzez sieć 110 kV na wskazanej linii wymiany, w całkowitym horyzoncie planowania 5 lat (60 miesięcy).
 
-Saldo wymiany jest dopuszczalne dla linii wymiany nierównoległej.
+Saldo wymiany jest przewidziane dla linii wymiany nierównoległej.
 
 Komunikat umożliwia zgłaszającym przekazanie wartości salda wymiany dla danej linii wymiany w ramach jednego zgłoszenia. 
 

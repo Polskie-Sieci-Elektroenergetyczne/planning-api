@@ -12,7 +12,7 @@
 ### Charakterystyka komunikatu
 Informacja o postojach dla zasobu w zadanym okresie przekazuje dane planistyczne dotyczące zgłoszonych i przyjętych do planu niedostępności postojów (całkowitych niedyspozycyjności zasobu) zazębiających się z podanym okresem, w ramach horyzontu 5 lat (60 miesięcy). 
 
-Mogą to być zarówno postoje na całe zasoby jak i, w odniesieniu do MWE hybrydowych, postoje na składowe takich MWE.
+Postoje mogą dotyczyć całych zasobów, a jeśli są to MWE posiadające wiele składowych (w szczególności MWE hybrydowych, w skład których wchodzą moduły parku energii, tj.PPM), to również składowych tych MWE.
 
 Komunikat zawiera informacje o parametrach postojów - kierunku, przyczynie, zdolności odzyskania dyspozycyjności oraz planowanych lub rzeczywistych datach początku i końca postoju. 
 
@@ -41,6 +41,14 @@ Pobranie listy postojów zasobu.
 | 404 | Brak danych |
 
 ---
+### Charakterystyka komunikatu
+Informacja o szczegółach wskazanego postoju dla zasobu przekazuje dane planistyczne dotyczące wybranego postoju, zgłoszonego i przyjętego do planu niedostępności. 
+
+Komunikat zawiera informacje o parametrach wskazanego postoju - kierunku, przyczynie, zdolności odzyskania dyspozycyjności oraz planowanych lub rzeczywistych datach początku i końca postoju.
+
+Komunikat dotyczy tylko wskazanego postoju. 
+
+Informacje otrzymywane w tym komunikacie wynikają z planów koordynacyjnych oraz ewidencjonowania stanów zasobów.
 
 ### GET `.../resources/{mainResourceMrid}/outages/{unavailabilityMrid}`
 Pobranie szczegółów postoju zasobu.
@@ -48,7 +56,7 @@ Pobranie szczegółów postoju zasobu.
 | Parametr | Typ | Lokalizacja | Wymagany | Opis | Przykład |
 |----------|-----|-------------|:--------:|------|----------|
 | `mainResourceMrid` | string | path | tak | mRID zasobu | `_d8736017-d25d-4952-a3cf-0fa83560e16f` |
-| `unavailabilityMrid` | string | path | tak | mRID awarii | `12346017-d25d-4952-a3cf-0fa83560e160` |
+| `unavailabilityMrid` | string | path | tak | mRID postoju | `12346017-d25d-4952-a3cf-0fa83560e160` |
 
 **operationId:** `getOutage`  
 **Tag:** Current Planning Data  
