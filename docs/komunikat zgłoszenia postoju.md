@@ -12,9 +12,9 @@
 ### Charakterystyka komunikatu
 Zgłoszenie postoju zawiera dane planistyczne dotyczące całkowitej niedyspozycyjności zasobu w horyzoncie 5 lat (60 miesięcy). 
 
-Postój jest dopuszczalny dla MWE typu D przyłączonych do sieci OSD lub OSP oraz MEE przyłączonych do sieci OSP.
+Postój jest przewidziany dla MWE typu D przyłączonych do sieci OSD lub OSP oraz MEE przyłączonych do sieci OSP.
 
-W odniesieniu do MWE hybrydowych, w skład których wchodzą moduły parku energii (PPM) postoje mogą być zgłaszane na poszczególne składowe z danej kategorii źródła energii pierwotnej. Nie wyklucza to jednocześnie zgłoszenia w tym samym czasie postoju na całe MWE - taki postój będzie miał pierwszeństwo względem postoju na składowe.
+W odniesieniu do MWE posiadających wiele składowych (w szczególności MWE hybrydowych, w skład których wchodzą moduły parku energii, tj.PPM), postoje oprócz zgłaszania na całe MWE mogą być zgłaszane również na poszczególne składowe wytwórcze z danej kategorii źródła energii pierwotnej, ew. na składową magazynową, jeśli występuje. Pojedynczy komunikat odnosi się tylko do jednego obiektu (albo całego MWE albo jego składowej).
 
 Komunikat pozwala zgłaszać nowy postój albo modyfikować bądź wycofywać już zgłoszony postój. W zależności od kwalifikacji postoju i od czasu przekazania, odbiorcami zgłoszenia są pracownicy działu planowania lub dyspozytorzy OSP.
 
@@ -24,9 +24,9 @@ Ponadto komunikat pozwala na przekazanie informacji o zdolności odzyskania dysp
 
 Jeśli zasób jest powiązany z JG w sposób mapowalny, tzn. w skład JG wchodzi tylko ten zasób, to zgłoszony postój na zasób jednocześnie dotyczy tej powiązanej JG. Poza tym w odniesieniu do zasobu powiązanego z JG, gdzie ZAK=1, dopuszczalne jest przekazywanie informacji tylko o czasie rzeczywistego rozpoczęcia postoju - nie przekazuje się tym komunikatem daty zakończenia. Rzeczywista data i czas zakończenia postoju jest uzupełniana w ramach powiązanej JG w sposób automatyczny, na podstawie odpowiednich zdarzeń ruchowych dotyczących tej JG.
 
-Pojedynczy dokument może dotyczyć postoju tylko w jednym kierunku.
+Pojedynczy komunikat może dotyczyć postoju tylko w jednym kierunku.
 
-W przypadku postoju już rozpoczętego dla zasobu powiązanego z JG<sub>W1</sub> opcjonalnie jest możliwe zgłoszenie charakterystyki uruchomienia dodatkowego, następującego po zgłaszanym postoju.
+W przypadku postoju już rozpoczętego, który dotyczy całego MWE i jest powiązany z JG<sub>W1</sub>, opcjonalnie jest możliwe zgłoszenie charakterystyki uruchomienia dodatkowego, następującego po zgłaszanym postoju.
 
 Informacje otrzymywane w tym komunikacie stanowią podstawę tworzenia lub korygowania planów koordynacyjnych oraz ewidencjonowania stanów zasobów.
 

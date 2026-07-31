@@ -15,7 +15,7 @@ Informacja o harmonogramie dyspozycyjności dla zasobu w zadanym okresie przekaz
 Harmonogram dyspozycyjności dotyczy całego zasobu, natomiast w szczególnych przypadkach:
 * MWE hybrydowych, w skład których wchodzą moduły parku energii (PPM), 
 * MWE, w skład których wchodzi oprócz składowej wytwórczej również składowa magazynowa,
-udostępniane są serie danych na składowe takich MWE zamiast na całe MWE. 
+udostępniane są również serie danych na składowe takich MWE. 
 
 Udostępniana jest minimalna i maksymalna dyspozycyjność elektrowniana oraz minimalna i maksymalna dyspozycyjność sieciowa. 
 

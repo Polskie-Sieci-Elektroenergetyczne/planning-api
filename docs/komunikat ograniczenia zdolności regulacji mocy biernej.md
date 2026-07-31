@@ -10,9 +10,13 @@
 | Odbiorca komunikatu | OSDp (Operator Systemu Dystrybucyjnego), Właściciel obiektu przyłączonego do sieci OSP |
 
 ### Charakterystyka komunikatu
-Informacja o ograniczeniach zdolności regulacji mocy biernej dla zasobu w zadanym okresie przekazuje dane planistyczne dotyczące zgłoszonych zakresów regulacji mocy biernej, zazębiających się z podanym okresem. 
+Informacja o ograniczeniach zdolności regulacji mocy biernej dla zasobu w zadanym okresie przekazuje dane planistyczne dotyczące zgłoszonych zakresów regulacji mocy biernej. 
 
-Udostępniana jest minimalna i maksymalna dyspozycyjność układu regulacji mocy biernej danego rodzaju mocy dla wskazanego stanu zasobu/składowej zasobu. 
+Mogą to być ograniczenia zdolności regulacji mocy biernej na całe zasoby oraz, w odniesieniu do MWE hybrydowych, ograniczenia na składowe wytwórcze takich MWE.
+
+Komunikat udostępnia tylko dane ograniczeń przekazane komunikatem: Zgłoszenie ograniczenia zdolności regulacji mocy biernej (ORMB). Informacje o zgłoszonych całkowitych niesprawnościach układu regulacji pozyskać można poprzez komunikat: [Komunikat niesprawności](komunikat%20niesprawno%C5%9Bci.md?ref_type=heads).
+
+Udostępniana jest minimalna i maksymalna dyspozycyjność układu regulacji mocy biernej danego rodzaju mocy dla wskazanego stanu zasobu (lub składowej zasobu). 
 
 W sekcji szczegółowej każdej z serii udostępniany jest jeden bądź więcej poziomów dyspozycyjności (jako wartości nieujemne), a dla każdej z nich czas początku obowiązywania tej wielkości. 
 

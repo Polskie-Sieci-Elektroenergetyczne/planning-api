@@ -12,9 +12,9 @@
 ### Charakterystyka komunikatu
 Zgłoszenie ubytku zawiera dane planistyczne dotyczące częściowej niedyspozycyjności zasobu w horyzoncie 5 lat (60 miesięcy). 
 
-Ubytek jest dopuszczalny dla MWE typu D przyłączonych do sieci OSD lub OSP oraz MEE przyłączonych do sieci OSP. 
+Ubytek jest przewidziany dla MWE typu D przyłączonych do sieci OSD lub OSP oraz MEE przyłączonych do sieci OSP. 
 
-W odniesieniu do MWE hybrydowych, w skład których wchodzą moduły parku energii (PPM) ubytki mogą być zgłaszane na poszczególne składowe z danej kategorii źródła energii pierwotnej. Nie wyklucza to jednocześnie zgłoszenia w tym samym czasie ubytku na całe MWE - taki ubytku będzie miał pierwszeństwo względem ubytku na składowe.
+W odniesieniu do MWE posiadających wiele składowych (w szczególności MWE hybrydowych, w skład których wchodzą moduły parku energii, tj.PPM), ubytki oprócz zgłaszania na całe MWE mogą być zgłaszane również na poszczególne składowe wytwórcze z danej kategorii źródła energii pierwotnej, ew. na składową magazynową, jeśli występuje. Pojedynczy komunikat odnosi się tylko do jednego obiektu (albo całego MWE albo jego składowej).
 
 Komunikat pozwala zgłaszać nowy ubytek albo modyfikować bądź wycofywać już zgłoszony ubytek. W zależności od kwalifikacji ubytku i od czasu przekazania, odbiorcami zgłoszenia są pracownicy działu planowania lub dyspozytorzy OSP.
 
@@ -24,7 +24,7 @@ W sekcji szczegółowej zgłoszenia wprowadzona jest jedna bądź więcej wielko
 
 Ponadto komunikat pozwala na przekazanie informacji o zdolności odzyskania dyspozycyjności w związku z przewidywaną przez zgłaszającego możliwością odwołania ubytku. W dokumencie wskazuje się jedynie na potencjalną zdolność odzyskania dyspozycyjności i ma to charakter wyłącznie informacyjny.
 
-Pojedynczy dokument może dotyczyć ubytku tylko w jednym kierunku.
+Pojedynczy komunikat może dotyczyć ubytku tylko w jednym kierunku.
 
 Dla danego zasobu i w danym kierunku można wprowadzić maksymalnie dwa ubytki, które nakładają się w czasie: jeden dodatni i jeden ujemny. Ubytki dodatnie obniżają dyspozycyjność zasobu, natomiast ubytki ujemne podwyższają jego moc minimalną. Pojedynczy dokument może dotyczyć ubytku tylko jednego rodzaju i w jednym kierunku.
 

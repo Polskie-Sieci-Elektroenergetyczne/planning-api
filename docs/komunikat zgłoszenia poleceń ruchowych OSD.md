@@ -16,9 +16,9 @@ Polecenia ruchowe OSD są przewidziane dla MWE typu B i C, przyłączonych do si
 
 Polecenia ruchowe OSD nie są zgłaszane w odniesieniu do MWE typu B, C i D, które aktywnie uczestniczącą na rynku bilansującym poprzez powiązanie z JG<sub>W1</sub>.
 
-Komunikat umożliwia zgłaszającym przekazanie poziomu minimalnej i maksymalnej generacji wynikającej z zakresu określonego przez polecenia OSD w ramach jednego zgłoszenia. 
+Komunikat umożliwia zgłaszającym w ramach jednego zgłoszenia przekazanie wybranego zestawu danych: poziomu minimalnej i maksymalnej generacji wynikającej z zakresu określonego przez polecenia OSD w ramach jednego zgłoszenia. W przypadku MWE wytwórczych jako kierunek dopuszczalna jest jedynie generacja. 
 
-W sekcji szczegółowej zgłoszenia dla grafiku mocy maksymalnej i grafiku mocy minimalnej wprowadzone są sekwencyjnie odpowiednie wielkości (jako wartości nieujemne) na każdy OREB w zadanym horyzoncie, zgodnie z początkiem i zakończeniem okresu poleceń ruchowych OSD określonym na poziomie ogólnym. Dopuszczalne są wielkości "puste" oznaczające brak ograniczeń wynikających z poleceń OSD.
+W sekcji szczegółowej zgłoszenia dla grafiku mocy maksymalnej i grafiku mocy minimalnej wprowadzone są sekwencyjnie odpowiednie wielkości (jako wartości nieujemne) na wybrane OREB w zadanym horyzoncie, zgodnie z początkiem i zakończeniem okresu poleceń ruchowych OSD określonym na poziomie ogólnym. Dopuszczalne są wielkości "puste" oznaczające brak ograniczeń wynikających z poleceń OSD.
 
 Dane dotyczące poleceń ruchowych OSD powinny być przekazywane w sposób kompletny, przynajmniej raz dziennie dla poszczególnych OREB okresu obejmującego 9 kolejnych dni kalendarzowych, przy czym dane dotyczące pierwszych 8 dni są aktualizacją uprzednio przekazanych danych.
 

@@ -12,9 +12,9 @@
 ### Charakterystyka komunikatu
 Zgłoszenie planu pracy zawiera dane planistyczne dotyczące generacji i ew. poboru zasobu w horyzoncie 9 dni. 
 
-Plan pracy jest dopuszczalny dla MWE typu B, C i D przyłączonych do sieci OSD, MWE typu D przyłączonych do sieci OSP, MEE przyłączonych do sieci OSD lub OSP oraz pomp przyłączonych do sieci OSD lub OSP. 
+Plan pracy jest przewidziany dla MWE typu B, C i D przyłączonych do sieci OSD, MWE typu D przyłączonych do sieci OSP, MEE przyłączonych do sieci OSD lub OSP oraz pomp przyłączonych do sieci OSD lub OSP. 
 
-W odniesieniu do MWE hybrydowych, w skład których wchodzą moduły parku energii (PPM), niektóre serie (grafiki) danych mają być zgłaszane dodatkowo na poszczególne składowe z danej kategorii źródła energii pierwotnej (jak podano powyżej). 
+W odniesieniu do MWE posiadających wiele składowych (w szczególności MWE hybrydowych, w skład których wchodzą moduły parku energii, tj.PPM), serie danych (grafiki) dotyczące potencjału generacji mają być zgłaszane na poszczególne składowe wytwórcze z danej kategorii źródła energii pierwotnej (jak podano poniżej), a pozostałe serie na całe MWE. 
 
 Plan pracy nie jest zgłaszany w odniesieniu do MWE typu B, C i D, które aktywnie uczestniczą na rynku bilansującym poprzez powiązanie z JG<sub>W1</sub>.
 
@@ -33,7 +33,7 @@ Dodatkowo dla MWE typu B, C, D, dane w kierunku generacji:
 * znacznika odzwierciedlania generacji mocy czynnej netto odpowiadającej potencjałowi generacji MWE wynikającemu z warunków meteorologicznych na koniec  poszczególnych OREB,
 * poziomu planowanej pracy wymuszonej (w kierunku generacji),
 
-Dodatkowo dla PPM (w kategorii FW, PV lub układ hybrydowy), w tym dla poszczególnych elementów tego układu, dane w kierunku generacji:
+Dodatkowo dla PPM (w kategorii FW, PV) dane na całe MWE w kierunku generacji oraz dla PPM typu układ hybrydowy dane na składowe wytwórcze MWE w kierunku generacji:
 
 * **średniej** generacji mocy czynnej netto w ramach poszczególnych OREB określających potencjał generacji MWE wynikający z warunków meteorologicznych i z **mocy dyspozycyjnej elektrownianej** MWE,
 * generacji mocy czynnej netto **na koniec** poszczególnych OREB określających potencjał generacji MWE wynikający z warunków meteorologicznych i z **mocy dyspozycyjnej elektrownianej** MWE,
