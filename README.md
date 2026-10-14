@@ -69,7 +69,7 @@ W ramach komunikacji kanałem B2B będzie zapewniona kontrola przesyłanych komu
 ### Zakres danych planistycznych
 Poniżej przedstawiono zakres danych planistycznych przekazywanych poprzez kanał B2B. Są to zarówno dane o charakterze grafikowym jak i dane okresowe, tj. niedyspozycyjności: postoje, ubytki i niesprawności układu regulacji. 
 
-Zachowanie ciągłości informacji i jednokrotnego zgłaszania niedostępności (w odniesieniu do kanału SOWE) dotyczy jedynie zasóbów, gdzie jednostka grafikowa jest powiązana wyłącznie z tym zasobem (JG = zasób) oraz gdzie na ten zasób zgłasza się postoje i ubytki. W tej sytuacji zgłoszenie danych na zasób jednocześnie bezpośrednio dotyczy powiązanej JG. W przypadku powiązania wielu zasobów do jednej JG albo powiązania JG z jednym zasobem, w odniesieniu do którego zgłasza się harmonogramy dyspozycyjności, zgłoszenia na poszczególny zasób oraz na JG są traktowane niezależnie.
+Zachowanie ciągłości informacji i jednokrotnego zgłaszania niedostępności (w odniesieniu do kanału SOWE) dotyczy jedynie zasobów, gdzie jednostka grafikowa jest powiązana wyłącznie z tym zasobem (JG = zasób) oraz gdzie na ten zasób zgłasza się postoje i ubytki. W tej sytuacji zgłoszenie danych na zasób jednocześnie bezpośrednio dotyczy powiązanej JG. W przypadku powiązania wielu zasobów do jednej JG albo powiązania JG z jednym zasobem, w odniesieniu do którego zgłasza się harmonogramy dyspozycyjności, zgłoszenia na poszczególny zasób oraz na JG są traktowane niezależnie.
 
 Dane planistyczne przekazywane są przez OSDp oraz poszczególnych właścicieli wypełniających obowiązki SOGL w porządku jak przedstawiono w poniższej tabeli. 
 
